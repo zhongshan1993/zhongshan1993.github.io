@@ -301,12 +301,26 @@
 </ol>
 <p><code>.</code> 匹配除换行符之外的任意字符<br><code>\d</code>匹配任意一个十进制数字，即 [0-9]<br><code>\D</code>匹配除数字之外的其他字符<br><code>\s</code>匹配一个不可见原子 即[\f\n\r\t\v]<br><code>\S</code>匹配一个可见的原子 [^\f\n\r\t\v]<br><code>\w</code>匹配任意一个数字、字母、或下划线 [0-9a-zA-Z<em>]<br><code>\W</code>匹配任意一个非数字、字母、或下划线 [^0-9a-zA-Z</em>]</p>
 <ol>
-<li>量词<br>　　　　<br>{n} 表示其前面的原子恰好出现 n 次<br>{n,} 表示其前面的原子最少出现 n 次<br>　　　　{n,m} 表示其前面的原子最少出现 n 次，最多出现 m 次<br>　　　　* 匹配0次，1次或多次其之前的原子 即 {0,}<br>　　　　+ 匹配1次或多次其之前的原子 即 {1,}<br>　　　　? 匹配0次或1次其之前的原子</li>
+<li>量词<br>　　　　<br><code>{n}</code> 表示其前面的原子恰好出现 n 次<br><code>{n,}</code> 表示其前面的原子最少出现 n 次<br><code>{n,m}</code>表示其前面的原子最少出现 n 次，最多出现 m 次<br><code>*</code>匹配0次，1次或多次其之前的原子 即 {0,}<br><code>+</code>匹配1次或多次其之前的原子 即 {1,}<br><code>?</code> 匹配0次或1次其之前的原子</li>
 </ol>
-<p>　　　　举例子 5{2} —- 55<br>　　　　[a-zA-Z]{2} —- ad1256135AW<br>　　　　[\w]{4} —- 连续出现4次字母、数字、下划线<br>　　　　[\w]{4,8} —- 4到8次字母、数字、下划线<br>　　　　\d+ —- 1到无穷大次数字出现<br>　　8　,边界控制<br>　　　　^ 匹配字符串开始的位置<br>　　　　$ 匹配字符串结束的位置<br>　　　　() 匹配其中的整体为一个原子<br>　　9，修正模式<br>　　　　贪婪匹配 匹配结果有歧义时取其长<br>　　　　懒惰匹配 匹配结果有歧义时取其短 标识 U<br>　　　　i 忽略英文大小写<br>　　　　x 匹配过程中忽略空白 ，包括空格和制表符<br>　　　　s 让元字符’ . ‘匹配包括换行符在内的所有字符</p>
-<p>四、正则表达式实战<br>　　1，非空： .+<br>　　2, 匹配一个保留两位小数的浮点数： \d+.\d{2}$<br>　　3, 大陆手机号： ^1(3|5|4|7|8)\d{9}<br>　　4, email地址： ^\w+(.\w)*@\w+(.\w)+$<br>　　5，url 地址： ^(https?://)?(\w+.)+.[a-zA-Z]+$</p>
-<p>五、正则表达式实战——正则表达式工具类</p>
-<p>‘require’ =&gt; ‘/.+/‘,<br>‘email’ =&gt; ‘/^\w+([-+.]\w+)<em>@\w+([-.]\w+)</em>.\w+([-.]\w+)<em>$/‘,<br>‘url’ =&gt; ‘/^http(s?):\/\/(?:[A-za-z0-9-]+.)+[A-za-z]{2,4}(?:[\/\?#][\/=\?%-&amp;~`@[]\’:+!.#\w]</em>)?$/‘,<br>‘currency’ =&gt; ‘/^\d+(.\d+)?$/‘,<br>‘number’ =&gt; ‘/^\d+$/‘,<br>‘zip’ =&gt; ‘/^\d{6}$/‘,<br>‘integer’ =&gt; ‘/^[-+]?\d+$/‘,<br>‘double’ =&gt; ‘/^[-+]?\d+(.\d+)?$/‘,<br>‘english’ =&gt; ‘/^[A-Za-z]+$/‘,<br>‘qq’    =&gt;  ‘/^\d{5,11}$/‘,<br>‘mobile’    =&gt;  ‘/^1(3|4|5|7|8)\d{9}$/‘</p>
+<p>举例子 </p>
+<p>5{2} —- 55<br>[a-zA-Z]{2} —- ad1256135AW<br>[\w]{4} —- 连续出现4次字母、数字、下划线<br>[\w]{4,8} —- 4到8次字母、数字、下划线<br>\d+ —- 1到无穷大次数字出现</p>
+<ol>
+<li>边界控制</li>
+</ol>
+<p><code>^</code>匹配字符串开始的位置<br><code>$</code>匹配字符串结束的位置<br><code>()</code> 匹配其中的整体为一个原子</p>
+<ol>
+<li>修正模式</li>
+</ol>
+<p>贪婪匹配 匹配结果有歧义时取其长<br>懒惰匹配 匹配结果有歧义时取其短 标识 <code>U</code><br><code>i</code> 忽略英文大小写<br><code>x</code> 匹配过程中忽略空白 ，包括空格和制表符<br><code>s</code> 让元字符’ . ‘匹配包括换行符在内的所有字符</p>
+<h2 id="正则表达式实战"><a href="#正则表达式实战" class="headerlink" title="正则表达式实战"></a>正则表达式实战</h2><ol>
+<li>非空： <code>.+</code></li>
+<li>匹配一个保留两位小数的浮点数：<code>\d+\.\d{2}$</code></li>
+<li>大陆手机号： <code>^1(3|5|4|7|8)\d{9}</code></li>
+<li>email地址： <code>^\w+(\.\w)*@\w+(\.\w)+$</code></li>
+<li>url 地址： <code>^(https?://)?(\w+\.)+.[a-zA-Z]+$</code></li>
+</ol>
+<h2 id="正则表达式实战——正则表达式工具类"><a href="#正则表达式实战——正则表达式工具类" class="headerlink" title="正则表达式实战——正则表达式工具类"></a>正则表达式实战——正则表达式工具类</h2><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'require'</span> =&gt; <span class="string">'/.+/'</span>,</span><br><span class="line"><span class="string">'email'</span> =&gt; <span class="string">'/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/'</span>,</span><br><span class="line"><span class="string">'url'</span> =&gt; <span class="string">'/^http(s?):\/\/(?:[A-za-z0-9-]+\.)+[A-za-z]&#123;2,4&#125;(?:[\/\?#][\/=\?%\-&amp;~`@[\]\':+!\.#\w]*)?$/'</span>,</span><br><span class="line"><span class="string">'currency'</span> =&gt; <span class="string">'/^\d+(\.\d+)?$/'</span>,</span><br><span class="line"><span class="string">'number'</span> =&gt; <span class="string">'/^\d+$/'</span>,</span><br><span class="line"><span class="string">'zip'</span> =&gt; <span class="string">'/^\d&#123;6&#125;$/'</span>,</span><br><span class="line"><span class="string">'integer'</span> =&gt; <span class="string">'/^[-\+]?\d+$/'</span>,</span><br><span class="line"><span class="string">'double'</span> =&gt; <span class="string">'/^[-\+]?\d+(\.\d+)?$/'</span>,</span><br><span class="line"><span class="string">'english'</span> =&gt; <span class="string">'/^[A-Za-z]+$/'</span>,</span><br><span class="line"><span class="string">'qq'</span>    =&gt;  <span class="string">'/^\d&#123;5,11&#125;$/'</span>,</span><br><span class="line"><span class="string">'mobile'</span>    =&gt;  <span class="string">'/^1(3|4|5|7|8)\d&#123;9&#125;$/'</span></span><br></pre></td></tr></table></figure>
 </span>
         
       
