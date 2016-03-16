@@ -38,51 +38,39 @@
 
 
 <meta name="description" content="正则表达式的历史背景
-内容深厚的正则表达式
+内容深厚的正则表达式^.+@.+\\..+$ 形式，字符串搜索与匹配的工具
+应用范围手机输入法、Windows文件搜索、linux 列出文件命令、网站用户注册，如邮箱、手机号码的表单验证等
 
-^.+@.+\\..+$ 形式，字符串搜索与匹配的工具
-
-应用范围
-
-手机输入法、Windows文件搜索、linux 列出文件命令、网站用户注册，如邮箱、手机号码的表单验证等
 正则表达式函数解析
 准备工作，在此选择 php 来学习正则表达式
 事先建立好一个 show() 函数
 
-1234567891011121314151617181920/** *">
+1234567891011121314151617181920/** * desc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PHP下正则表达式整理">
 <meta property="og:url" content="http://yoursite.com/2016/03/16/PHP下正则表达式整理/index.html">
 <meta property="og:site_name" content="Zhongshan">
 <meta property="og:description" content="正则表达式的历史背景
-内容深厚的正则表达式
+内容深厚的正则表达式^.+@.+\\..+$ 形式，字符串搜索与匹配的工具
+应用范围手机输入法、Windows文件搜索、linux 列出文件命令、网站用户注册，如邮箱、手机号码的表单验证等
 
-^.+@.+\\..+$ 形式，字符串搜索与匹配的工具
-
-应用范围
-
-手机输入法、Windows文件搜索、linux 列出文件命令、网站用户注册，如邮箱、手机号码的表单验证等
 正则表达式函数解析
 准备工作，在此选择 php 来学习正则表达式
 事先建立好一个 show() 函数
 
-1234567891011121314151617181920/** *">
-<meta property="og:updated_time" content="2016-03-16T12:23:46.210Z">
+1234567891011121314151617181920/** * desc">
+<meta property="og:updated_time" content="2016-03-16T12:25:33.498Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP下正则表达式整理">
 <meta name="twitter:description" content="正则表达式的历史背景
-内容深厚的正则表达式
+内容深厚的正则表达式^.+@.+\\..+$ 形式，字符串搜索与匹配的工具
+应用范围手机输入法、Windows文件搜索、linux 列出文件命令、网站用户注册，如邮箱、手机号码的表单验证等
 
-^.+@.+\\..+$ 形式，字符串搜索与匹配的工具
-
-应用范围
-
-手机输入法、Windows文件搜索、linux 列出文件命令、网站用户注册，如邮箱、手机号码的表单验证等
 正则表达式函数解析
 准备工作，在此选择 php 来学习正则表达式
 事先建立好一个 show() 函数
 
-1234567891011121314151617181920/** *">
+1234567891011121314151617181920/** * desc">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -270,13 +258,9 @@
 
       
         <span itemprop="articleBody"><h2 id="正则表达式的历史背景"><a href="#正则表达式的历史背景" class="headerlink" title="正则表达式的历史背景"></a>正则表达式的历史背景</h2><ol>
-<li>内容深厚的正则表达式</li>
+<li>内容深厚的正则表达式<br><code>^.+@.+\\..+$</code> 形式，字符串搜索与匹配的工具</li>
+<li>应用范围<br>手机输入法、Windows文件搜索、linux 列出文件命令、网站用户注册，如邮箱、手机号码的表单验证等</li>
 </ol>
-<p><code>^.+@.+\\..+$</code> 形式，字符串搜索与匹配的工具</p>
-<ol>
-<li>应用范围</li>
-</ol>
-<p>手机输入法、Windows文件搜索、linux 列出文件命令、网站用户注册，如邮箱、手机号码的表单验证等</p>
 <h2 id="正则表达式函数解析"><a href="#正则表达式函数解析" class="headerlink" title="正则表达式函数解析"></a>正则表达式函数解析</h2><ol>
 <li>准备工作，在此选择 php 来学习正则表达式</li>
 <li>事先建立好一个 show() 函数</li>
@@ -286,22 +270,19 @@
 <li>php 中常用的正则表达式函数(使用最频繁),返回匹配到的次数</li>
 </ol>
 <ul>
-<li><code>preg_match($pattern, $subject, [array &amp;$matches])</code> 只会匹配一次，<code>preg_match_all($pattern, $subject, array &amp;$matches)</code> 匹配所有</li>
+<li><code>preg_match($pattern, $subject, [array &amp;$matches])</code> 只会匹配一次，<code>preg_match_all($pattern, $subject, array &amp;$matches)</code> 匹配所有<br>以下是代码实例</li>
 </ul>
-<p>以下是代码实例</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$pattern</span> = <span class="string">'/[0-9]/'</span>;</span><br><span class="line"><span class="variable">$subject</span> = <span class="string">'hdgsah7ghgsj89gsgh7faf432'</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$m1</span> = <span class="variable">$m2</span> = array();</span><br><span class="line"></span><br><span class="line"><span class="variable">$t1</span> = preg_match(<span class="variable">$pattern</span>, <span class="variable">$subject</span>, <span class="variable">$m1</span>); <span class="regexp">//</span><span class="variable">$t1</span> = <span class="number">1</span></span><br><span class="line"><span class="variable">$t2</span> = preg_match_all(<span class="variable">$pattern</span>, <span class="variable">$subject</span>, <span class="variable">$m2</span>); <span class="regexp">//</span><span class="variable">$t2</span> = <span class="number">7</span></span><br><span class="line"></span><br><span class="line">show(<span class="variable">$m1</span>); <span class="regexp">//</span>输出一个一维数组</span><br><span class="line">echo <span class="string">"&lt;hr&gt;"</span>;</span><br><span class="line">show(<span class="variable">$m2</span>); <span class="regexp">//</span>输出一个二维数组</span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>preg_replace($pattern, $replacement, $subject)</code>和<code>preg_filter($pattern, $replacement, $subject)</code></li>
+<li><code>preg_replace($pattern, $replacement, $subject)</code>和<code>preg_filter($pattern, $replacement, $subject)</code><br>代码实例</li>
 </ul>
-<p>代码实例</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$pattern</span> = <span class="keyword">array</span>(<span class="string">'/[0123]/'</span>,<span class="string">'/[456]/'</span>,<span class="string">'/[789]/'</span>);</span><br><span class="line"><span class="variable">$subject</span> = <span class="keyword">array</span>(<span class="string">'hdg'</span>,<span class="string">'sah7'</span>,<span class="string">'ghgsj'</span>,<span class="string">'89gsg'</span>,<span class="string">'h7fa'</span>,<span class="string">'f432'</span>);</span><br><span class="line"><span class="variable">$replacement</span> = <span class="keyword">array</span>(<span class="string">'你'</span>,<span class="string">'好'</span>,<span class="string">'!'</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$str1</span> = preg_replace(<span class="variable">$pattern</span>, <span class="variable">$replacement</span>, <span class="variable">$subject</span>);</span><br><span class="line"><span class="variable">$str2</span> = preg_filter(<span class="variable">$pattern</span>, <span class="variable">$replacement</span>, <span class="variable">$subject</span>);</span><br><span class="line"></span><br><span class="line">show( <span class="variable">$str1</span> );</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;hr&gt;"</span>;</span><br><span class="line">show( <span class="variable">$str2</span> );</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>preg_grep($pattern, array $input)将无法匹配的值过滤掉 阉割版 preg_filter()</p>
 </li>
-<li><p>preg_split($pattern, $subject)</p>
+<li><p>preg_split($pattern, $subject)<br>代码实例</p>
 </li>
 </ul>
-<p>代码实例</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$pattern</span> = <span class="string">'/[0-9]/'</span>;</span><br><span class="line"><span class="variable">$subject</span> = <span class="string">'这9是2一段3文5字'</span>;</span><br><span class="line"><span class="variable">$arr</span> = preg_split(<span class="variable">$pattern</span>, <span class="variable">$subject</span>);</span><br><span class="line">show(<span class="variable">$arr</span>);</span><br><span class="line"><span class="comment">// 输出</span></span><br><span class="line"><span class="keyword">Array</span></span><br><span class="line">(</span><br><span class="line">[<span class="number">0</span>] =&gt; 这</span><br><span class="line">[<span class="number">1</span>] =&gt; 是</span><br><span class="line">[<span class="number">2</span>] =&gt; 一段</span><br><span class="line">[<span class="number">3</span>] =&gt; 文</span><br><span class="line">[<span class="number">4</span>] =&gt; 字</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>preg_quote($str)<br>正则运算符转义</p>
