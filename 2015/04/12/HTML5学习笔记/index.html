@@ -51,7 +51,7 @@ form属性,实现form与其中的标签分离
 form属性,实现form与其中的标签分离
 
 123&amp;lt;form id=&quot;login&quot; action=&quot;login.php&quot; method=&quot;get&quot;&amp;gt;&amp;lt;/">
-<meta property="og:updated_time" content="2016-03-16T11:17:07.936Z">
+<meta property="og:updated_time" content="2016-03-16T11:21:12.504Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTML5学习笔记">
 <meta name="twitter:description" content="ie8及以下对html5相关语义标签的支持123&amp;lt;!-[if lt IE9]&amp;gt;    &amp;lt;script src=&quot;html5.js&quot;&amp;gt;&amp;lt;/script&amp;gt;&amp;lt;![endif]-&amp;gt;
@@ -255,34 +255,38 @@ form属性,实现form与其中的标签分离
 </ol>
 <figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;form <span class="variable">id=</span><span class="string">"login"</span> <span class="variable">action=</span><span class="string">"login.php"</span> <span class="variable">method=</span><span class="string">"get"</span>&gt;&lt;/form&gt;</span><br><span class="line">&lt;input <span class="variable">form=</span><span class="string">"login"</span> <span class="variable">placeholder=</span><span class="string">"请输入用户名"</span> <span class="variable">type=</span><span class="string">"text"</span> <span class="variable">name=</span><span class="string">"user"</span> <span class="variable">id=</span><span class="string">""</span>&gt;</span><br><span class="line">&lt;input <span class="variable">form=</span><span class="string">"login"</span> <span class="variable">formaction=</span><span class="string">"del.php"</span> <span class="variable">formmethod=</span><span class="string">"get"</span> <span class="variable">type=</span><span class="string">"submit"</span> <span class="variable">name=</span><span class="string">"dosubmit"</span> <span class="variable">value=</span><span class="string">"删除"</span>&gt;</span><br><span class="line">&lt;input <span class="variable">form=</span><span class="string">"login"</span> <span class="variable">formaction=</span><span class="string">"pass.php"</span> <span class="variable">formmethod=</span><span class="string">"post"</span> <span class="variable">type=</span><span class="string">"submit"</span> <span class="variable">name=</span><span class="string">"dosubmit"</span> <span class="variable">value=</span><span class="string">"通过"</span>&gt;</span><br><span class="line">&lt;input <span class="variable">form=</span><span class="string">"login"</span> <span class="variable">formaction=</span><span class="string">"notpass.php"</span> <span class="variable">formmethod=</span><span class="string">"get"</span> <span class="variable">type=</span><span class="string">"submit"</span> <span class="variable">name=</span><span class="string">"dosubmit"</span> <span class="variable">value=</span><span class="string">"不通过"</span>&gt;</span><br></pre></td></tr></table></figure>
 <ol>
-<li>autofocus 自动获得焦点,这里可以贴一下js的实现代码<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="coffeescript"></span><br><span class="line">    <span class="reserved">var</span> username = <span class="built_in">document</span>.getElementById(<span class="string">'username'</span>);</span><br><span class="line">    username.focus();</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>autofocus 自动获得焦点,这里可以贴一下js的实现代码</li>
 </ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="coffeescript"></span><br><span class="line">    <span class="reserved">var</span> username = <span class="built_in">document</span>.getElementById(<span class="string">'username'</span>);</span><br><span class="line">    username.focus();</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <ol>
-<li><p>autocomplete 根据输入记录自动补全</p>
+<li>autocomplete 根据输入记录自动补全</li>
+</ol>
 <figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">autocomplete=</span><span class="string">"on"</span> <span class="variable">autocomplete=</span><span class="string">"off"</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>list提示列表</p>
-</li>
+<ol>
+<li>list提示列表</li>
 </ol>
 <figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;input form=<span class="string">"login"</span> list=<span class="string">"listtest"</span> autofocus autocomplete=<span class="string">"on"</span> id=<span class="string">"username"</span> placeholder=<span class="string">"请输入用户名"</span> type=<span class="string">"text"</span> name=<span class="string">"user"</span> id=<span class="string">""</span>&gt;</span><br><span class="line">&lt;datalist id=<span class="string">"listtest"</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">option</span>&gt;this <span class="keyword">is</span> one&lt;/<span class="keyword">option</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">option</span>&gt;this <span class="keyword">is</span> two&lt;/<span class="keyword">option</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">option</span>&gt;this <span class="keyword">is</span> three&lt;/<span class="keyword">option</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">option</span>&gt;this <span class="keyword">is</span> four&lt;/<span class="keyword">option</span>&gt;</span><br><span class="line">&lt;/datalist&gt;</span><br></pre></td></tr></table></figure>
 <h2 id="改良的input元素种类（可以简单的使用这些元素来实现js的功能）"><a href="#改良的input元素种类（可以简单的使用这些元素来实现js的功能）" class="headerlink" title="改良的input元素种类（可以简单的使用这些元素来实现js的功能）"></a>改良的input元素种类（可以简单的使用这些元素来实现js的功能）</h2><ol>
 <li><p><code>&lt;input type=&quot;search&quot; name=&quot;&quot; id=&quot;&quot;&gt;</code>   </p>
 </li>
 <li><p>tel 属性</p>
+</li>
+</ol>
 <figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="variable">type=</span><span class="string">"tel"</span> <span class="variable">name=</span><span class="string">""</span> <span class="variable">id=</span><span class="string">""</span>&gt; 没有特殊的校验规则</span><br><span class="line">&lt;input <span class="variable">type=</span><span class="string">"tel"</span> <span class="variable">title=</span><span class="string">"只能输入十位数字"</span> <span class="variable">pattern=</span><span class="string">"^\d&#123;10&#125;$"</span>&gt;可以添加正则属性</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>url 专门用来输入url</p>
+<ol>
+<li>url 专门用来输入url</li>
+</ol>
 <figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="variable">type=</span><span class="string">"url"</span> <span class="variable">name=</span><span class="string">""</span> <span class="variable">id=</span><span class="string">""</span>&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>email </p>
+<ol>
+<li>email</li>
+</ol>
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="class"><span class="keyword">type</span></span>=<span class="string">"email"</span> required&gt; 该字段是必须的</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>时间属性</p>
+<ol>
+<li>时间属性</li>
+</ol>
 <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Datetime: &lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"datetime"</span> name=<span class="string">""</span> id=<span class="string">""</span>&gt;&lt;<span class="keyword">br</span>&gt;</span><br><span class="line">Date: &lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"date"</span> name=<span class="string">""</span> id=<span class="string">""</span>&gt;&lt;<span class="keyword">br</span>&gt;</span><br><span class="line">month: &lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"month"</span> value=<span class="string">"2015-02"</span>&gt;&lt;<span class="keyword">br</span>&gt;</span><br><span class="line">week: &lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"week"</span> name=<span class="string">""</span> value=<span class="string">"2015-W10"</span>&gt;&lt;<span class="keyword">br</span>&gt;</span><br><span class="line">time: &lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"time"</span> name=<span class="string">""</span> id=<span class="string">""</span>&gt;&lt;<span class="keyword">br</span>&gt;</span><br><span class="line">Datetime-<span class="keyword">local</span>: &lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"datetime-local"</span> name=<span class="string">""</span> id=<span class="string">""</span>&gt;&lt;<span class="keyword">br</span>&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>number 限制输入数字</p>
-</li>
+<ol>
+<li>number 限制输入数字</li>
 </ol>
 <p>小提示乱入：<br>在<code>input</code>中加入 <code>formnovalidate</code> 属性可设置不验证</p>
 <figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="variable">type=</span><span class="string">"number"</span> <span class="variable">name=</span><span class="string">"num"</span> <span class="variable">max=</span><span class="string">"20"</span> <span class="variable">min=</span><span class="string">"0"</span> <span class="variable">step=</span><span class="string">"3"</span>&gt;</span><br></pre></td></tr></table></figure>
@@ -292,31 +296,31 @@ form属性,实现form与其中的标签分离
 <figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="variable">type=</span><span class="string">"range"</span> <span class="variable">onchange=</span><span class="string">"document.getElementById('num').value = this.value"</span> <span class="variable">name=</span><span class="string">"num"</span> <span class="variable">max=</span><span class="string">"20"</span> <span class="variable">min=</span><span class="string">"0"</span> <span class="variable">step=</span><span class="string">"3"</span> <span class="variable">value=</span><span class="string">"0"</span>&gt;&lt;br&gt;</span><br><span class="line">&lt;output <span class="variable">id=</span><span class="string">"num"</span>&gt;<span class="number">0</span>&lt;/output&gt;</span><br></pre></td></tr></table></figure>
 <ol>
 <li>color 颜色选择器</li>
-<li>multiple 选择多个文件<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="variable">type=</span><span class="string">"file"</span> <span class="variable">name=</span><span class="string">"pic"</span> multiple <span class="variable">accept=</span><span class="string">"image/*"</span>&gt; 仅仅支持上传图片</span><br></pre></td></tr></table></figure>
-</li>
+<li>multiple 选择多个文件</li>
 </ol>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="variable">type=</span><span class="string">"file"</span> <span class="variable">name=</span><span class="string">"pic"</span> multiple <span class="variable">accept=</span><span class="string">"image/*"</span>&gt; 仅仅支持上传图片</span><br></pre></td></tr></table></figure>
 <h2 id="html5-中新增加的标签"><a href="#html5-中新增加的标签" class="headerlink" title="html5 中新增加的标签"></a>html5 中新增加的标签</h2><ol>
 <li><code>&lt;mark&gt;&lt;/mark&gt;</code> 黄色背景强调</li>
 <li><code>&lt;wbr&gt;</code> 软换行 </li>
-<li><p>进度条，可以使用 js 控制它们的 <code>value</code> 值</p>
-<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;progress <span class="variable">min=</span><span class="string">"0"</span> <span class="variable">max=</span><span class="string">"100"</span> <span class="variable">value=</span><span class="string">"20"</span> <span class="variable">id=</span><span class="string">"pro"</span>&gt;&lt;/progress&gt;</span><br><span class="line">&lt;meter <span class="variable">min=</span><span class="string">"0"</span> <span class="variable">max=</span><span class="string">"100"</span> <span class="variable">low=</span><span class="string">"30"</span> <span class="variable">high=</span><span class="string">"80"</span> <span class="variable">id=</span><span class="string">"pro"</span>&gt;&lt;/meter&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>canvas 通过js 画图</p>
-</li>
-<li><p>details 详细信息</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">details</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">summary</span>&gt;</span></span><br><span class="line">标题</span><br><span class="line"><span class="tag">&lt;/<span class="title">summary</span>&gt;</span></span><br><span class="line">内容</span><br><span class="line">内容</span><br><span class="line">内容</span><br><span class="line"><span class="tag">&lt;/<span class="title">details</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ruby 拼音注释</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">ruby</span>&gt;</span></span><br><span class="line">妹子<span class="tag">&lt;<span class="title">rp</span>&gt;</span>(<span class="tag">&lt;/<span class="title">rp</span>&gt;</span><span class="tag">&lt;<span class="title">rt</span>&gt;</span>meizi<span class="tag">&lt;/<span class="title">rt</span>&gt;</span><span class="tag">&lt;<span class="title">rp</span>&gt;</span>)<span class="tag">&lt;/<span class="title">rp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ruby</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>进度条，可以使用 js 控制它们的 <code>value</code> 值</li>
 </ol>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;progress <span class="variable">min=</span><span class="string">"0"</span> <span class="variable">max=</span><span class="string">"100"</span> <span class="variable">value=</span><span class="string">"20"</span> <span class="variable">id=</span><span class="string">"pro"</span>&gt;&lt;/progress&gt;</span><br><span class="line">&lt;meter <span class="variable">min=</span><span class="string">"0"</span> <span class="variable">max=</span><span class="string">"100"</span> <span class="variable">low=</span><span class="string">"30"</span> <span class="variable">high=</span><span class="string">"80"</span> <span class="variable">id=</span><span class="string">"pro"</span>&gt;&lt;/meter&gt;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>canvas 通过js 画图</li>
+<li>details 详细信息</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">details</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">summary</span>&gt;</span></span><br><span class="line">标题</span><br><span class="line"><span class="tag">&lt;/<span class="title">summary</span>&gt;</span></span><br><span class="line">内容</span><br><span class="line">内容</span><br><span class="line">内容</span><br><span class="line"><span class="tag">&lt;/<span class="title">details</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>ruby 拼音注释</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">ruby</span>&gt;</span></span><br><span class="line">妹子<span class="tag">&lt;<span class="title">rp</span>&gt;</span>(<span class="tag">&lt;/<span class="title">rp</span>&gt;</span><span class="tag">&lt;<span class="title">rt</span>&gt;</span>meizi<span class="tag">&lt;/<span class="title">rt</span>&gt;</span><span class="tag">&lt;<span class="title">rp</span>&gt;</span>)<span class="tag">&lt;/<span class="title">rp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ruby</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="html5-废除的元素"><a href="#html5-废除的元素" class="headerlink" title="html5 废除的元素"></a>html5 废除的元素</h2><p><code>&lt;font&gt;&lt;/font&gt;</code> <code>&lt;u&gt;&lt;/u&gt;</code>等元素</p>
 <h2 id="html5-新增的元素和废除的元素"><a href="#html5-新增的元素和废除的元素" class="headerlink" title="html5 新增的元素和废除的元素"></a>html5 新增的元素和废除的元素</h2><ol>
-<li><p><code>&lt;base&gt;</code></p>
+<li><code>&lt;base&gt;</code></li>
+</ol>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">base</span> <span class="attribute">target</span>=<span class="value">"_blank"</span> <span class="attribute">href</span>=<span class="value">"http://www.yangguang520.cn"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"index.php"</span>&gt;</span>云课堂<span class="tag">&lt;/<span class="title">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>有序列表倒转</p>
-</li>
+<ol>
+<li>有序列表倒转</li>
 </ol>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">ol</span> <span class="attribute">reversed</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">li</span>&gt;</span>列表<span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">li</span>&gt;</span>列表<span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">li</span>&gt;</span>列表<span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">li</span>&gt;</span>列表<span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">li</span>&gt;</span>列表<span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">li</span>&gt;</span>列表<span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ol</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <ol>
