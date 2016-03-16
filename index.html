@@ -272,13 +272,11 @@
 <p>代码实例</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$pattern</span> = <span class="string">'/[0-9]/'</span>;</span><br><span class="line"><span class="variable">$subject</span> = <span class="string">'这9是2一段3文5字'</span>;</span><br><span class="line"><span class="variable">$arr</span> = preg_split(<span class="variable">$pattern</span>, <span class="variable">$subject</span>);</span><br><span class="line">show(<span class="variable">$arr</span>);</span><br><span class="line"><span class="comment">// 输出</span></span><br><span class="line"><span class="keyword">Array</span></span><br><span class="line">(</span><br><span class="line">[<span class="number">0</span>] =&gt; 这</span><br><span class="line">[<span class="number">1</span>] =&gt; 是</span><br><span class="line">[<span class="number">2</span>] =&gt; 一段</span><br><span class="line">[<span class="number">3</span>] =&gt; 文</span><br><span class="line">[<span class="number">4</span>] =&gt; 字</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <ul>
-<li>preg_quote($str)</li>
+<li><p>preg_quote($str)<br>正则运算符转义</p>
+</li>
+<li><p>正则表达式总结<br>都以<code>preg_</code>开头<br>除<code>preg_quote()</code> 外，第一个参数都是正则表达式<br><code>preg_match()</code> 表单验证<br><code>preg_replace ()</code> 非法词汇过滤等</p>
+</li>
 </ul>
-<p>正则运算符转义</p>
-<ul>
-<li>正则表达式总结</li>
-</ul>
-<p>都以<code>preg_</code>开头<br>除<code>preg_quote()</code> 外，第一个参数都是正则表达式<br><code>preg_match()</code> 表单验证<br><code>preg_replace ()</code> 非法词汇过滤等</p>
 <h2 id="模式修正"><a href="#模式修正" class="headerlink" title="模式修正"></a>模式修正</h2><ol>
 <li>概述<br>界定符、原子、量词、边界控制、模式单元</li>
 <li>界定符<br>表示正则表达式开始和结束的位置</li>
@@ -287,32 +285,20 @@
 <ol>
 <li>regexpal 工具<br>用于调试正则表达式
 　</li>
-<li>原子概念</li>
-</ol>
-<p>正则匹配最小单位<br>可见原子：键盘输出后肉眼可见的字符<br>不可见原子：换行符、回车、空格</p>
-<p>在匹配中文字符时，建议先转换 Unicode <a href="http://tool.chinaz.com/Tools/Unicode.aspx" target="_blank" rel="external">http://tool.chinaz.com/Tools/Unicode.aspx</a></p>
-<ol>
-<li>原子的筛选方式</li>
-</ol>
-<p><code>|</code> 匹配两个或多个分支选择<br><code>[]</code> 匹配方括号中的任意一个原子 ，<code>[789]</code> 匹配 789 ，<code>[a-zA-Z0-9]</code>匹配字母和数字<br><code>[^]</code>匹配方括号中的原子之外的任意字符 [^789] 匹配非 789
+<li><p>原子概念<br>正则匹配最小单位<br>可见原子：键盘输出后肉眼可见的字符<br>不可见原子：换行符、回车、空格<br>在匹配中文字符时，建议先转换 Unicode <a href="http://tool.chinaz.com/Tools/Unicode.aspx" target="_blank" rel="external">http://tool.chinaz.com/Tools/Unicode.aspx</a></p>
+</li>
+<li><p>原子的筛选方式<br><code>|</code> 匹配两个或多个分支选择<br><code>[]</code> 匹配方括号中的任意一个原子 ，<code>[789]</code> 匹配 789 ，<code>[a-zA-Z0-9]</code>匹配字母和数字<br><code>[^]</code>匹配方括号中的原子之外的任意字符 [^789] 匹配非 789
 　　</p>
-<ol>
-<li>元字符（原子的集合）</li>
+</li>
+<li><p>元字符（原子的集合）<br><code>.</code> 匹配除换行符之外的任意字符<br><code>\d</code>匹配任意一个十进制数字，即 [0-9]<br><code>\D</code>匹配除数字之外的其他字符<br><code>\s</code>匹配一个不可见原子 即[\f\n\r\t\v]<br><code>\S</code>匹配一个可见的原子 [^\f\n\r\t\v]<br><code>\w</code>匹配任意一个数字、字母、或下划线 [0-9a-zA-Z<em>]<br><code>\W</code>匹配任意一个非数字、字母、或下划线 [^0-9a-zA-Z</em>]</p>
+</li>
+<li><p>量词<br><code>{n}</code> 表示其前面的原子恰好出现 n 次<br><code>{n,}</code> 表示其前面的原子最少出现 n 次<br><code>{n,m}</code>表示其前面的原子最少出现 n 次，最多出现 m 次<br><code>*</code>匹配0次，1次或多次其之前的原子 即 {0,}<br><code>+</code>匹配1次或多次其之前的原子 即 {1,}<br><code>?</code> 匹配0次或1次其之前的原子<br>举例子<br>5{2} —- 55<br>[a-zA-Z]{2} —- ad1256135AW<br>[\w]{4} —- 连续出现4次字母、数字、下划线<br>[\w]{4,8} —- 4到8次字母、数字、下划线<br>\d+ —- 1到无穷大次数字出现</p>
+</li>
+<li><p>边界控制<br><code>^</code>匹配字符串开始的位置<br><code>$</code>匹配字符串结束的位置<br><code>()</code> 匹配其中的整体为一个原子</p>
+</li>
+<li><p>修正模式<br>贪婪匹配 匹配结果有歧义时取其长<br>懒惰匹配 匹配结果有歧义时取其短 标识 <code>U</code><br><code>i</code> 忽略英文大小写<br><code>x</code> 匹配过程中忽略空白 ，包括空格和制表符<br><code>s</code> 让元字符’ . ‘匹配包括换行符在内的所有字符</p>
+</li>
 </ol>
-<p><code>.</code> 匹配除换行符之外的任意字符<br><code>\d</code>匹配任意一个十进制数字，即 [0-9]<br><code>\D</code>匹配除数字之外的其他字符<br><code>\s</code>匹配一个不可见原子 即[\f\n\r\t\v]<br><code>\S</code>匹配一个可见的原子 [^\f\n\r\t\v]<br><code>\w</code>匹配任意一个数字、字母、或下划线 [0-9a-zA-Z<em>]<br><code>\W</code>匹配任意一个非数字、字母、或下划线 [^0-9a-zA-Z</em>]</p>
-<ol>
-<li>量词<br>　　　　<br><code>{n}</code> 表示其前面的原子恰好出现 n 次<br><code>{n,}</code> 表示其前面的原子最少出现 n 次<br><code>{n,m}</code>表示其前面的原子最少出现 n 次，最多出现 m 次<br><code>*</code>匹配0次，1次或多次其之前的原子 即 {0,}<br><code>+</code>匹配1次或多次其之前的原子 即 {1,}<br><code>?</code> 匹配0次或1次其之前的原子</li>
-</ol>
-<p>举例子 </p>
-<p>5{2} —- 55<br>[a-zA-Z]{2} —- ad1256135AW<br>[\w]{4} —- 连续出现4次字母、数字、下划线<br>[\w]{4,8} —- 4到8次字母、数字、下划线<br>\d+ —- 1到无穷大次数字出现</p>
-<ol>
-<li>边界控制</li>
-</ol>
-<p><code>^</code>匹配字符串开始的位置<br><code>$</code>匹配字符串结束的位置<br><code>()</code> 匹配其中的整体为一个原子</p>
-<ol>
-<li>修正模式</li>
-</ol>
-<p>贪婪匹配 匹配结果有歧义时取其长<br>懒惰匹配 匹配结果有歧义时取其短 标识 <code>U</code><br><code>i</code> 忽略英文大小写<br><code>x</code> 匹配过程中忽略空白 ，包括空格和制表符<br><code>s</code> 让元字符’ . ‘匹配包括换行符在内的所有字符</p>
 <h2 id="正则表达式实战"><a href="#正则表达式实战" class="headerlink" title="正则表达式实战"></a>正则表达式实战</h2><ol>
 <li>非空： <code>.+</code></li>
 <li>匹配一个保留两位小数的浮点数：<code>\d+\.\d{2}$</code></li>
