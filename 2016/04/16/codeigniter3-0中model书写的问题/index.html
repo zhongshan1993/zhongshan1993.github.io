@@ -28,7 +28,7 @@
 
 
 
-  <meta name="keywords" content="JS," />
+  <meta name="keywords" content="CodeIgniter,PHP," />
 
 
 
@@ -37,16 +37,22 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="123456789101112131415161718192021222324252627&amp;lt;script&amp;gt;    function Person(name, gender) &amp;#123;        this.name = name;        this.gender = gender;    &amp;#125;    Person.prototype.showName = funct">
+<meta name="description" content="今天把一个codeigniter程序部署到linux(centos)下的nginx的时候出现了Unable to locate the model you have specified:*_model  这个问题.
+顺手粘贴到网上搜索了一下，这是由于大小写问题引起的。
+在codeigniter3.0中，model文件名的首字母必须大写，如 User_model.php，在这个文件中，书写规则如下：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript一种比较通用的继承过程">
-<meta property="og:url" content="http://yoursite.com/2015/07/17/javascript一种比较通用的继承过程/index.html">
+<meta property="og:title" content="codeigniter3.0中model书写的问题">
+<meta property="og:url" content="http://yoursite.com/2016/04/16/codeigniter3-0中model书写的问题/index.html">
 <meta property="og:site_name" content="Zhongshan">
-<meta property="og:description" content="123456789101112131415161718192021222324252627&amp;lt;script&amp;gt;    function Person(name, gender) &amp;#123;        this.name = name;        this.gender = gender;    &amp;#125;    Person.prototype.showName = funct">
-<meta property="og:updated_time" content="2016-03-17T03:26:20.004Z">
+<meta property="og:description" content="今天把一个codeigniter程序部署到linux(centos)下的nginx的时候出现了Unable to locate the model you have specified:*_model  这个问题.
+顺手粘贴到网上搜索了一下，这是由于大小写问题引起的。
+在codeigniter3.0中，model文件名的首字母必须大写，如 User_model.php，在这个文件中，书写规则如下：">
+<meta property="og:updated_time" content="2016-04-16T13:51:17.514Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript一种比较通用的继承过程">
-<meta name="twitter:description" content="123456789101112131415161718192021222324252627&amp;lt;script&amp;gt;    function Person(name, gender) &amp;#123;        this.name = name;        this.gender = gender;    &amp;#125;    Person.prototype.showName = funct">
+<meta name="twitter:title" content="codeigniter3.0中model书写的问题">
+<meta name="twitter:description" content="今天把一个codeigniter程序部署到linux(centos)下的nginx的时候出现了Unable to locate the model you have specified:*_model  这个问题.
+顺手粘贴到网上搜索了一下，这是由于大小写问题引起的。
+在codeigniter3.0中，model文件名的首字母必须大写，如 User_model.php，在这个文件中，书写规则如下：">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -56,7 +62,7 @@
   };
 </script>
 
-    <title> javascript一种比较通用的继承过程 // Zhongshan </title>
+    <title> codeigniter3.0中model书写的问题 // Zhongshan </title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 <!--[if lte IE 8]>
@@ -187,7 +193,7 @@
           
           
             
-              javascript一种比较通用的继承过程
+              codeigniter3.0中model书写的问题
             
           
         </h1>
@@ -196,8 +202,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-07-17T11:11:59+08:00" content="2015-07-17">
-            2015-07-17
+          <time itemprop="dateCreated" datetime="2016-04-16T21:49:45+08:00" content="2016-04-16">
+            2016-04-16
           </time>
         </span>
 
@@ -205,7 +211,7 @@
           <span class="post-category" >
             &nbsp; | &nbsp; 分类于
             
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/back-end/" itemprop="url" rel="index"><span itemprop="name">back-end</span></a></span>
 
               
               
@@ -218,8 +224,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/07/17/javascript一种比较通用的继承过程/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/17/javascript一种比较通用的继承过程/" itemprop="commentsCount"></span>
+              <a href="/2016/04/16/codeigniter3-0中model书写的问题/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/16/codeigniter3-0中model书写的问题/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -233,7 +239,13 @@
       
 
       
-        <span itemprop="articleBody"><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="inform7"></span><br><span class="line">    function <span class="keyword">Person</span>(name, <span class="keyword">gender</span>) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.<span class="keyword">gender</span> = <span class="keyword">gender</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">Person</span>.prototype.showName = function() &#123;</span><br><span class="line">        alert(this.name);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">Person</span>.prototype.showGender =function() &#123;</span><br><span class="line">        alert(this.<span class="keyword">gender</span>);</span><br><span class="line">    &#125;</span><br><span class="line">　　</span><br><span class="line">    function Worker(name, <span class="keyword">gender</span>, job) &#123;</span><br><span class="line">　　　　　　　// Step1</span><br><span class="line">        <span class="keyword">Person</span>.call(this, name, <span class="keyword">gender</span>);</span><br><span class="line">        this.job = job;</span><br><span class="line">    &#125;</span><br><span class="line">　　　// Step2</span><br><span class="line">    for (var i in <span class="keyword">Person</span>.prototype) &#123;</span><br><span class="line">        Worker.prototype<span class="comment">[i]</span> = <span class="keyword">Person</span>.prototype<span class="comment">[i]</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    Worker.prototype.showJob = function() &#123;</span><br><span class="line">        alert(this.job);</span><br><span class="line">    &#125;</span><br><span class="line">    var oW1 = new Worker(<span class="string">"hello"</span>, <span class="string">"male"</span>, <span class="string">"coder"</span>);</span><br><span class="line">    oW1.showJob();</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+        <span itemprop="articleBody"><p>今天把一个codeigniter程序部署到linux(centos)下的nginx的时候出现了<br><strong>Unable to locate the model you have specified:*_model</strong>  这个问题.</p>
+<p>顺手粘贴到网上搜索了一下，这是由于大小写问题引起的。</p>
+<p>在codeigniter3.0中，model文件名的首字母必须大写，如 <code>User_model.php</code>，在这个文件中，书写规则如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注意这里的'User_model'</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User_model</span> <span class="keyword">extends</span> <span class="title">CI_Model</span></span>&#123;</span><br><span class="line">        <span class="comment">//验证用户是否已经登陆</span></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">adminValid</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="variable">$user</span> = <span class="variable">$this</span>-&gt;session-&gt;userdata(<span class="string">'user_name'</span>);  </span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable">$user</span>)) &#123;</span><br><span class="line">                <span class="variable">$url</span> = site_url(<span class="string">'login/index'</span>);</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">"&lt;script&gt;window.location='$url';&lt;/script&gt;"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>controller</code>中，使用如下： </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">parent</span>::__construct(); <span class="comment">//调用父类的构造方法</span></span><br><span class="line">    <span class="comment">// header("Content-Type:text/html;charset=utf-8");</span></span><br><span class="line">    error_reporting(E_ALL ^E_NOTICE);</span><br><span class="line">    <span class="comment">//登陆验证...</span></span><br><span class="line">    <span class="variable">$this</span>-&gt;load-&gt;model(<span class="string">'user_model'</span>,<span class="string">'user'</span>);</span><br><span class="line">    <span class="variable">$this</span>-&gt;user-&gt;adminValid();</span><br><span class="line">    <span class="comment">//权限验证...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个规则是必须遵守的，在Windows下无所谓，但是在Linux下就会出问题。</p>
 </span>
       
     </div>
@@ -242,7 +254,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JS/" rel="tag">#JS</a>
+            <a href="/tags/CodeIgniter/" rel="tag">#CodeIgniter</a>
+          
+            <a href="/tags/PHP/" rel="tag">#PHP</a>
           
         </div>
       
@@ -251,13 +265,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/07/17/一串跟随鼠标运动的DIV/" rel="prev">一串跟随鼠标运动的DIV</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/07/16/一种兼容性比较好的简单拖拽/" rel="next">一种兼容性比较好的简单拖拽</a>
+              <a href="/2016/04/12/JS中引用的小问题/" rel="next">JS中引用的小问题</a>
             
           </div>
         </div>
@@ -283,8 +295,8 @@
             
               <div class="comments" id="comments">
                 
-                  <div class="ds-thread" data-thread-key="2015/07/17/javascript一种比较通用的继承过程/"
-                       data-title="javascript一种比较通用的继承过程" data-url="http://yoursite.com/2015/07/17/javascript一种比较通用的继承过程/">
+                  <div class="ds-thread" data-thread-key="2016/04/16/codeigniter3-0中model书写的问题/"
+                       data-title="codeigniter3.0中model书写的问题" data-url="http://yoursite.com/2016/04/16/codeigniter3-0中model书写的问题/">
                   </div>
                 
               </div>

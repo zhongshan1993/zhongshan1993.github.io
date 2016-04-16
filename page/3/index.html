@@ -188,6 +188,287 @@
           
           
             
+              <a class="post-title-link" href="/2015/07/21/linux(Centos6.3)学习笔记/" itemprop="url">
+                linux(Centos 6.3)学习笔记
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-07-21T21:08:34+08:00" content="2015-07-21">
+            2015-07-21
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/07/21/linux(Centos6.3)学习笔记/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/21/linux(Centos6.3)学习笔记/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h2 id="系统分区"><a href="#系统分区" class="headerlink" title="系统分区"></a>系统分区</h2><ol>
+<li>磁盘分区<br>使用分区编辑器（partition editor）在磁盘上划分几个逻辑部分。碟片一旦划分成          数个分区，不同类的目录与文件可以存储进不同的分区。</li>
+<li>分区类型<br>主分区：最多只能有4个。<br>扩展分区：最多只能有1个。主分区加扩展分区最多有4个。不能写入数据，只能包                     含逻辑分区。<br>逻辑分区</li>
+<li>格式化（高级格式化）<br>它是指根据用户选定的文件系统（如 FAT16,FAT32,NTFS,EXT2,EXT3,EXT4等），在磁盘的特定区域写入数据，在分区中划分出一片用于存放文件分配表、目录表等用于文件管理的磁盘空间。</li>
+<li>iNode 号<br>inode包含文件的元信息，具体来说有以下内容：</li>
+</ol>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>文件的字节数</span><br><span class="line"><span class="bullet">* </span>文件拥有者的User ID</span><br><span class="line"><span class="bullet">* </span>文件的Group ID</span><br><span class="line"><span class="bullet">* </span>文件的读、写、执行权限</span><br><span class="line"><span class="bullet">* </span>文件的时间戳，共有三个：ctime指inode上一次变动的时间，mtime            指文件内容上一次变动的时间，atime指文件上一次打开的时间。</span><br><span class="line"><span class="bullet">* </span>链接数，即有多少文件名指向这个inode</span><br><span class="line"><span class="bullet">* </span>文件数据block的位置</span><br></pre></td></tr></table></figure>
+<ol>
+<li>硬件设备文件名<br>在linux 中，每个硬件都对应一个设备文件名</li>
+<li>挂载<br> 必须分区<pre><code>根分区
+swap分区（交换分区，内存2倍，不超过2GB）
+</code></pre> 推荐分区<pre><code>/boot (启动分区　200ＭＢ)
+</code></pre></li>
+</ol>
+<h2 id="Linux-系统安装"><a href="#Linux-系统安装" class="headerlink" title="Linux 系统安装"></a>Linux 系统安装</h2><p>设置Linux的IP地址  ifconfig eth0 192.168.233.2</p>
+<h2 id="linux-常用命令"><a href="#linux-常用命令" class="headerlink" title="linux 常用命令"></a>linux 常用命令</h2><pre><code>4.1.1  命令格式与目录处理命令ls
+    ls -a 可以看到隐藏文件（带有.）
+    ls -l  长格式显示
+    ls -lh  长格式人性化显示（自动转换文件大小的单位）
+
+    ls -ld /etc  查看指定目录的详细信息
+    ls-i 查看 inode 节点
+
+    文件类型： -普通文件 d目录 l软链接
+        r所属人 g所属组 o其他人
+    文件权限    r读 w写 x执行
+4.1.2 目录处理命令    
+    mkdir 创建目录
+    mkdir /tmp/zhongshan 可以同时创建多个目录
+    mkdir -p /tmp/zhongshan/liu   当/zhongshan 目录不存在的时候创建 /liu 目录
+
+    cd 目录名  change directory切换目录
+    cd ..       返回上一级目录
+    pwd          print working directory 显示当前工作目录
+
+    rmdir  remove empty directory  删除空目录
+    cp -rp [原文件或目录][目标目录]  复制过程中可以改文件名
+         -r  复制目录
+         -p 保留文件属性(修改时间等)
+    mv [原文件或目录][目标目录]   剪切文件、改名,move
+    rm -rf [文件或目录]
+         -r 删除目录
+         -f 强行执行( false )
+    ctrl+c 终止命令 ， ctrl+l 清屏
+4.1.3 文件处理命令
+    touch [文件名] 创建文件 文件名允许使用大多数字符，除了&apos;/&apos;
+    cat 显示文件内容
+    cat -n 显示行号
+    tac 文件倒着显示
+    more 显示长文件,使用空格或f翻页，(enter)换行，q退出
+    less 与more类似，显示长文件。按(page up)可向前翻页，按(^)可向上翻行。&apos;/&apos;+关键词可以搜索关键词，此时可以按&apos;n&apos;查找下一个高亮显示
+    head/tail -n 20 /etc/services   查看文件的前(后)20行,如果不指定行数，默认显示前10行
+    tail -f [文件名]   动态显示文件末尾的内容, ctrl+c 终止命令
+4.1.4 链接命令
+    ln -s [原文件][目标文件]  创建软链接,软链接特征类似于Windows的快捷方式,它的权限不影响原文件的权限,软链接可以跨分区，可以针对目录使用
+    ln [原文件][目标文件]  创建硬链接，硬链接不能跨分区，两个文件可以同步更新，且他们的i节点相同，不可以针对目录使用
+4.2.1 权限管理命令
+    chmod (change the permissions mode of file)  
+    chmod [{ugoa}{+-=}{rwx}][文件名]
+               [421][文件名]
+               -R 递归修改，更改其子目录的权限
+    -------------------权限有继承关系----------------------------------------------
+    directory     r:ls
+           w: touch/mkdir/rmdir/rm
+           x: cd (一般r和x 成对出现)
+4.2.2 其他权限管理命令
+    chown (change file ownership)更改文件的所有者(只有root 可以改)
+    chgrp (change file group ownership) 更改文件的所属组(只有root 可以改)
+    umask -S 查看新建文件默认的权限(任何新建的文件都不具备x可执行)
+    umask 023 可以更改当前新建文件的默认权限
+4.3.1 文件搜索命令
+    find [搜索范围][匹配条件]
+    find /etc -name init  在/etc 目录下查找文件init,精准的搜索
+    find /etc -name *init* 在/etc 目录下查找包含init的文件,模糊的搜索
+    find /etc -name init???  匹配以 init 开头，后面有3个字符的文件
+    (ctrl+q解决secureCRT 假死问题)
+    find /etc -iname init???  忽略文件名大小写
+    find / -size +n 搜索文件大小大于n 的文件(一个数据块是0.5kb)
+    find /home -user zhongshan 查找所有者为 zhongshan 的文件
+    find /home -group brothers 查找所属组为 brothers的文件
+    find /etc -cmin -(+)5 在/etc 在查找5分钟内(外)被修改过属性的文件和目录
+                 -amin      访问时间access
+                 -mmin    文件内容modify 
+    -o ---&gt;or        -a ----&gt;and
+    find /etc -size +163840 -a -size -204800   (and)查找大于80M小于100M的文件
+                  -o      or或
+    -type根据文件类型查找  f文件 d目录 l软链接文件
+    find /etc -name inittab -exec ls -l {} \;   在/etc 下查找inittab文件并显示其详细信息    
+    find /etc -name inittab -ok ls -l {} \;   在/etc 下查找inittab文件并显示其详细信息询问确认        
+
+    find . -inum 130715 -exec rm {} \;   在当前目录下根据 i 节点找到文件并删除
+4.4 帮助命令-帮助命令
+    man    原义为manual 
+    man ls 查看ls命令的帮助信息
+    man services  查看配置文件的帮助信息
+    1  命令的帮助， 5  配置文件的帮助
+    man 5 passwd   查看passwd 配置文件的帮助
+    whatis ls 得到ls 命令的一个简短的信息
+    apropos services  查看配置文件的简短信息
+    touch --help  查看命令的选项
+    date 070222552015.00  更改系统时间
+    info         与man相似
+    help umask    shell内置命令的详细信息(找不到命令所在位置的命令)
+4.5 文件搜索命令-用户管理命令
+    useradd 用户名     添加用户（用户名不要太复杂）
+    passwd 用户名     修改用户名密码
+    who     查看在线登陆用户信息，tty为本地登陆，pts表示远程终端
+    w   得到更为详细的登陆信息
+    uptime   查看系统使用情况
+4.6 文件搜索命令-压缩解压命令
+    压缩格式：.gz  .zip(windows和linux兼容)
+    gzip 文件名     压缩文件，只能压缩文件，不可压缩目录，不保留原文件
+    gunzip 文件名     解压文件
+    tar -cvf Japan.tar Japan   将Japan目录打包成Japan.tar文件
+    tar -zcf Japan.tar.gz Japan       打包压缩一步完成
+    tar -zx(v)f Japan.tar.gz    解压命令
+    zip Japan.zip Japan      将Japan 压缩成Japan.zip 
+    unzip Japan.zip         解压文件
+    bzip2  -k boduo       压缩文件且保留原文件
+    tar -cjf Japan.tar.bz2 Japan  打包压缩一步完成
+    tar -xjf Japan.tz2           解压缩
+4.7 网络命令
+    write 用户名     给在线用户发信息 ctrl+D 保存结束
+    wall 给所有在线用户发信息
+    ping 选项 IP地址 -c指定发送次数   packet loss(丢包率)
+    ifconfig 查看当前网卡状态
+    mail [用户名]  查看发送电子邮件
+    mail 查看邮件， 序列号查看邮件内容， h查看列表， d+序列号删除邮件，q退出邮件系统
+    last 统计计算机所有的登录用户以及重启记录
+    lastlog  查看某特定用户上次登录的时间
+    lastlog -u 520 查看用户id为502的上次登录时间
+    traceroute www.lampbrother.com  显示数据包到主机的路径
+    netstat [选项] 显示网络相关信息
+        -t    TCP协议
+        -u   UDP协议
+        -l    监听
+        -r   路由
+        -n  显示IP地址和端口号
+    netstat -tlun 查询当前本机监听的端口
+    netstat -an  查询本机所有的网络连接
+    netstat -rn   查询本机路由表
+    setup   配置网络（永久生效）
+    service network restart 重启网络服务
+    mount  -t iso9660 /dev/sr0 /mnt/cdrom/ 挂载光盘
+    umount /dev/sr0 卸载光盘
+4.8 关机重启命令
+    shutdown -h now 现在关机
+    shutdown -r now  现在
+    shutdown -c  取消前一个关机命令
+    reboot 重    启
+    init 6   重启
+    runlevel 查询当前运行级别
+    logout  退出登录
+5.1 Vim常用操作
+    vi filename   进入
+    按下ESC  进入命令模式
+    进入命令模式后
+        a 在光标所在字符后插入
+        A 在光标所在行行尾插入
+        i 在光标所在字符前插入
+        I 在光标所在行行首插入
+        o 在光标下插入新行
+        O 在光标上插入新行
+        :set nu  设置行号
+        :set nonu 取消行号
+        gg 到第一行
+        G 到最后一行
+        nG 到第n行
+        :n  到第n行
+        $  移至行尾
+        0  移至行首
+        x  删除光标所在处的字符
+        n 删除光标所在处n个字符
+        dd 删除光标所在行， ndd删除n行
+        dG 删除光标所在行到文件末尾内容
+        D 删除光标所在处到文件末尾的内容
+        :n1,n2d 删除光标所在范围内行
+        yy 复制当前行
+        nyy 复制当前行以下n行
+        dd 剪切当前行
+        ndd 剪切当前行以下n行
+        p/P  粘贴在当前光标所在行下或行上
+        u 取消上一步操作
+        r  取代光标所在处字符
+        R 从光标所在处开始替换字符，按ESC结束
+        set ic 不区分大小写
+        set noic 不区分大小写
+        /string 指定搜索字符串
+        n 搜索指定字符串的下一个位置
+        :%s/old/new/g  全文搜索替换指定字符串
+        :%s/old/new/g  全文搜索替换指定字符串(询问确认)
+        :n1,n2s/old/new/g  在一定范围内搜索替换指定字符串
+        :w 保存修改
+        :w new_filename 另存为指定文件
+        :wq 保存退出
+        ZZ 快捷键，保存修改并退出
+        :q! 不保存修改退出
+        :wq! 保存修改并退出（文件所有者以及root可使用）
+5.2 Vim使用技巧
+    :r 文件名   导入文件的内容
+    :r !命令   导入命令执行结果
+    定义快捷键
+        map 快捷键 触发命令
+    :map ^p(ctrl+v+p) I#&lt;ESC&gt;  ctrl+p 设置快捷键跳到行首添加#
+    :map ^B 0x  跳到行首删除第一个字符
+    连续行注释
+        :n1,n2s/^/#/g
+        :n1,n2s/^#//g   去掉行首的#
+        :n1,n2s/^/\/\//g   替换时转义
+    :ab zhongshan zhongshanshanshanshan
+    /home/username/.vimrc   配置相关快捷键（永久生效）
+6.1 软件包管理
+    软件包分类：源码包（脚本安装包）和二进制包（RPM包、系统默认包）
+</code></pre></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/07/20/javascript运动函数/" itemprop="url">
                 javascript运动函数
               </a>
@@ -966,148 +1247,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/16/PHP下正则表达式整理/" itemprop="url">
-                PHP下正则表达式整理
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-06-16T19:57:38+08:00" content="2015-06-16">
-            2015-06-16
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/back-end/" itemprop="url" rel="index"><span itemprop="name">back-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/06/16/PHP下正则表达式整理/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/16/PHP下正则表达式整理/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><h2 id="正则表达式的历史背景"><a href="#正则表达式的历史背景" class="headerlink" title="正则表达式的历史背景"></a>正则表达式的历史背景</h2><ol>
-<li>内容深厚的正则表达式<br><code>^.+@.+\\..+$</code> 形式，字符串搜索与匹配的工具</li>
-<li>应用范围<br>手机输入法、Windows文件搜索、linux 列出文件命令、网站用户注册，如邮箱、手机号码的表单验证等</li>
-</ol>
-<h2 id="正则表达式函数解析"><a href="#正则表达式函数解析" class="headerlink" title="正则表达式函数解析"></a>正则表达式函数解析</h2><ol>
-<li>准备工作，在此选择 php 来学习正则表达式</li>
-<li>事先建立好一个 show() 函数</li>
-</ol>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * description: php正则表达式函数</span><br><span class="line">*/</span></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * <span class="doctag">@name</span>:show</span><br><span class="line"> * <span class="doctag">@description</span> : output debug</span><br><span class="line"> * <span class="doctag">@param</span> $var : input data </span><br><span class="line"> * <span class="doctag">@return</span> void</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">show</span><span class="params">(<span class="variable">$var</span> = null)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ( <span class="keyword">empty</span>( <span class="variable">$var</span> ) ) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'null'</span>;</span><br><span class="line">    &#125; <span class="keyword">elseif</span>( is_array(<span class="variable">$var</span>) || is_object(<span class="variable">$var</span>) )&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;"</span>;</span><br><span class="line">        print_r(<span class="variable">$var</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"&lt;/pre&gt;"</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$var</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>php 中常用的正则表达式函数(使用最频繁),返回匹配到的次数</li>
-</ol>
-<ul>
-<li><code>preg_match($pattern, $subject, [array &amp;$matches])</code> 只会匹配一次，<code>preg_match_all($pattern, $subject, array &amp;$matches)</code> 匹配所有<br>以下是代码实例</li>
-</ul>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$pattern</span> = <span class="string">'/[0-9]/'</span>;</span><br><span class="line"><span class="variable">$subject</span> = <span class="string">'hdgsah7ghgsj89gsgh7faf432'</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$m1</span> = <span class="variable">$m2</span> = array();</span><br><span class="line"></span><br><span class="line"><span class="variable">$t1</span> = preg_match(<span class="variable">$pattern</span>, <span class="variable">$subject</span>, <span class="variable">$m1</span>); <span class="regexp">//</span><span class="variable">$t1</span> = <span class="number">1</span></span><br><span class="line"><span class="variable">$t2</span> = preg_match_all(<span class="variable">$pattern</span>, <span class="variable">$subject</span>, <span class="variable">$m2</span>); <span class="regexp">//</span><span class="variable">$t2</span> = <span class="number">7</span></span><br><span class="line"></span><br><span class="line">show(<span class="variable">$m1</span>); <span class="regexp">//</span>输出一个一维数组</span><br><span class="line">echo <span class="string">"&lt;hr&gt;"</span>;</span><br><span class="line">show(<span class="variable">$m2</span>); <span class="regexp">//</span>输出一个二维数组</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>preg_replace($pattern, $replacement, $subject)</code>和<code>preg_filter($pattern, $replacement, $subject)</code><br>代码实例</li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$pattern</span> = <span class="keyword">array</span>(<span class="string">'/[0123]/'</span>,<span class="string">'/[456]/'</span>,<span class="string">'/[789]/'</span>);</span><br><span class="line"><span class="variable">$subject</span> = <span class="keyword">array</span>(<span class="string">'hdg'</span>,<span class="string">'sah7'</span>,<span class="string">'ghgsj'</span>,<span class="string">'89gsg'</span>,<span class="string">'h7fa'</span>,<span class="string">'f432'</span>);</span><br><span class="line"><span class="variable">$replacement</span> = <span class="keyword">array</span>(<span class="string">'你'</span>,<span class="string">'好'</span>,<span class="string">'!'</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$str1</span> = preg_replace(<span class="variable">$pattern</span>, <span class="variable">$replacement</span>, <span class="variable">$subject</span>);</span><br><span class="line"><span class="variable">$str2</span> = preg_filter(<span class="variable">$pattern</span>, <span class="variable">$replacement</span>, <span class="variable">$subject</span>);</span><br><span class="line"></span><br><span class="line">show( <span class="variable">$str1</span> );</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;hr&gt;"</span>;</span><br><span class="line">show( <span class="variable">$str2</span> );</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>preg_grep($pattern, array $input)将无法匹配的值过滤掉 阉割版 preg_filter()</p>
-</li>
-<li><p>preg_split($pattern, $subject)<br>代码实例</p>
-</li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$pattern</span> = <span class="string">'/[0-9]/'</span>;</span><br><span class="line"><span class="variable">$subject</span> = <span class="string">'这9是2一段3文5字'</span>;</span><br><span class="line"><span class="variable">$arr</span> = preg_split(<span class="variable">$pattern</span>, <span class="variable">$subject</span>);</span><br><span class="line">show(<span class="variable">$arr</span>);</span><br><span class="line"><span class="comment">// 输出</span></span><br><span class="line"><span class="keyword">Array</span></span><br><span class="line">(</span><br><span class="line">[<span class="number">0</span>] =&gt; 这</span><br><span class="line">[<span class="number">1</span>] =&gt; 是</span><br><span class="line">[<span class="number">2</span>] =&gt; 一段</span><br><span class="line">[<span class="number">3</span>] =&gt; 文</span><br><span class="line">[<span class="number">4</span>] =&gt; 字</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>preg_quote($str)<br>正则运算符转义</p>
-</li>
-<li><p>正则表达式总结<br>都以<code>preg_</code>开头<br>除<code>preg_quote()</code> 外，第一个参数都是正则表达式<br><code>preg_match()</code> 表单验证<br><code>preg_replace ()</code> 非法词汇过滤等</p>
-</li>
-</ul>
-<h2 id="模式修正"><a href="#模式修正" class="headerlink" title="模式修正"></a>模式修正</h2><ol>
-<li>概述<br>界定符、原子、量词、边界控制、模式单元</li>
-<li>界定符<br>表示正则表达式开始和结束的位置</li>
-</ol>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$pattern</span> = <span class="string">'/[0-9]/'</span>;</span><br><span class="line"><span class="variable">$pattern</span> = <span class="string">'#[0-9]#'</span>;</span><br><span class="line"><span class="variable">$pattern</span> = <span class="string">'&#123;[0-9]&#125;'</span>; <span class="regexp">//</span>在php中不推荐使用</span><br></pre></td></tr></table></figure>
-<ol>
-<li>regexpal 工具<br>用于调试正则表达式
-　</li>
-<li><p>原子概念<br>正则匹配最小单位<br>可见原子：键盘输出后肉眼可见的字符<br>不可见原子：换行符、回车、空格<br>在匹配中文字符时，建议先转换 Unicode <a href="http://tool.chinaz.com/Tools/Unicode.aspx" target="_blank" rel="external">http://tool.chinaz.com/Tools/Unicode.aspx</a></p>
-</li>
-<li><p>原子的筛选方式<br><code>|</code> 匹配两个或多个分支选择<br><code>[]</code> 匹配方括号中的任意一个原子 ，<code>[789]</code> 匹配 789 ，<code>[a-zA-Z0-9]</code>匹配字母和数字<br><code>[^]</code>匹配方括号中的原子之外的任意字符 [^789] 匹配非 789
-　　</p>
-</li>
-<li><p>元字符（原子的集合）<br><code>.</code> 匹配除换行符之外的任意字符<br><code>\d</code>匹配任意一个十进制数字，即 [0-9]<br><code>\D</code>匹配除数字之外的其他字符<br><code>\s</code>匹配一个不可见原子 即[\f\n\r\t\v]<br><code>\S</code>匹配一个可见的原子 [^\f\n\r\t\v]<br><code>\w</code>匹配任意一个数字、字母、或下划线 [0-9a-zA-Z<em>]<br><code>\W</code>匹配任意一个非数字、字母、或下划线 [^0-9a-zA-Z</em>]</p>
-</li>
-<li><p>量词<br><code>{n}</code> 表示其前面的原子恰好出现 n 次<br><code>{n,}</code> 表示其前面的原子最少出现 n 次<br><code>{n,m}</code>表示其前面的原子最少出现 n 次，最多出现 m 次<br><code>*</code>匹配0次，1次或多次其之前的原子 即 {0,}<br><code>+</code>匹配1次或多次其之前的原子 即 {1,}<br><code>?</code> 匹配0次或1次其之前的原子<br>举例子<br>5{2} —- 55<br>[a-zA-Z]{2} —- ad1256135AW<br>[\w]{4} —- 连续出现4次字母、数字、下划线<br>[\w]{4,8} —- 4到8次字母、数字、下划线<br>\d+ —- 1到无穷大次数字出现</p>
-</li>
-<li><p>边界控制<br><code>^</code>匹配字符串开始的位置<br><code>$</code>匹配字符串结束的位置<br><code>()</code> 匹配其中的整体为一个原子</p>
-</li>
-<li><p>修正模式<br>贪婪匹配 匹配结果有歧义时取其长<br>懒惰匹配 匹配结果有歧义时取其短 标识 <code>U</code><br><code>i</code> 忽略英文大小写<br><code>x</code> 匹配过程中忽略空白 ，包括空格和制表符<br><code>s</code> 让元字符’ . ‘匹配包括换行符在内的所有字符</p>
-</li>
-</ol>
-<h2 id="正则表达式实战"><a href="#正则表达式实战" class="headerlink" title="正则表达式实战"></a>正则表达式实战</h2><ol>
-<li>非空： <code>.+</code></li>
-<li>匹配一个保留两位小数的浮点数：<code>\d+\.\d{2}$</code></li>
-<li>大陆手机号： <code>^1(3|5|4|7|8)\d{9}</code></li>
-<li>email地址： <code>^\w+(\.\w)*@\w+(\.\w)+$</code></li>
-<li>url 地址： <code>^(https?://)?(\w+\.)+.[a-zA-Z]+$</code></li>
-</ol>
-<h2 id="正则表达式实战——正则表达式工具类"><a href="#正则表达式实战——正则表达式工具类" class="headerlink" title="正则表达式实战——正则表达式工具类"></a>正则表达式实战——正则表达式工具类</h2><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'require'</span> =&gt; <span class="string">'/.+/'</span>,</span><br><span class="line"><span class="string">'email'</span> =&gt; <span class="string">'/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/'</span>,</span><br><span class="line"><span class="string">'url'</span> =&gt; <span class="string">'/^http(s?):\/\/(?:[A-za-z0-9-]+\.)+[A-za-z]&#123;2,4&#125;(?:[\/\?#][\/=\?%\-&amp;~`@[\]\':+!\.#\w]*)?$/'</span>,</span><br><span class="line"><span class="string">'currency'</span> =&gt; <span class="string">'/^\d+(\.\d+)?$/'</span>,</span><br><span class="line"><span class="string">'number'</span> =&gt; <span class="string">'/^\d+$/'</span>,</span><br><span class="line"><span class="string">'zip'</span> =&gt; <span class="string">'/^\d&#123;6&#125;$/'</span>,</span><br><span class="line"><span class="string">'integer'</span> =&gt; <span class="string">'/^[-\+]?\d+$/'</span>,</span><br><span class="line"><span class="string">'double'</span> =&gt; <span class="string">'/^[-\+]?\d+(\.\d+)?$/'</span>,</span><br><span class="line"><span class="string">'english'</span> =&gt; <span class="string">'/^[A-Za-z]+$/'</span>,</span><br><span class="line"><span class="string">'qq'</span>    =&gt;  <span class="string">'/^\d&#123;5,11&#125;$/'</span>,</span><br><span class="line"><span class="string">'mobile'</span>    =&gt;  <span class="string">'/^1(3|4|5|7|8)\d&#123;9&#125;$/'</span></span><br></pre></td></tr></table></figure>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1147,7 +1286,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">35</span>
+              <span class="site-state-item-count">36</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

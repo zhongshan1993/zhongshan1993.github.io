@@ -188,6 +188,92 @@
           
           
             
+              <a class="post-title-link" href="/2016/04/16/codeigniter3-0中model书写的问题/" itemprop="url">
+                codeigniter3.0中model书写的问题
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-04-16T21:49:45+08:00" content="2016-04-16">
+            2016-04-16
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/back-end/" itemprop="url" rel="index"><span itemprop="name">back-end</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/04/16/codeigniter3-0中model书写的问题/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/16/codeigniter3-0中model书写的问题/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>今天把一个codeigniter程序部署到linux(centos)下的nginx的时候出现了<br><strong>Unable to locate the model you have specified:*_model</strong>  这个问题.</p>
+<p>顺手粘贴到网上搜索了一下，这是由于大小写问题引起的。</p>
+<p>在codeigniter3.0中，model文件名的首字母必须大写，如 <code>User_model.php</code>，在这个文件中，书写规则如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注意这里的'User_model'</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User_model</span> <span class="keyword">extends</span> <span class="title">CI_Model</span></span>&#123;</span><br><span class="line">        <span class="comment">//验证用户是否已经登陆</span></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">adminValid</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="variable">$user</span> = <span class="variable">$this</span>-&gt;session-&gt;userdata(<span class="string">'user_name'</span>);  </span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable">$user</span>)) &#123;</span><br><span class="line">                <span class="variable">$url</span> = site_url(<span class="string">'login/index'</span>);</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">"&lt;script&gt;window.location='$url';&lt;/script&gt;"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>controller</code>中，使用如下： </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">parent</span>::__construct(); <span class="comment">//调用父类的构造方法</span></span><br><span class="line">    <span class="comment">// header("Content-Type:text/html;charset=utf-8");</span></span><br><span class="line">    error_reporting(E_ALL ^E_NOTICE);</span><br><span class="line">    <span class="comment">//登陆验证...</span></span><br><span class="line">    <span class="variable">$this</span>-&gt;load-&gt;model(<span class="string">'user_model'</span>,<span class="string">'user'</span>);</span><br><span class="line">    <span class="variable">$this</span>-&gt;user-&gt;adminValid();</span><br><span class="line">    <span class="comment">//权限验证...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个规则是必须遵守的，在Windows下无所谓，但是在Linux下就会出问题。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2016/04/12/JS中引用的小问题/" itemprop="url">
                 JS中引用的小问题
               </a>
@@ -1118,93 +1204,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/09/11/JS中的内存泄漏/" itemprop="url">
-                JS中的内存泄漏
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-09-11T11:00:50+08:00" content="2015-09-11">
-            2015-09-11
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/09/11/JS中的内存泄漏/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/11/JS中的内存泄漏/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p><strong>明天下午面试微店的前端开发职位，有点紧张~~</strong></p>
-<p>刚刚正好看到js中的内存泄露，所以来整理一番。</p>
-<h2 id="给DOM对象添加的属性是对一个js对象的引用。"><a href="#给DOM对象添加的属性是对一个js对象的引用。" class="headerlink" title="给DOM对象添加的属性是对一个js对象的引用。"></a>给DOM对象添加的属性是对一个js对象的引用。</h2><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="reserved">var</span> MyObject = &#123;&#125;; </span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">'myDiv'</span>).myProp = MyObject;</span><br></pre></td></tr></table></figure>
-<p>解决方法：<br>在window.onunload事件中写上: <code>document.getElementById(&#39;myDiv&#39;).myProp = null;</code></p>
-<h2 id="DOM对象和JS对象相互引用。"><a href="#DOM对象和JS对象相互引用。" class="headerlink" title="DOM对象和JS对象相互引用。"></a>DOM对象和JS对象相互引用。</h2><p>在<code>onunload</code>事件中写上: <code>document.getElementById(&#39;myDiv&#39;).myProp = null;</code></p>
-<h2 id="给DOM对象用attachEvent-绑定事件。"><a href="#给DOM对象用attachEvent-绑定事件。" class="headerlink" title="给DOM对象用attachEvent()绑定事件。"></a>给DOM对象用attachEvent()绑定事件。</h2><p>在onunload事件中写上: element.detachEvent(‘onclick’, doClick); </p>
-<h2 id="反复重写同一个属性。"><a href="#反复重写同一个属性。" class="headerlink" title="反复重写同一个属性。"></a>反复重写同一个属性。</h2><p>避免这种情况发生就是啦！</p>
-<h2 id="由外到内使用appendChild-方法。"><a href="#由外到内使用appendChild-方法。" class="headerlink" title="由外到内使用appendChild()方法。"></a>由外到内使用appendChild()方法。</h2><p>由内到外执行即可。</p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1244,7 +1243,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">35</span>
+              <span class="site-state-item-count">36</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
