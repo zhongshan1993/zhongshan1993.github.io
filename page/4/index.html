@@ -188,6 +188,136 @@
           
           
             
+              <a class="post-title-link" href="/2015/07/12/自定义的右键菜单/" itemprop="url">
+                自定义的右键菜单
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-07-12T11:18:04+08:00" content="2015-07-12">
+            2015-07-12
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/07/12/自定义的右键菜单/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/12/自定义的右键菜单/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+    &lt;style&gt;
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ul {
+            width: 100px;
+            background: #ccc;
+            border:1px solid #000;
+            position: absolute;
+            display: none;
+            list-style: inside;
+        }
+        li {
+
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;ul id=&quot;ul1&quot;&gt;
+        &lt;li&gt;登陆&lt;/li&gt;
+        &lt;li&gt;注销&lt;/li&gt;
+        &lt;li&gt;回到首页&lt;/li&gt;
+        &lt;li&gt;加入&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;script&gt;
+
+        document.oncontextmenu = function (ev){
+            var oEvent = ev || event;
+            var oUl = document.getElementById(&quot;ul1&quot;);
+            var scrollTop = document.documentElement.scrollTop || 
+                    document.body.scrollTop;
+            oUl.style.display = &quot;block&quot;;
+
+            oUl.style.left = oEvent.clientX + &apos;px&apos;;
+            oUl.style.top = scrollTop + oEvent.clientY + &apos;px&apos;;
+            return false;
+        }
+
+        document.onclick = function (){
+            var oUl = document.getElementById(&quot;ul1&quot;);
+            oUl.style.display = &quot;none&quot;;
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/06/16/PHP下正则表达式整理/" itemprop="url">
                 PHP下正则表达式整理
               </a>
@@ -945,7 +1075,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-count">37</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -959,7 +1089,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

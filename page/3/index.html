@@ -188,6 +188,85 @@
           
           
             
+              <a class="post-title-link" href="/2015/07/23/在浏览器端应用cookie记住用户名/" itemprop="url">
+                在浏览器端应用cookie记住用户名
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-07-23T21:20:33+08:00" content="2015-07-23">
+            2015-07-23
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/07/23/在浏览器端应用cookie记住用户名/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/23/在浏览器端应用cookie记住用户名/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="doctype">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">"http://www.baidu.com"</span> <span class="attribute">id</span>=<span class="value">"frm"</span>&gt;</span></span><br><span class="line">        用户名<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">name</span>=<span class="value">""</span> <span class="attribute">id</span>=<span class="value">""</span>&gt;</span></span><br><span class="line">        密码<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"password"</span> <span class="attribute">name</span>=<span class="value">""</span> <span class="attribute">id</span>=<span class="value">""</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"submit"</span> <span class="attribute">value</span>=<span class="value">"登陆"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"javascript:;"</span> <span class="attribute">id</span>=<span class="value">"clear"</span>&gt;</span>清除记录<span class="tag">&lt;/<span class="title">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">setCookie</span> (<span class="params">name, value, iDay</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> oDate = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">            oDate.setDate(oDate.getDate()+iDay);</span><br><span class="line">            <span class="built_in">document</span>.cookie = name+<span class="string">"="</span>+value+<span class="string">";expires="</span>+oDate;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">getCookie</span> (<span class="params">name</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> cookieArr = <span class="built_in">document</span>.cookie.split(<span class="string">"; "</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; cookieArr.length; i++) &#123;</span><br><span class="line">                <span class="keyword">var</span> oneCookie = cookieArr[i].split(<span class="string">"="</span>);</span><br><span class="line">                <span class="keyword">if</span> (oneCookie[<span class="number">0</span>] === name) &#123;</span><br><span class="line">                    <span class="keyword">return</span> oneCookie[<span class="number">1</span>];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="string">''</span>;</span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">removeCookie</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">            setCookie(name, <span class="string">'1'</span>, -<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">addListener</span> (<span class="params">target, type, handler</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (target.attachEventListener) &#123;</span><br><span class="line">                target.attachEventListener(type, handler, <span class="literal">false</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (target.attachEvent) &#123;</span><br><span class="line">                target.attachEvent(<span class="string">"on"</span>+type, handler);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                target[<span class="string">"on"</span>+type] = handler;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> oForm = <span class="built_in">document</span>.getElementById(<span class="string">"frm"</span>);</span><br><span class="line">            <span class="keyword">var</span> oUser = oForm.getElementsByTagName(<span class="string">"input"</span>)[<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">var</span> oClear = oForm.getElementsByTagName(<span class="string">"a"</span>)[<span class="number">0</span>];</span><br><span class="line">            oForm.onsubmit = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">var</span> username = oUser.value;</span><br><span class="line">                setCookie(<span class="string">"username"</span>, username, <span class="number">30</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            oUser.value = getCookie(<span class="string">'username'</span>);</span><br><span class="line"></span><br><span class="line">            addListener(oClear, <span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                removeCookie(<span class="string">"username"</span>);</span><br><span class="line">                oUser.value = <span class="string">''</span>;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/07/21/linux(Centos6.3)学习笔记/" itemprop="url">
                 linux(Centos 6.3)学习笔记
               </a>
@@ -1117,136 +1196,6 @@ swap分区（交换分区，内存2倍，不超过2GB）
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/12/自定义的右键菜单/" itemprop="url">
-                自定义的右键菜单
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-07-12T11:18:04+08:00" content="2015-07-12">
-            2015-07-12
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/07/12/自定义的右键菜单/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/12/自定义的右键菜单/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;Document&lt;/title&gt;
-    &lt;style&gt;
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        ul {
-            width: 100px;
-            background: #ccc;
-            border:1px solid #000;
-            position: absolute;
-            display: none;
-            list-style: inside;
-        }
-        li {
-
-        }
-    &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;ul id=&quot;ul1&quot;&gt;
-        &lt;li&gt;登陆&lt;/li&gt;
-        &lt;li&gt;注销&lt;/li&gt;
-        &lt;li&gt;回到首页&lt;/li&gt;
-        &lt;li&gt;加入&lt;/li&gt;
-    &lt;/ul&gt;
-    &lt;script&gt;
-
-        document.oncontextmenu = function (ev){
-            var oEvent = ev || event;
-            var oUl = document.getElementById(&quot;ul1&quot;);
-            var scrollTop = document.documentElement.scrollTop || 
-                    document.body.scrollTop;
-            oUl.style.display = &quot;block&quot;;
-
-            oUl.style.left = oEvent.clientX + &apos;px&apos;;
-            oUl.style.top = scrollTop + oEvent.clientY + &apos;px&apos;;
-            return false;
-        }
-
-        document.onclick = function (){
-            var oUl = document.getElementById(&quot;ul1&quot;);
-            oUl.style.display = &quot;none&quot;;
-        }
-    &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre></span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1286,7 +1235,7 @@ swap分区（交换分区，内存2倍，不超过2GB）
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-count">37</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1300,7 +1249,7 @@ swap分区（交换分区，内存2倍，不超过2GB）
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
