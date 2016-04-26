@@ -188,6 +188,89 @@
           
           
             
+              <a class="post-title-link" href="/2015/09/17/假装成黑客/" itemprop="url">
+                假装成黑客
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-09-17T10:50:32+08:00" content="2015-09-17">
+            2015-09-17
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/09/17/假装成黑客/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/17/假装成黑客/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p><strong><a href="http://zhongshan1993.github.io/myDemo/singlePage/pretendAHacker.html" target="_blank" rel="external">点击此处查看DEMO演示</a></strong></p>
+<p>今天在做大众点评在线笔试题目的时候，遇到一个很有趣的编程题目，实现黑客电影中的字符串效果。</p>
+<p>对！就是图中这样……当时是直接在提交文本框上写的，也没有调试机会，于是肯定会有很bug,晚上闲来无事，重新实现一下~</p>
+<p><img src="http://i.imgur.com/QgATYLO.png" alt=""></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="doctype">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span> <span class="attribute">xmlns</span>=<span class="value">"http://www.w3.org/1999/xhtml"</span> <span class="attribute">xml:lang</span>=<span class="value">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">http-equiv</span>=<span class="value">"Content-Type"</span> <span class="attribute">content</span>=<span class="value">"text/html;charset=UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span><span class="css"></span><br><span class="line">        <span class="tag">body</span> <span class="rules">&#123;</span><br><span class="line">            <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#000</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">color</span>:<span class="value"> <span class="hexcolor">#fff</span></span></span>;</span><br><span class="line">        &#125;</span></span><br><span class="line">        <span class="class">.rain</span> <span class="rules">&#123;</span><br><span class="line">            <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">left</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">font-size</span>:<span class="value"> <span class="number">20px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">background</span>:<span class="value"> lightgreen</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">25px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">box-shadow</span>:<span class="value"> <span class="number">2px</span> <span class="number">2px</span> <span class="number">4px</span> green</span></span>;</span><br><span class="line">        &#125;</span></span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- &lt;div class="rain"&gt;&lt;/div&gt; --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">generateChar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> strLen = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*<span class="number">100</span>);</span><br><span class="line">            <span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">var</span> choose = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">var</span> resCode = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">var</span> str = <span class="string">''</span>;</span><br><span class="line">            <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; strLen; i++) &#123;</span><br><span class="line">                choose = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*<span class="number">3</span>);</span><br><span class="line">                <span class="keyword">switch</span> (choose) &#123;</span><br><span class="line">                    <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">                        resCode = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*<span class="number">10</span> + <span class="number">48</span>);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                        resCode = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*<span class="number">26</span> + <span class="number">65</span>);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                        resCode = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*<span class="number">26</span> + <span class="number">97</span>);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                str += <span class="built_in">String</span>.fromCharCode(resCode)+<span class="string">'&lt;br&gt;'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">animate</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> cWidth = <span class="built_in">document</span>.documentElement.clientWidth-<span class="number">10</span>;</span><br><span class="line">            <span class="keyword">var</span> cHeight =  <span class="built_in">document</span>.documentElement.clientHeight;</span><br><span class="line">            <span class="comment">// alert(cHeight);</span></span><br><span class="line">            <span class="keyword">var</span> startLeft = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*cWidth);</span><br><span class="line">            <span class="keyword">var</span> startTop = <span class="number">0</span>;</span><br><span class="line">            obj.style.left = startLeft + <span class="string">'px'</span>;</span><br><span class="line">            obj.style.top = startTop + <span class="string">'px'</span>;</span><br><span class="line">            <span class="keyword">var</span> speed = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">            obj.timer = setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                startTop += speed;</span><br><span class="line">                obj.style.top = startTop + <span class="string">'px'</span>;</span><br><span class="line">                <span class="keyword">if</span> (startTop &gt; cHeight-obj.offsetHeight) &#123;</span><br><span class="line">                    clearInterval(obj.timer);</span><br><span class="line">                    <span class="built_in">document</span>.body.removeChild(obj);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;, <span class="number">30</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> obj = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line">            obj.className = <span class="string">'rain'</span>;</span><br><span class="line">            obj.innerHTML = generateChar();</span><br><span class="line">            <span class="built_in">document</span>.body.appendChild(obj);</span><br><span class="line">            animate(obj);</span><br><span class="line">        &#125;, <span class="number">50</span>);</span><br><span class="line">        </span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/09/13/常用排序算法之javascript实现/" itemprop="url">
                 常用排序算法之javascript实现
               </a>
@@ -1038,99 +1121,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/29/写一个兼容性比较好的拖拽DEMO/" itemprop="url">
-                写一个兼容性比较好的拖拽DEMO
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-07-29T20:52:35+08:00" content="2015-07-29">
-            2015-07-29
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/07/29/写一个兼容性比较好的拖拽DEMO/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/29/写一个兼容性比较好的拖拽DEMO/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p><a href="http://zhongshan1993.github.io/myDemo/singlePage/drag.html" target="_blank" rel="external">查看Demo</a></p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
-<li>div盒子</li>
-<li>鼠标按下事件onmousedown</li>
-<li>鼠标移动事件onmousemove，获得鼠标的坐标，将div移动至鼠标的当前坐标</li>
-<li>鼠标抬起事件omouseup，清除鼠标移动事件和鼠标抬起事件</li>
-</ol>
-<h2 id="布局和代码"><a href="#布局和代码" class="headerlink" title="布局和代码"></a>布局和代码</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span><br><span class="line">    <span class="id">#div1</span> <span class="rules">&#123;</span><br><span class="line">        <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="function">rgb</span>(<span class="number">40</span>,<span class="number">40</span>,<span class="number">40</span>)</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100px</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100px</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">color</span>:<span class="value"> <span class="hexcolor">#fff</span></span></span>;</span><br><span class="line">    &#125;</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">    <span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    实例文字实例文字实例文字实例文字</span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"div1"</span>&gt;</span>实例文字<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    实例文字实例文字实例文字实例文字</span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span><br><span class="line">        <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            drag(<span class="string">"div1"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">drag</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> oDiv = <span class="built_in">document</span>.getElementById(id);</span><br><span class="line"></span><br><span class="line">            oDiv.onmousedown = <span class="function"><span class="keyword">function</span>(<span class="params">ev</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">var</span> oEvent = event || ev;</span><br><span class="line">                <span class="keyword">var</span> disX = oEvent.clientX - oDiv.offsetLeft;</span><br><span class="line">                <span class="keyword">var</span> disY = oEvent.clientY - oDiv.offsetTop;</span><br><span class="line">                oDiv.style.cursor = <span class="string">"move"</span>;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// for IE</span></span><br><span class="line">                <span class="keyword">if</span> (oDiv.setCapture) &#123;</span><br><span class="line">                    oDiv.onmousemove = fnMove;</span><br><span class="line">                    oDiv.onmouseup = fnUp;</span><br><span class="line">                    oDiv.setCapture();</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        </span><br><span class="line">                    <span class="built_in">document</span>.onmousemove = fnMove;</span><br><span class="line">                    <span class="built_in">document</span>.onmouseup = fnUp;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="function"><span class="keyword">function</span> <span class="title">fnMove</span>(<span class="params">ev</span>) </span>&#123;</span><br><span class="line">                    <span class="keyword">var</span> oEvent = event || ev;</span><br><span class="line">                    <span class="keyword">var</span> l = oEvent.clientX - disX;</span><br><span class="line">                    <span class="keyword">var</span> t = oEvent.clientY - disY;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 磁性吸附</span></span><br><span class="line">                    <span class="keyword">if</span> (l &lt; <span class="number">50</span>) &#123;</span><br><span class="line">                        l = <span class="number">0</span>;</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (l &gt; <span class="built_in">document</span>.documentElement.clientWidth - oDiv.offsetWidth-<span class="number">50</span>) &#123;</span><br><span class="line">                        l = <span class="built_in">document</span>.documentElement.clientWidth - oDiv.offsetWidth;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (t &lt; <span class="number">50</span>) &#123;</span><br><span class="line">                        t = <span class="number">0</span>;</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (t &gt; <span class="built_in">document</span>.documentElement.clientHeight - oDiv.offsetHeight-<span class="number">50</span>) &#123;</span><br><span class="line">                        t = <span class="built_in">document</span>.documentElement.clientHeight - oDiv.offsetHeight;</span><br><span class="line">                    &#125;</span><br><span class="line">                    oDiv.style.left = l + <span class="string">'px'</span>;</span><br><span class="line">                    oDiv.style.top = t + <span class="string">'px'</span>;</span><br><span class="line"></span><br><span class="line">                &#125;;</span><br><span class="line">                <span class="function"><span class="keyword">function</span> <span class="title">fnUp</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                    <span class="keyword">this</span>.onmousemove = <span class="literal">null</span>;</span><br><span class="line">                    <span class="keyword">this</span>.onmouseup = <span class="literal">null</span>;</span><br><span class="line">                    <span class="keyword">if</span> (<span class="keyword">this</span>.releaseCapture) &#123;</span><br><span class="line">                        <span class="keyword">this</span>.releaseCapture();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// 阻止文字选中</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="DEBUG"><a href="#DEBUG" class="headerlink" title="DEBUG"></a>DEBUG</h2><ul>
-<li>当页面中有其他元素的时候，鼠标拖拽时，会默认地去选中其他的诸如文字之类的东西，布局中的“实例文字”就是为此准备的。我们可以加入<code>return false</code>来解决掉很多浏览器默认事件，在这里就有一个很好的应用</li>
-<li>微软的IE总是有自己的一套，这给js兼容带来了很大的麻烦，上述的bug解决方法在IE6下根本无效，因此这里引入了IE特有的<code>setCapture()</code>，IE中，假设id为div1一个元素设置了setCapture()，然后再绑定事件，比如一个点击事件，接下来，无论你点击哪里，被触发的都是div1元素的点击事件了，甚至你点击浏览器的地址栏，工具栏，都会触发div1的点击事件（）。此时你的ie浏览器会像中毒一样，点击关闭按钮都是在触发div1的点击事件（）,其他元素不管在div之上还是之下的，他们绑定的点击事件全部失效。</li>
-<li>这里刚好可以运用IE的<code>setCapture</code>和<code>releaseCapture</code>，当鼠标的div1上按下时，为div1 setCapture，这时所有的事件都集中到了div1身上，捕获所有事件，再也不会去选中其他的元素了，在鼠标抬起后，运用releaseCapture，不再捕获。</li>
-</ul>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1170,7 +1160,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">38</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1184,7 +1174,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
