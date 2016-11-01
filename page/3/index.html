@@ -188,6 +188,231 @@
           
           
             
+              <a class="post-title-link" href="/2015/07/30/2014蘑菇街校招前端笔试题和我自己的解答/" itemprop="url">
+                2014蘑菇街校招前端笔试题和我自己的解答
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-07-30T20:45:47+08:00" content="2015-07-30">
+            2015-07-30
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/07/30/2014蘑菇街校招前端笔试题和我自己的解答/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/30/2014蘑菇街校招前端笔试题和我自己的解答/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h2 id="写出position属性的属性值，简述各值的感化与差别"><a href="#写出position属性的属性值，简述各值的感化与差别" class="headerlink" title="写出position属性的属性值，简述各值的感化与差别"></a>写出position属性的属性值，简述各值的感化与差别</h2><blockquote>
+<p>position: static;</p>
+</blockquote>
+<p>元素框正常生成，块级元素生成一个矩形框，作为文档流的一部分，行内元素则会创建一个或多个行框，置于其父元素中</p>
+<blockquote>
+<p>position: relative;</p>
+</blockquote>
+<p>元素框偏移某个距离，元素仍然保持位定位前的形状，它原本所占的空间仍然保留</p>
+<blockquote>
+<p>position: absolute;</p>
+</blockquote>
+<p>元素从文档流完全删除，相对于包含块定位，包含块可能是元素中的另一个元素或者初始包含块（）。元素原先在正常文档流中所占的空间被关闭，且定位后的元素会生成一个块级框</p>
+<blockquote>
+<p>position: fixed;</p>
+</blockquote>
+<p>相当于包含块是视窗的position: absolute;</p>
+<h2 id="写出一个两列等高，左列固定宽度为300px，右列自适应浏览器的布局"><a href="#写出一个两列等高，左列固定宽度为300px，右列自适应浏览器的布局" class="headerlink" title="写出一个两列等高，左列固定宽度为300px，右列自适应浏览器的布局"></a>写出一个两列等高，左列固定宽度为300px，右列自适应浏览器的布局</h2><p>这里参考豆瓣克军大牛的<a href="http://site.douban.com/Jobs/widget/notes/277664/note/180697114/" target="_blank" rel="external">一篇文章</a></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span><br><span class="line">    <span class="tag">body</span> <span class="rules">&#123;</span><br><span class="line">        <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">500px</span></span></span>;</span><br><span class="line">    &#125;</span></span><br><span class="line">    <span class="class">.left</span> <span class="rules">&#123;</span><br><span class="line">        <span class="rule"><span class="attribute">background</span>:<span class="value"> yellow</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">300px</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">float</span>:<span class="value"> left</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">    &#125;</span></span><br><span class="line">    <span class="class">.right</span> <span class="rules">&#123;</span><br><span class="line">        <span class="rule"><span class="attribute">overflow</span>:<span class="value"> hidden</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">zoom</span>:<span class="value"> <span class="number">1</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">background</span>:<span class="value"> green</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">    &#125;</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"left"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"right"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="写一个获取url中参数的值的函数"><a href="#写一个获取url中参数的值的函数" class="headerlink" title="写一个获取url中参数的值的函数"></a>写一个获取url中参数的值的函数</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getRequest</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> url = <span class="built_in">window</span>.location.search;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> oRequest = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (url.indexOf(<span class="string">'?'</span>) !== -<span class="number">1</span>) &#123;</span><br><span class="line"></span><br><span class="line">            url = url.substr(<span class="number">1</span>); <span class="comment">// 取得?以后的字符串</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> reqArr = url.split(<span class="string">'&amp;'</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; reqArr.length; i++) &#123;</span><br><span class="line"></span><br><span class="line">                oRequest[(reqArr[i].split(<span class="string">'='</span>))[<span class="number">0</span>]] = <span class="built_in">unescape</span>((reqArr[i].split(<span class="string">'='</span>))[<span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> oRequest;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>有字符串在的地方就少不了正则表达式</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据参数获取参数值</span></span><br><span class="line">function getQueryString(name) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> <span class="keyword">reg</span> = new RegExp(<span class="string">"(^|&amp;)"</span>+name+<span class="string">"=([^&amp;]*)(&amp;|$)"</span>, <span class="string">"i"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> <span class="keyword">ret</span> = location.<span class="keyword">search</span>.<span class="literal">substr</span>(1).<span class="literal">match</span>(<span class="keyword">reg</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">ret</span> === null ? null : <span class="keyword">ret</span>[2];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.<span class="literal">log</span>(getQueryString(<span class="string">"key"</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回参数与参数的值对象</span></span><br><span class="line">function getRequest() &#123;</span><br><span class="line">    <span class="keyword">var</span> searchStr = decodeURI(<span class="keyword">window</span>.location.<span class="keyword">search</span>);</span><br><span class="line">    <span class="keyword">var</span> <span class="keyword">reg</span> = /([\u4E00-\u9FFFa-zA-Z0-9_]+=[\u4E00-\u9FFFa-zA-Z0-9_]+)/<span class="keyword">g</span>;</span><br><span class="line">    <span class="keyword">var</span> aRes = [];</span><br><span class="line">    <span class="keyword">var</span> oRequest = &#123;&#125;;</span><br><span class="line">    <span class="keyword">var</span> i = 0;</span><br><span class="line">    aRes = searchStr.<span class="literal">match</span>(<span class="keyword">reg</span>);</span><br><span class="line">    <span class="keyword">for</span> (i = 0; i &lt; aRes.length; i++) &#123;</span><br><span class="line">        oRequest[(aRes[i].<span class="keyword">split</span>('='))[0]] = (aRes[i].<span class="keyword">split</span>('='))[1];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> oRequest;</span><br><span class="line">&#125;</span><br><span class="line">console.<span class="literal">log</span>(getRequest());</span><br></pre></td></tr></table></figure>
+<h2 id="写出一个3X5的方格一共有几许个矩形的推导过程以及成果"><a href="#写出一个3X5的方格一共有几许个矩形的推导过程以及成果" class="headerlink" title="写出一个3X5的方格一共有几许个矩形的推导过程以及成果"></a>写出一个3X5的方格一共有几许个矩形的推导过程以及成果</h2><p>每个矩形都是由两条水平直线和两条竖直直线组成的，那么水平直线的取法有 3<em>2/(2</em>1) = 3,竖直线的取法有 5<em>4/(2</em>1) = 10，则矩形个数为30（不知道这里正方形算不算矩形……）</p>
+<ul>
+<li><strong>简单用代码实现下JS中的原型持续，并且画图申明其父类与子类的原型关系</strong></li>
+<li><strong>用JS代码简单介绍本身</strong></li>
+<li><strong>JS中的数据类型？如何断定一个变量是否是String类型</strong></li>
+</ul>
+<p>在ECMAScript有5种基本数据类型： Undefined/Null/Boolean/Number/String， 以及一种复杂数据类型Object。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"abcd"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> str); <span class="comment">// object</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(str) === <span class="string">"[object String]"</span>); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> str1 = <span class="string">"abcd"</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> str1); <span class="comment">// string</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(str1) === <span class="string">"[object String]"</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/29/MySQL子查询与连接/" itemprop="url">
+                MySQL子查询与连接
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-07-29T20:55:43+08:00" content="2015-07-29">
+            2015-07-29
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/back-end/" itemprop="url" rel="index"><span itemprop="name">back-end</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/07/29/MySQL子查询与连接/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/29/MySQL子查询与连接/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h2 id="子查询（Subquery）是指出现在其他-SQL-语句内的select子句"><a href="#子查询（Subquery）是指出现在其他-SQL-语句内的select子句" class="headerlink" title="子查询（Subquery）是指出现在其他 SQL 语句内的select子句"></a>子查询（Subquery）是指出现在其他 SQL 语句内的select子句</h2><p>例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> t1 <span class="keyword">where</span> col1 = (<span class="keyword">select</span> col2 <span class="keyword">from</span> t2);</span></span><br></pre></td></tr></table></figure>
+<p>其中 <code>select * from t1</code>， 称为<code>Outer Query/Outer Statement</code></p>
+<p><code>select col2 from t2</code> ,称为 <code>SubQuery</code>。</p>
+<h2 id="子查询指嵌套在查询内部，并且始终出现在圆括号内"><a href="#子查询指嵌套在查询内部，并且始终出现在圆括号内" class="headerlink" title="子查询指嵌套在查询内部，并且始终出现在圆括号内"></a>子查询指嵌套在查询内部，并且始终出现在圆括号内</h2><p>子查询有多个关键字或条件，如 <code>distinct</code> , <code>group by</code>, <code>order by</code>, <code>limit</code>, <code>函数</code>等<br>子查询的外层查询可以是 ： <code>select</code>, <code>insert</code>, <code>update</code>, <code>set</code> 或 <code>do</code>。</p>
+<h2 id="子查询可以返回标量、一行、一列或子查询"><a href="#子查询可以返回标量、一行、一列或子查询" class="headerlink" title="子查询可以返回标量、一行、一列或子查询"></a>子查询可以返回标量、一行、一列或子查询</h2><h2 id="由比较运算符（-gt-lt-gt-lt-lt-gt-lt-gt-）引发的子查询"><a href="#由比较运算符（-gt-lt-gt-lt-lt-gt-lt-gt-）引发的子查询" class="headerlink" title="由比较运算符（=,&gt;,&lt;,&gt;=,&lt;=,&lt;&gt;,!=,&lt;=&gt;）引发的子查询"></a>由比较运算符（=,&gt;,&lt;,&gt;=,&lt;=,&lt;&gt;,!=,&lt;=&gt;）引发的子查询</h2><p>语法结构 ： <code>operand comparison_operator subquery</code><br>子查询实例</p>
+<p>求所有商品的平均价格</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> <span class="keyword">round</span>(<span class="keyword">avg</span>(goods_price), <span class="number">2</span>) <span class="keyword">from</span> tdb_goods;</span></span><br></pre></td></tr></table></figure>
+<p>列出所有商品价格在平均价格之上的商品</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> goods_id,goods_name,goods_price <span class="keyword">from</span> tdb_goods</span><br><span class="line"></span><br><span class="line"><span class="keyword">where</span> goods_price &gt;= (<span class="keyword">select</span> <span class="keyword">round</span>(<span class="keyword">avg</span>(goods_price),<span class="number">2</span>) <span class="keyword">from</span> tdb_goods);</span></span><br></pre></td></tr></table></figure>
+<p>用 SOME（任意一个）,ANY（任意一个）,ALL（所有的） 修饰比较运算符</p>
+<h2 id="由-NOT-IN-、-NOT-EXISTS引发的查询"><a href="#由-NOT-IN-、-NOT-EXISTS引发的查询" class="headerlink" title="由 [NOT] IN 、[NOT] EXISTS引发的查询"></a>由 [NOT] IN 、[NOT] EXISTS引发的查询</h2><p><code>= ANY</code>运算符 与<code>IN</code> 等效，<code>!=ALL</code>或<code>&lt;&gt;ALL</code>与<code>NOT IN</code> 等效;<br>如果子查询返回任何行，EXIST将返回TRUE，否则返回false;</p>
+<h2 id="使用-INSERT…SELECT-插入记录（便于使用外键实现）"><a href="#使用-INSERT…SELECT-插入记录（便于使用外键实现）" class="headerlink" title="使用 INSERT…SELECT 插入记录（便于使用外键实现）"></a>使用 INSERT…SELECT 插入记录（便于使用外键实现）</h2><p>在一个数据表的分类中，可能存在大量重复的数据，这时候可以奖建立两个数据表关联，提高查询效率。<br>实例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">将查询结果写入数据表</span><br><span class="line"><span class="operator"><span class="keyword">Insert</span> tdb_goods_cates(cate_name) <span class="keyword">select</span> goods_cate <span class="keyword">from</span> tdb_goods <span class="keyword">group</span> <span class="keyword">by</span> goods_cate;</span></span><br></pre></td></tr></table></figure>
+<h2 id="多表更新"><a href="#多表更新" class="headerlink" title="多表更新"></a>多表更新</h2><p>多表的更新基本上与单表更新相似。<br>连接类型</p>
+<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">INNER <span class="built_in">JOIN</span>（与<span class="built_in">JOIN</span>,CROSS <span class="built_in">JOIN</span>等价） 内连接，</span><br><span class="line"></span><br><span class="line"><span class="built_in">LEFT</span>[OUTER] <span class="built_in">JOIN</span> 左外连接</span><br><span class="line"></span><br><span class="line"><span class="built_in">RIGHT</span>[OUTER] <span class="built_in">JOIN</span> 右外连接</span><br><span class="line"></span><br><span class="line">SQL语句实例</span><br><span class="line"></span><br><span class="line">update tdb_goods inner <span class="built_in">join</span> tdb_goods_cates <span class="keyword">on</span> goods_cate = cate_name <span class="keyword">set</span> goods_cate = cate_id;</span><br></pre></td></tr></table></figure>
+<h2 id="多表更新之一步到位-–-CREATE-…-SELECT"><a href="#多表更新之一步到位-–-CREATE-…-SELECT" class="headerlink" title="多表更新之一步到位 – CREATE … SELECT"></a>多表更新之一步到位 – CREATE … SELECT</h2><p>SQL语句实例</p>
+<ol>
+<li><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">create</span> <span class="keyword">table</span> tdb_goods_brands</span><br><span class="line"></span><br><span class="line">(</span><br><span class="line"></span><br><span class="line">brand_id <span class="built_in">smallint</span> unsigned <span class="keyword">primary</span> <span class="keyword">key</span> auto_increment,</span><br><span class="line"></span><br><span class="line">brand_name <span class="built_in">varchar</span>(<span class="number">40</span>) <span class="keyword">not</span> <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">)</span><br><span class="line"><span class="keyword">select</span> brand_name <span class="keyword">from</span> tdb_goods <span class="keyword">group</span> <span class="keyword">by</span> brand_name;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当两个表的字段名相同时，可以为两个表分别起一个别名，例如下面的g和b:</p>
+</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">update</span> tdb_goods <span class="keyword">as</span> g <span class="keyword">inner</span> <span class="keyword">join</span> tdb_goods_brands <span class="keyword">as</span> b <span class="keyword">on</span> g.brand_name = b.brand_name <span class="keyword">set</span> g.brand_name = b.brand_id;</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>修改表的结构</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">alter</span> <span class="keyword">table</span> tdb_goods <span class="keyword">change</span> goods_cate cate_id <span class="built_in">smallint</span> unsigned <span class="keyword">not</span> <span class="literal">null</span>,<span class="keyword">change</span> brand_name brand_id <span class="built_in">smallint</span> unsigned <span class="keyword">not</span> <span class="literal">null</span>;</span></span><br></pre></td></tr></table></figure>
+<h2 id="连接的语法结构"><a href="#连接的语法结构" class="headerlink" title="连接的语法结构"></a>连接的语法结构</h2><h2 id="内连接-INNER-JOIN"><a href="#内连接-INNER-JOIN" class="headerlink" title="内连接 INNER JOIN"></a>内连接 INNER JOIN</h2><p>通常使用 ON 关键字来设定连接条件，使用WHERE关键字进行结果集记录的过滤。<br>内连接：显示左表及右表符合条件的记录（交集）。<br>SQL语句实例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> goods_id,goods_name,cate_name <span class="keyword">from</span> tdb_goods <span class="keyword">inner</span> <span class="keyword">join</span> tdb_goods_cates <span class="keyword">on</span> tdb_goods.cate_id =tdb_goods_cates.cate_id;</span></span><br></pre></td></tr></table></figure>
+<h2 id="外连接-OUTER-JOIN"><a href="#外连接-OUTER-JOIN" class="headerlink" title="外连接 OUTER JOIN"></a>外连接 OUTER JOIN</h2><ol>
+<li>左外连接： 显示左表中的全部和右表中符合条件的部分。</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> goods_id,goods_name,cate_name <span class="keyword">from</span> tdb_goods <span class="keyword">left</span> <span class="keyword">join</span> tdb_goods_cates <span class="keyword">on</span> tdb_goods.cate_id = tdb_goods_cates.cate_id;</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>右外连接： 显示右表中的全部和左表中符合条件的部分。</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> goods_id,goods_name,cate_name <span class="keyword">from</span> tdb_goods <span class="keyword">right</span> <span class="keyword">join</span> tdb_goods_cates <span class="keyword">on</span> tdb_goods.cate_id =tdb_goods_cates.cate_id;</span></span><br></pre></td></tr></table></figure>
+<h2 id="多表连接"><a href="#多表连接" class="headerlink" title="多表连接"></a>多表连接</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> goods_id,goods_name,cate_name,brand_name,goods_price <span class="keyword">from</span> tdb_goods <span class="keyword">as</span> g</span><br><span class="line"></span><br><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> tdb_goods_cates <span class="keyword">as</span> c <span class="keyword">on</span> g.cate_id = c.cate_id</span><br><span class="line"></span><br><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> tdb_goods_brands <span class="keyword">as</span> b <span class="keyword">on</span> g.brand_id = b.brand_id\G;</span></span><br></pre></td></tr></table></figure></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/07/29/写一个兼容性比较好的拖拽DEMO/" itemprop="url">
                 写一个兼容性比较好的拖拽DEMO
               </a>
@@ -1030,171 +1255,6 @@ swap分区（交换分区，内存2倍，不超过2GB）
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/16/一种兼容性比较好的简单拖拽/" itemprop="url">
-                一种兼容性比较好的简单拖拽
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-07-16T21:18:12+08:00" content="2015-07-16">
-            2015-07-16
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/07/16/一种兼容性比较好的简单拖拽/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/16/一种兼容性比较好的简单拖拽/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p>作为一个马上要找工作、非计算机专业、热爱前端的大四狗，最近开始疯狂写demo、看书，准备九、十月份的校招。</p>
-<p>晚上用js实现了一个比较简单（low）的拖拽效果，初步测试兼容性还是不错的，于是写一段小博文记录下~大神求轻喷</p>
-<h2 id="面向过程的写法"><a href="#面向过程的写法" class="headerlink" title="面向过程的写法"></a>面向过程的写法</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="doctype">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span><br><span class="line">        <span class="id">#box</span> <span class="rules">&#123;</span><br><span class="line">            <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">background</span>:<span class="value"> red</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;</span><br><span class="line">        &#125;</span></span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"box"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span><br><span class="line">        <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> disX = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">var</span> disY = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">var</span> oBox = <span class="built_in">document</span>.getElementById(<span class="string">"box"</span>);</span><br><span class="line">            oBox.onmousedown = <span class="function"><span class="keyword">function</span> (<span class="params">ev</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">var</span> oEvent = ev || event;</span><br><span class="line"></span><br><span class="line">                oBox.style.cursor = <span class="string">"move"</span>;</span><br><span class="line">                disX = oEvent.clientX - oBox.offsetLeft;</span><br><span class="line">                disY = oEvent.clientY - oBox.offsetTop;</span><br><span class="line"></span><br><span class="line">                <span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span> (<span class="params">ev</span>)</span>&#123;</span><br><span class="line">                    <span class="keyword">var</span> oEvent = ev || event;</span><br><span class="line">                    <span class="keyword">var</span> theLeft = oEvent.clientX - disX;</span><br><span class="line">                    <span class="keyword">var</span> theTop = oEvent.clientY - disY;</span><br><span class="line">                    </span><br><span class="line">                    <span class="comment">// 禁止用户从浏览器左框拖出</span></span><br><span class="line">                    <span class="keyword">if</span> (theLeft &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                        theLeft = <span class="number">0</span>;</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (theLeft &gt; <span class="built_in">document</span>.documentElement.clientWidth-</span><br><span class="line">                        oBox.offsetWidth) &#123;</span><br><span class="line">                        theLeft = <span class="built_in">document</span>.documentElement.clientWidth-</span><br><span class="line">                        oBox.offsetWidth;</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (theTop &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                        theTop = <span class="number">0</span>;</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (theTop &gt; <span class="built_in">document</span>.documentElement.clientHeight-</span><br><span class="line">                        oBox.offsetHeight) &#123;</span><br><span class="line">                        theTop = <span class="built_in">document</span>.documentElement.clientHeight-</span><br><span class="line">                        oBox.offsetHeight;</span><br><span class="line">                    &#125;</span><br><span class="line">                    oBox.style.left = theLeft + <span class="string">'px'</span>;</span><br><span class="line">                    oBox.style.top = theTop + <span class="string">'px'</span>;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="built_in">document</span>.onmouseup = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="built_in">document</span>.onmousemove =<span class="literal">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">    　　　　 <span class="comment">// 窗口重设大小时的处理方法</span></span><br><span class="line">            <span class="built_in">window</span>.onresize = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">                oBox.style.left = <span class="built_in">document</span>.documentElement.clientWidth/<span class="number">2</span>-oBox.offsetWidth/<span class="number">2</span> + <span class="string">'px'</span>;</span><br><span class="line">                oBox.style.top = <span class="built_in">document</span>.documentElement.clientHeight/<span class="number">2</span>-oBox.offsetHeight/<span class="number">2</span> + <span class="string">'px'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 兼容firefox 3.6.19</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="创建一个拖拽对象"><a href="#创建一个拖拽对象" class="headerlink" title="创建一个拖拽对象"></a>创建一个拖拽对象</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="doctype">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span><br><span class="line">        <span class="id">#box</span>,<span class="id">#box2</span> <span class="rules">&#123;</span><br><span class="line">            <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">background</span>:<span class="value"> red</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;</span><br><span class="line">        &#125;</span></span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"box"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"box2"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span><br><span class="line">        <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">new</span> Drag(<span class="string">"box"</span>);</span><br><span class="line">            <span class="keyword">new</span> Drag(<span class="string">"box2"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Drag</span>(<span class="params">id</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> _this = <span class="keyword">this</span>;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">this</span>.disX = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">this</span>.disY = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">this</span>.oBox = <span class="built_in">document</span>.getElementById(id);</span><br><span class="line"></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">this</span>.oBox.onmousedown = <span class="function"><span class="keyword">function</span> (<span class="params">ev</span>)</span>&#123;</span><br><span class="line">                _this.fnDown(ev);</span><br><span class="line">                </span><br><span class="line">                <span class="comment">// 兼容firefox 3.6.19</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="built_in">document</span>.onmouseup = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">                _this.fnUp();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">window</span>.onresize = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">                _this.fnResize();</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="comment">// 兼容firefox 3.6.19</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Drag.prototype.fnDown = <span class="function"><span class="keyword">function</span>(<span class="params">ev</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> oEvent = ev || event;</span><br><span class="line">            <span class="keyword">var</span> _this = <span class="keyword">this</span>;</span><br><span class="line">            <span class="keyword">this</span>.oBox.style.cursor = <span class="string">"move"</span>;</span><br><span class="line">            <span class="keyword">this</span>.disX = oEvent.clientX - <span class="keyword">this</span>.oBox.offsetLeft;</span><br><span class="line">            <span class="keyword">this</span>.disY = oEvent.clientY - <span class="keyword">this</span>.oBox.offsetTop;</span><br><span class="line"></span><br><span class="line">            <span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span> (<span class="params">ev</span>)</span>&#123;</span><br><span class="line">                _this.fnMove(ev);</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        Drag.prototype.fnMove = <span class="function"><span class="keyword">function</span>(<span class="params">ev</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> oEvent = ev || event;</span><br><span class="line">            <span class="keyword">var</span> theLeft = oEvent.clientX - <span class="keyword">this</span>.disX;</span><br><span class="line">            <span class="keyword">var</span> theTop = oEvent.clientY - <span class="keyword">this</span>.disY;</span><br><span class="line">            <span class="comment">// 禁止用户从浏览器左框拖出</span></span><br><span class="line">            <span class="keyword">if</span> (theLeft &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                theLeft = <span class="number">0</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (theLeft &gt; <span class="built_in">document</span>.documentElement.clientWidth-</span><br><span class="line">                <span class="keyword">this</span>.oBox.offsetWidth) &#123;</span><br><span class="line">                theLeft = <span class="built_in">document</span>.documentElement.clientWidth-</span><br><span class="line">                <span class="keyword">this</span>.oBox.offsetWidth;</span><br><span class="line">            &#125; </span><br><span class="line">            <span class="keyword">if</span> (theTop &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                theTop = <span class="number">0</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (theTop &gt; <span class="built_in">document</span>.documentElement.clientHeight-</span><br><span class="line">                <span class="keyword">this</span>.oBox.offsetHeight) &#123;</span><br><span class="line">                theTop = <span class="built_in">document</span>.documentElement.clientHeight-</span><br><span class="line">                <span class="keyword">this</span>.oBox.offsetHeight;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">this</span>.oBox.style.left = theLeft + <span class="string">'px'</span>;</span><br><span class="line">            <span class="keyword">this</span>.oBox.style.top = theTop + <span class="string">'px'</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Drag.prototype.fnUp = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">document</span>.onmousemove =<span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">        Drag.prototype.fnResize = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.oBox.style.left = <span class="built_in">document</span>.documentElement.clientWidth/<span class="number">2</span>-<span class="keyword">this</span>.oBox.offsetWidth/<span class="number">2</span> + <span class="string">'px'</span>;</span><br><span class="line">            <span class="keyword">this</span>.oBox.style.top = <span class="built_in">document</span>.documentElement.clientHeight/<span class="number">2</span>-<span class="keyword">this</span>.oBox.offsetHeight/<span class="number">2</span> + <span class="string">'px'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure></span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/16/memcache在PHP存取中的应用/" itemprop="url">
-                memcache在PHP存取中的应用
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-07-16T20:39:51+08:00" content="2015-07-16">
-            2015-07-16
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/back-end/" itemprop="url" rel="index"><span itemprop="name">back-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/07/16/memcache在PHP存取中的应用/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/16/memcache在PHP存取中的应用/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p>当用户刷新网页或有大量用户访问网站时，就会产生大量数据库查询进程，这不但拖慢了网页打开速度，同时也给服务器带来了很大压力。</p>
-<p>作为php菜鸟，今天刚刚接触到了 <code>memcache</code> 这个东东，于是自己跟着文档做了一个实例，一方面鼓励自己，另一方面等大神轻喷~</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="preprocessor">&lt;?php</span> </span><br><span class="line">    header(<span class="string">"Content-Type:text/html;charset=utf-8"</span>);</span><br><span class="line">    <span class="comment">//创建memcache对象</span></span><br><span class="line">    <span class="variable">$mem</span> = <span class="keyword">new</span> Memcache;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//连接memcache服务器</span></span><br><span class="line">    <span class="variable">$mem</span>-&gt;connect(<span class="string">"localhost"</span>,<span class="number">11211</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="variable">$sql</span> = <span class="string">"select id,name,pass,age,sex,email from user order by id"</span>;</span><br><span class="line">    <span class="variable">$key</span> = md5(<span class="variable">$sql</span>); <span class="comment">//可用SQL语句做键值</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//直接从内存中要数据</span></span><br><span class="line">    <span class="variable">$data</span> = <span class="variable">$mem</span>-&gt;get(<span class="variable">$key</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//如果内存中没有数据，就从数据库中取出</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable">$data</span>)) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//数据库连接操作</span></span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="variable">$pdo</span> = <span class="keyword">new</span> PDO(<span class="string">"mysql:host=localhost;dbname=phpdemo"</span>, <span class="string">"root"</span>, <span class="string">""</span>);</span><br><span class="line"></span><br><span class="line">        &#125;<span class="keyword">catch</span>(PDOException <span class="variable">$e</span>)&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"数据库连接失败，原因是"</span>.<span class="variable">$e</span>-&gt;getMessage();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="variable">$stmt</span> = <span class="variable">$pdo</span>-&gt;prepare(<span class="variable">$sql</span>);</span><br><span class="line"></span><br><span class="line">        <span class="variable">$stmt</span>-&gt;execute();</span><br><span class="line"></span><br><span class="line">        <span class="variable">$data</span> = <span class="variable">$stmt</span>-&gt;fetchAll(PDO::FETCH_ASSOC);</span><br><span class="line"></span><br><span class="line">        <span class="variable">$mem</span>-&gt;add(<span class="variable">$key</span>, <span class="variable">$data</span>, MEMCACHE_COMPRESSED, <span class="number">5</span>); <span class="comment">//5秒</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"&lt;br&gt;这是第一次访问，从数据库访问并存到内存中！"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;"</span>;</span><br><span class="line">    print_r(<span class="variable">$data</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;/pre&gt;"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//关闭连接</span></span><br><span class="line">    <span class="variable">$mem</span>-&gt;close();</span><br><span class="line"></span><br><span class="line"> <span class="preprocessor">?&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>　　</p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1234,7 +1294,7 @@ swap分区（交换分区，内存2倍，不超过2GB）
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

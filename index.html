@@ -188,6 +188,260 @@
           
           
             
+              <a class="post-title-link" href="/2016/11/02/ECMAScript 2016的那些你不知道的事儿 - NCZOnline/" itemprop="url">
+                ECMAScript 2016的那些你不知道的事儿 - NCZOnline
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-11-02T10:54:23+08:00" content="2016-11-02">
+            2016-11-02
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/翻译/" itemprop="url" rel="index"><span itemprop="name">翻译</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/11/02/ECMAScript 2016的那些你不知道的事儿 - NCZOnline/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/02/ECMAScript 2016的那些你不知道的事儿 - NCZOnline/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>原文链接：<a href="https://www.nczonline.net/blog/2016/10/the-ecmascript-2016-change-you-probably-dont-know/" target="_blank" rel="external">https://www.nczonline.net/blog/2016/10/the-ecmascript-2016-change-you-probably-dont-know/</a></p>
+<p>相比 ECMAScript 6 (也被称为 ECMAScript 2015), ECMAScript 2016在 JavaScript 的语言规范上有小幅度的更新。由于ECMAScript版本会每年一更，每个新版其实就是所有就绪特性的集合。有鉴于此，大多数文章仅列出 ECMAScript 2016 中两个显著的变化。</p>
+<ol>
+<li>增加了乘幂运算符（<code>**</code>）。</li>
+<li>增加了<code>Array.prototype.includes()</code>方法。</li>
+</ol>
+<p>这两项功能对JavaScript开发者有着最直接的影响，实际上， ECMAScript 2016 还有一些经常被人忽略的重要更新。在我写的书<a href="http://amzn.to/2d31CIC" target="_blank" rel="external">Understanding ECMAScript 6</a>中有提到这些更新，但是我仍然会收到关于它的一些疑问，所以在这篇文章中，我想深入地探讨一下 ECMAScript 2016 。</p>
+<p>首先，我会陈述 ECMAScript 2016 的一些更新，然后再讲讲其背后的理论基础。</p>
+<h2 id="更新点"><a href="#更新点" class="headerlink" title="更新点"></a>更新点</h2><p>ECMAScript 2016 规定，<code>&quot;use strict&quot;</code>严格模式不允许用于参数具有默认值、使用解构参数或多余参数的函数内部，规范将简单参数定义为仅包含标识符的参数列表（ECMAScript 5 仅支持简单参数列表）[1]. 这一更新会影响所有的函数类型，包括函数声明、函数表达式、箭头函数和对象字面量。以下是一些示例代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// this is okay</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doSomething</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line"><span class="pi">    "use strict"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// code</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// syntax error in ECMAScript 2016</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doSomething</span>(<span class="params">a, b=a</span>) </span>&#123;</span><br><span class="line"><span class="pi">    "use strict"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// code</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// syntax error in ECMAScript 2016</span></span><br><span class="line"><span class="keyword">const</span> doSomething = <span class="function"><span class="keyword">function</span>(<span class="params">&#123;a, b&#125;</span>) </span>&#123;</span><br><span class="line"><span class="pi">    "use strict"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// code</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// syntax error in ECMAScript 2016</span></span><br><span class="line"><span class="keyword">const</span> doSomething = (...a) =&gt; &#123;</span><br><span class="line">    <span class="string">"use strict"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// code</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// syntax error in ECMAScript 2016</span></span><br><span class="line">    doSomething(&#123;a, b&#125;) &#123;</span><br><span class="line">        <span class="string">"use strict"</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// code</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>即使函数是一个具有非简单参数的函数，你仍然可以在函数体之外全局使用<code>&quot;use strict&quot;</code>，以使该函数在严格模式下执行。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// this is okay</span></span><br><span class="line"><span class="pi">"use strict"</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doSomething</span>(<span class="params">a, b=a</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// code</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这种情况下，函数体外的<code>&quot;use strict&quot;</code>语法是正确的。即使你使用 ECMAScript 模块，也不必担心这个问题，因为它会以严格模式执行所有代码。</p>
+<h2 id="为什么要做这项更新？"><a href="#为什么要做这项更新？" class="headerlink" title="为什么要做这项更新？"></a>为什么要做这项更新？</h2><p>鉴于严格模式和非简单参数列表的工作方式，此项更新显得举足轻重。当在 ECMAScript 5 中使用严格模式时，解构和默认参数值不再存在，因此先解析参数列表然后再使用<code>&quot;use strict&quot;</code>就不会有问题。此时，<code>&quot;use strict&quot;</code>不能影响解析参数列表的结果，它只用于验证参数标识符（不允许重复并检查被禁止的标识符，例如<code>eval</code>和<code>arguments</code>）。然而，随着在 ECMAScript 6 中引入解构和默认函数参数值，情况已经有所改变，因为规范指出参数列表应该按照与函数体相同的模式进行解析（这意味着<code>&quot;use strict&quot;</code>在函数体内必须触发严格模式）。</p>
+<p>首先要意识到的是严格模式需要改变JavaScript代码的解析和执行[2]。举个非常简单的例子，严格模式不允许旧式的八进制数值表示形式（如<code>070</code>）。如果代码在严格模式下解析，<code>070</code>会抛出语法错误。考虑到这一点，你认为以下代码应该怎样写？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// syntax error in ECMAScript 2016</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doSomething</span>(<span class="params">value=070</span>) </span>&#123;</span><br><span class="line"><span class="pi">    "use strict"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你用JavaScript解析器解析这段代码，参数列表则会在函数体之前被解析。这意味着，<code>070</code>会被解析为合法的值，之后在函数体中遇到<code>&quot;use strict&quot;</code>，它会告诉解析器，“实际上你应该在严格模式下解析参数列表”。于是，解析器将不得不再次在严格模式下回溯并重新解析参数列表，因此会抛出<code>070</code>的语法错误。这可能还无足轻重，但如果默认参数值更复杂呢？</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// syntax error <span class="type">in</span> ECMAScript <span class="number">2016</span></span><br><span class="line"><span class="function"><span class="keyword">function</span></span> doSomething(<span class="keyword">value</span>=(<span class="function"><span class="keyword">function</span><span class="params">()</span></span> &#123;</span><br><span class="line">   <span class="keyword">return</span> doSomeCalculation() + <span class="number">070</span>;</span><br><span class="line">&#125;())) &#123;</span><br><span class="line">    <span class="string">"use strict"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">value</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在其默认参数值是一个函数的情况下，将会引发更多的问题。你要理清更多的tokens，还必须将函数设置为默认在严格模式下运行。要确保默认参数表达式被正确解析，并在严格模式下运行，是极度复杂的。解构参数包含默认值，同样会导致类似的问题。例子如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// syntax error in ECMAScript 2016</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doSomething</span>(<span class="params">&#123;value=070&#125;</span>) </span>&#123;</span><br><span class="line"><span class="pi">    "use strict"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里，解构参数<code>value</code>具有严格模式下不允许的默认值，会导致与默认参数值相同的问题。</p>
+<p>最后，似乎TC-39决定[3]简单地禁止函数体使用<code>&quot;use strict&quot;</code>，以避免上述的错误发生，这在 ECMAScript 5 中是没有说明的。这意味着具有默认参数值、解构参数或多余参数的函数在函数体中不能有<code>&quot;use strict&quot;</code>。这也包括<code>&quot;use strict&quot;</code>没有作用的情况，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">outer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="pi">    "use strict"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// syntax error in ECMAScript 2016</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">doSomething</span>(<span class="params">value=070</span>) </span>&#123;</span><br><span class="line"><span class="pi">        "use strict"</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上面的代码中，将具有非简单参数的函数嵌套在具有<code>&quot;use strict&quot;</code>的另一个函数中。<code>doSomething()</code>自动处于严格模式下，但JavaScript引擎仍会在<code>doSomething()</code>的函数体中的<code>&quot;use strict&quot;</code>指令上抛出语法错误。</p>
+<h2 id="替代方案"><a href="#替代方案" class="headerlink" title="替代方案"></a>替代方案</h2><p>这种更新一般不会影响很多开发者，这也可能是你不知道它的原因。<code>&quot;use strict&quot;</code>指令会渐渐成为过去，因为ECMAScript的模块和类都会自动在严格模式下运行，而无需另外指定，这意味着这些情况下不再需要使用<code>&quot;use strict&quot;</code>。但是，在极少数情况下，你如果需要一个带有非简单参数的函数在严格模式下运行，可以使用IIFE模式创建函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> doSomething = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="pi">    "use strict"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">value=42</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;());</span><br></pre></td></tr></table></figure>
+<p>在这段代码中，函数创建在以严格模式运行的IIFE中。这允许返回的函数在使用默认参数值的情况下以严格模式运行。因为外部作用域是以严格模式运行的，所以解析默认参数值是不会出错的，并且在函数体中不需要额外使用<code>&quot;use strict&quot;</code>。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>禁止有非简单参数列表的函数的函数体使用<code>&quot;use strict&quot;</code>指令，ECMAScript 2016 这一小的改变，也表现出这样一门流行的编程语言的发展历程是多么坎坷。在这样的情况下，TC-39决定引入一个新的语法错误来消除歧义，如果上述问题出现的早的话，这也可能已经是ECMAScript 6（2015）的一部分了。添加这个语法错误是最明智的选择，因为它对现有的代码影响甚微（规范更改是与JavaScript引擎实现非简单参数列表同步的），而且不大可能影响以后的JavaScript代码，因为ECMAScript的模块和类是以严格模式运行的。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><a href="http://www.ecma-international.org/ecma-262/7.0/#sec-function-definitions-static-semantics-issimpleparameterlist" target="_blank" rel="external">Static Semantics: IsSimpleParameterList</a> (ecma-international.org)</li>
+<li><a href="https://www.nczonline.net/blog/2012/03/13/its-time-to-start-using-javascript-strict-mode/" target="_blank" rel="external">It’s time to start using JavaScript strict mode</a> (nczonline.net)</li>
+<li><a href="https://github.com/rwaldron/tc39-notes/blob/d0c651b358b361b0855cfe7af9ba0b76cab73949/es7/2015-07/july-29.md#611-the-scope-of-use-strict-with-respect-to-destructuring-in-parameter-lists" target="_blank" rel="external">The scope of “use strict” with respect to destructuring in parameter lists</a></li>
+</ol>
+<p>免责声明：本文中表达的任何观点和看法都是Nicholas C. Zakas的观点和看法，并且不以任何方式反映我的雇主，我的同事，<a href="http://www.wrox.com/" target="_blank" rel="external">Wrox出版社</a>，<a href="http://www.oreilly.com/" target="_blank" rel="external">O’Reilly出版社</a>或任何其他人的观点和看法。 我仅代表个人的观点，与他人无关。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2016/11/01/逃离回调地狱/" itemprop="url">
+                逃离回调地狱
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-11-01T23:54:23+08:00" content="2016-11-01">
+            2016-11-01
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/翻译/" itemprop="url" rel="index"><span itemprop="name">翻译</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/11/01/逃离回调地狱/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/01/逃离回调地狱/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>原文链接：<a href="https://www.sitepoint.com/saved-from-callback-hell/" target="_blank" rel="external">https://www.sitepoint.com/saved-from-callback-hell/</a></p>
+<p><img src="http://p0.qhimg.com/t01a9dae3f367238718.png" alt="Devil standing over offce worker with receivers hanging everywhere"></p>
+<p>这篇文章已经由Mallory van Achterberg, Dan Prince 和 Vildan Softic 三位同行审核，在此感谢所有同行为创造优秀网站做出的努力。</p>
+<h2 id="作者的其他文章"><a href="#作者的其他文章" class="headerlink" title="作者的其他文章"></a>作者的其他文章</h2><ol>
+<li><a href="https://www.sitepoint.com/throttle-scroll-events/?utm_source=sitepoint&amp;utm_medium=relatedinline&amp;utm_term=&amp;utm_campaign=relatedauthor" target="_blank" rel="external">Quick Tip: How to Throttle Scroll Events</a></li>
+<li><a href="https://www.sitepoint.com/getting-started-with-the-raspberry-pi-gpio-pins-in-node-js/?utm_source=sitepoint&amp;utm_medium=relatedinline&amp;utm_term=&amp;utm_campaign=relatedauthor" target="_blank" rel="external">Getting Started with the Raspberry Pi GPIO Pins in Node.js</a></li>
+</ol>
+<p>在实际开发中，回调地狱是真实存在的，开发者将它视为洪水猛兽，甚至到了想逃离它们的地步。而JavaScript的灵活性却对此爱莫能助。从表面上看，回调似乎并不完美，所以我们总想找到其替代者。</p>
+<p>好消息是，只需要简单的几步即可逃离回调地狱。我觉得，在你的代码中不使用回调就好比壮士断腕。回调函数是JavaScript的核心之一，也是它的精粹所在。如果你用其他方式来代替回调，那也只是换汤不换药，无济于事。</p>
+<p>有朋友告诉我，回调这东西一无是处，并劝我去学习更好的编程语言。那么，回调真的如此吗？</p>
+<p>在JavaScript中使用回调有它自身的闪光点。如果仅仅是因为回调的话，我们没有理由不用JavaScript。</p>
+<p>让我们来研究一下合理的编程方式是怎么处理回调的。我的偏好是坚持SOLID原则，让我们来一探究竟。</p>
+<h2 id="回调地狱是什么"><a href="#回调地狱是什么" class="headerlink" title="回调地狱是什么"></a>回调地狱是什么</h2><p>我知道你可能在想，回调地狱到底是什么，为什么我应该关注它呢？在JavaScript中，回调的角色是充当一个委托函数，这个委托可能会在未来的任一时刻执行。在JavaScript中，当接收函数调用回调时发生委托。接收函数可能在执行过程中的任意时刻调用回调。</p>
+<p>简而言之，回调是作为参数传递给另一个函数的函数。什么时候调用回调是由接收函数决定的，因此回调并不会立即执行，以下是代码示例。</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">receiver</span><span class="params">(fn)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> fn();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callback</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'foobar'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> callbackResponse = receiver(<span class="keyword">callback</span>);</span><br><span class="line"><span class="comment">// callbackResponse == 'foobar'</span></span><br></pre></td></tr></table></figure>
+<p>如果你曾写过ajax请求，那就肯定遇到过回调函数。因为我们无法知道回调将在什么时候执行，所以异步代码使用这种方式。</p>
+<p>回调的问题在于依赖于其他回调的异步代码。下面我会使用<code>setTimeout</code>来模拟带有回调的异步调用。</p>
+<p>代码已经放在Github，可以自由查看拷贝。后文中大部分代码片段都在这个库里面，你可以拷贝下来自己运行。</p>
+<p>看吧，下面就是回调深渊。</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">setTimeout<span class="list">(<span class="keyword">function</span> <span class="list">(<span class="keyword">name</span>)</span> &#123;</span><br><span class="line">  var catList = name + ','<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">  setTimeout<span class="list">(<span class="keyword">function</span> <span class="list">(<span class="keyword">name</span>)</span> &#123;</span><br><span class="line">    catList += name + ','<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">    setTimeout<span class="list">(<span class="keyword">function</span> <span class="list">(<span class="keyword">name</span>)</span> &#123;</span><br><span class="line">      catList += name + ','<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">      setTimeout<span class="list">(<span class="keyword">function</span> <span class="list">(<span class="keyword">name</span>)</span> &#123;</span><br><span class="line">        catList += name + ','<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">        setTimeout<span class="list">(<span class="keyword">function</span> <span class="list">(<span class="keyword">name</span>)</span> &#123;</span><br><span class="line">          catList += name<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">          console.log<span class="list">(<span class="keyword">catList</span>)</span><span class="comment">;</span></span><br><span class="line">        &#125;, <span class="number">1</span>, <span class="quoted">'Lion</span>')</span><span class="comment">;</span></span><br><span class="line">      &#125;, <span class="number">1</span>, <span class="quoted">'Snow</span> Leopard')</span><span class="comment">;</span></span><br><span class="line">    &#125;, <span class="number">1</span>, <span class="quoted">'Lynx</span>')</span><span class="comment">;</span></span><br><span class="line">  &#125;, <span class="number">1</span>, <span class="quoted">'Jaguar</span>')</span><span class="comment">;</span></span><br><span class="line">&#125;, <span class="number">1</span>, <span class="quoted">'Panther</span>')</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>从上面的代码可以看到，我们向<code>setTimeout</code>中传递了一个将在1ms后执行的回调函数。最后一个参数用来给回调函数传递数据。这和期望从服务器返回<code>name</code>参数的ajax请求类似。</p>
+<p>在MDN上，对setTimeout有<a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setTimeout" target="_blank" rel="external">一个很详细的介绍</a>。</p>
+<p>我通过这段异步代码，收集了一组猫的名字列表。每个回调都会返回给我一个猫的名字，然后我将其添加到列表中。我试着更合理地实现它，但是，鉴于JavaScript函数的灵活性，这简直就是噩梦。</p>
+<h2 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h2><p>在前面的例子中，你可能注意到了匿名函数的使用。匿名函数是一个用于赋给一个变量或作为参数传递给其他函数的未命名函数表达式。</p>
+<p>在有些编码标准中不建议使用匿名函数。最好是为它们命名，使用<code>function getCat(name){}</code>而不是<code>function (name){}</code>。使用具名函数会让你的程序更加清晰易读。匿名函数很容易定义使用，但是会让你直坠回调地狱，当你走上这条不归路时，最好停下来反思。</p>
+<p>有个打破回调的简单方式是使用函数声明：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(getPanther, <span class="number">1</span>, <span class="string">'Panther'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> catList = <span class="string">''</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPanther</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  catList = name + <span class="string">','</span>;</span><br><span class="line"></span><br><span class="line">  setTimeout(getJaguar, <span class="number">1</span>, <span class="string">'Jaguar'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getJaguar</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  catList += name + <span class="string">','</span>;</span><br><span class="line"></span><br><span class="line">  setTimeout(getLynx, <span class="number">1</span>, <span class="string">'Lynx'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getLynx</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  catList += name + <span class="string">','</span>;</span><br><span class="line"></span><br><span class="line">  setTimeout(getSnowLeopard, <span class="number">1</span>, <span class="string">'Snow Leopard'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getSnowLeopard</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  catList += name + <span class="string">','</span>;</span><br><span class="line"></span><br><span class="line">  setTimeout(getLion, <span class="number">1</span>, <span class="string">'Lion'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getLion</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  catList += name;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(catList);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在仓库中没有这段代码，但是其改进在<a href="https://github.com/beautifulcoder/FunWithCallbacks/commit/59017f3c859603cfdcbba8e009c123a1da8456af" target="_blank" rel="external">这个提交</a>上面。</p>
+<p>每个函数都有它自己的声明，其优点是我们可以不再使用金字塔式的回调。每个函数都被隔离，专注于自己的任务。现在每个函数都有理由做出改变，这说明我们的研究方向是正确的。例如像<code>getPanther()</code>这样被当做参数传入的函数，JavaScript不关心你是如何创建回调的。然而，这样写又有什么值得改进的地方呢？</p>
+<p>为了了解更加透彻，可以看这篇文章<a href="https://www.sitepoint.com/function-expressions-vs-declarations/" target="_blank" rel="external">SitePoint article on Function Expressions vs Function Declarations</a>。</p>
+<p>不过，有个缺点是每个函数的作用域不再限定在其回调内。每个函数被放到全局作用域下，而不是作为一个闭包回调。所以，这就是为什么<code>catList</code>申明在全局作用域下，是为了保证回调函数能访问到列表。有时候，使用全局作用域并不是一个好的方案。因为它在将猫名字添加到列表的同时调用下一个回调，这也造成了代码冗余。</p>
+<p>这些代码总有一些回调地狱的影子，所以为了处理回调地狱常常需要付出巨大的努力而且开始时可能还会觉得事倍功半，无济于事。那有没有更好的编码方式呢？</p>
+<h2 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h2><p>依赖倒置原则告诉我们，应该对编码进行抽象，而不是关注其具体细节。其核心思想是将一个大的问题分解成小的依赖。这些依赖变得彼此独立，与实现细节无关。</p>
+<p>SOLID原则建议：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当遵循这项原则时，传统的依赖关系建立从高层次/策略设定模块到底层的依赖模块倒置，从而使高层次的模块独立于底层模块的实现细节。</span><br></pre></td></tr></table></figure>
+<p>如何理解这段话呢？好消息是通过为参数分配一个回调，猜猜会发生什么？实际上你已经这样做了，至少在一定程度上，为了解耦，将回调看做依赖。这种依赖变成一个契约，从这点就表明你已经开始做SOLID编程了。</p>
+<p>获得回调自由的一种方式是创建一个契约：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`<span class="function"><span class="keyword">fn</span></span>(catList);`</span><br></pre></td></tr></table></figure>
+<p>这定义了我打算用回调来实现的功能，它需要跟踪一个单一的参数，也就是上文中猫的列表。</p>
+<p>此依赖关系现在可以通过参数传递：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">buildFerociousCats</span><span class="params">(list, returnValue, fn)</span> </span>&#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">asyncCall</span><span class="params">(data)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> catList = <span class="keyword">list</span> === <span class="string">''</span> ? data : <span class="keyword">list</span> + <span class="string">','</span> + data;</span><br><span class="line"></span><br><span class="line">    fn(catList);</span><br><span class="line">  &#125;, <span class="number">1</span>, returnValue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，函数表达式<code>asyncCall</code>的作用域在<code>buildFerociousCats</code>下。当与异步编程中的回调配合时，这种写法是很有效果的。该契约异步执行，并获取其所需参数。由于其解耦性，该组合获得了所需的回调自由。JavaScript的灵活性让编码更明了，充分发挥了自身的优势。</p>
+<p>接下来的写法不言而喻，以下是其中一种：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">buildFerociousCats(<span class="string">''</span>, <span class="string">'Panther'</span>, getJaguar);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getJaguar</span><span class="params">(list)</span> </span>&#123;</span><br><span class="line">  buildFerociousCats(<span class="keyword">list</span>, <span class="string">'Jaguar'</span>, getLynx);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getLynx</span><span class="params">(list)</span> </span>&#123;</span><br><span class="line">  buildFerociousCats(<span class="keyword">list</span>, <span class="string">'Lynx'</span>, getSnowLeopard);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getSnowLeopard</span><span class="params">(list)</span> </span>&#123;</span><br><span class="line">  buildFerociousCats(<span class="keyword">list</span>, <span class="string">'Snow Leopard'</span>, getLion);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getLion</span><span class="params">(list)</span> </span>&#123;</span><br><span class="line">  buildFerociousCats(<span class="keyword">list</span>, <span class="string">'Lion'</span>, printList);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printList</span><span class="params">(list)</span> </span>&#123;</span><br><span class="line">  console.log(<span class="keyword">list</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，以上片段没有重复的代码。在不使用全局变量的情况下，回调可以追踪自己的状态。例如，回调<code>getLion</code>可以与契约之后的任何东西相关联。这是一个需要猫的列表作为参数的回调。这段代码已经上传至<a href="https://github.com/beautifulcoder/FunWithCallbacks/blob/master/callbackDependencyInversion.js" target="_blank" rel="external">GitHub</a>。</p>
+<h2 id="多态回调"><a href="#多态回调" class="headerlink" title="多态回调"></a>多态回调</h2><p>这是什么呢？让我们更疯狂一点。如果我们想将行为从创建逗号分隔列表更改为管道分隔呢？我发现的一个问题是<code>buildFerociousCats</code>与实现细节相关联。可以使用<code>list + &#39;,&#39; + data</code>做到这一点。</p>
+<p>简单来说就是回调行为的多态性。其原则仍然是：像契约一样处理回调，并使其实现互不关联。一旦回调提升到抽象，特定的细节可以随意改变。</p>
+<p>多态打开了在JavaScript中复用代码的新大门。将多态回调想象成定义严格契约的一种方式，同时允许其有足够的自由，这时候细节就不再重要。值得注意的是我们仍然在讨论依赖倒置。多态回调只是一个花哨的名字，指出了进一步采取该想法的一种方式。</p>
+<p>我们可以定义一个使用<code>list</code>和<code>data</code>参数的契约：</p>
+<p><code>cat.delimiter(cat.list, data);</code></p>
+<p>然后使用<code>buildFerociousCats</code>并做一些微小的调整：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">buildFerociousCats</span><span class="params">(cat, returnValue, next)</span> </span>&#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">asyncCall</span><span class="params">(data)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> catList = cat.delimiter(cat.<span class="keyword">list</span>, data);</span><br><span class="line"></span><br><span class="line">    next(&#123; <span class="keyword">list</span>: catList, delimiter: cat.delimiter &#125;);</span><br><span class="line">  &#125;, <span class="number">1</span>, returnValue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在JavaScript对象<code>cat</code>封装了<code>list</code>数据和<code>delimiter</code>方法。回调链的异步回调，在以前我们称之为<code>fn</code>。注意，我们可以随意使用JavaScript对象将参数分组。<code>cat</code>对象同时需要<code>list</code>和<code>delimiter</code>两个特定的键。此JavaScript对象现在是契约的一部分，其余代码保持不变。</p>
+<p>我们可以这样来实现：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">buildFerociousCats</span>(&#123; <span class="attribute">list</span>: <span class="string">''</span>, <span class="attribute">delimiter</span>: commaDelimiter &#125;, <span class="string">'Panther'</span>, getJaguar);</span><br><span class="line"><span class="tag">buildFerociousCats</span>(&#123; <span class="attribute">list</span>: <span class="string">''</span>, <span class="attribute">delimiter</span>: pipeDelimiter &#125;, <span class="string">'Panther'</span>, getJaguar);</span><br></pre></td></tr></table></figure>
+<p>回调被交换。只要契约得到满足，细节就不再重要。我们可以轻松地改变其行为。现在回调被看成是一种依赖，被反转成一个高级别的契约。这个想法采用我们已经知道的回调，并将其提高到一个新的水平。 通过减少回调到契约，它提升了抽象和解耦软件模块。</p>
+<p>激进的是，从独立模块自然过渡到单元测试。<code>delimiter</code>契约是一个纯函数。这意味着在多次输入的情况下，每次都可以得到相同的输出。这个级别的可测试性提高了解决方案的可行性。毕竟，模块化的独立赋予了自我评估的权利。</p>
+<p><code>pipe delimiter</code>的有效单元测试可能是这样的：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="symbol">'A</span> pipe delimiter', <span class="keyword">function</span> <span class="literal">()</span> &#123;</span><br><span class="line">  it(<span class="symbol">'adds</span> a pipe <span class="keyword">in</span> the list', <span class="keyword">function</span> <span class="literal">()</span> &#123;</span><br><span class="line">    var <span class="built_in">list</span> = pipeDelimiter(<span class="symbol">'Cat'</span>, <span class="symbol">'Cat'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">assert</span>.equal(<span class="built_in">list</span>, <span class="symbol">'Cat</span>|<span class="type">Cat'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>你可以随意想象一下其实现细节是什么样子，同时也可以<a href="https://github.com/beautifulcoder/FunWithCallbacks/commit/f5cd1988ecb29d97b10180cbe1ec246adbc53d03" target="_blank" rel="external">在github上查看代码</a>。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过其细节才能掌握JavaScript中的回调。我希望你能看到JavaScript函数的微妙变化。当我们缺乏基础知识时，可能会误解回调函数。一旦理清JavaScript函数，SOLID原则也会很好理解。实现SOLID编程需要有强大的基础知识，语言本身灵活性的体现在于程序员如何使用它。</p>
+<p>我最欣慰的是JavaScript培养了良好的编程能力。对基础知识和细节的把握会使你在一门语言上造诣更高。这种方式在回调函数中显得尤为重要。一些不起眼的细节往往会提升你的编程技能。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2016/04/26/Node-js基础，如何升级Node-js版本/" itemprop="url">
                 Node.js基础，如何升级Node.js版本
               </a>
@@ -986,215 +1240,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/29/ES6学习笔记-Module的基本用法/" itemprop="url">
-                ES6学习笔记:Module的基本用法
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-10-29T11:06:32+08:00" content="2015-10-29">
-            2015-10-29
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/29/ES6学习笔记-Module的基本用法/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/29/ES6学习笔记-Module的基本用法/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><h2 id="export和import"><a href="#export和import" class="headerlink" title="export和import"></a>export和import</h2><p>ES6实现了模块功能，试图解决JavaScript代码上的依赖和部署上的问题，取代现有的<code>CommonJs</code>的<code>AMD</code>规范，成为浏览器和服务器通用的模块解决方案。</p>
-<p>模块功能有两个关键字： <code>export</code>和<code>import</code>。<code>export</code>用于用户自定义模块，规定对外接口；<code>import</code>用于输入其它模块提供的功能，同时创造命名空间(<code>namespace</code>)，防止函数名冲突。</p>
-<p>ES6允许将独立的JS文件作为模块，也就是说，允许一个<code>JavaScript</code>脚本文件调用另一个脚本文件。最简单的模块就是一个JS文件，里面使用<code>export</code>关键字输出变量。</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// profile.js</span></span><br><span class="line"><span class="literal">export</span> <span class="keyword">var</span> firstName = <span class="string">'David'</span>;</span><br><span class="line"><span class="literal">export</span> <span class="keyword">var</span> lastName = <span class="string">'Belle'</span>;</span><br><span class="line"><span class="literal">export</span> <span class="keyword">var</span> year = <span class="number">1973</span>;</span><br></pre></td></tr></table></figure>
-<p>上面是<code>profile.js</code>的内容，ES6将其视为一个模块，里面用<code>export</code>关键字输出了三个变量。<code>export</code>的写法，除了上面这样，还有另外一种，两者是等价的。</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// profile.js</span></span><br><span class="line"><span class="keyword">var</span> firstName = <span class="string">'David'</span>;</span><br><span class="line"><span class="keyword">var</span> lastName = <span class="string">'Belle'</span>;</span><br><span class="line"><span class="keyword">var</span> year = <span class="number">1973</span>;</span><br><span class="line"></span><br><span class="line"><span class="literal">export</span> &#123;firstName, lastName, year&#125;;</span><br></pre></td></tr></table></figure>
-<p>使用<code>export</code>定义模块后，其他JS文件就可以通过<code>import</code>关键字加载这个模块(文件)。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;firstName, lastName, year&#125; <span class="keyword">from</span> <span class="string">'./profile'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setHeader</span>(<span class="params">element</span>) </span>&#123;</span><br><span class="line">    element.textContent = firstName + <span class="string">' '</span> + lastName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面的代码中<code>import</code>关键字接受一个对象(用大括号表示)，里面指定要从其他模块导入的变量。大括号里面的变量名，必须与被导入模块对外接口的名称相同。</p>
-<p>如果想为输入的属性或方法重新取一个名字，import语句要写成这样。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;someMethod, another <span class="keyword">as</span> newName&#125; <span class="keyword">from</span> <span class="string">'./profile'</span>;</span><br></pre></td></tr></table></figure>
-<h2 id="模块的整体加载"><a href="#模块的整体加载" class="headerlink" title="模块的整体加载"></a>模块的整体加载</h2><p><code>export</code>关键字除了输出变量，还可以输出方法或类(<code>class</code>)。下面是<code>circle.js</code>文件的内容，它输出两个方法。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// circle.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">area</span>(<span class="params">redius</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.PI * radius * radius;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">circumference</span>(<span class="params">radius</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span> * <span class="built_in">Math</span>.PI * radius;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后，<code>main.js</code>引用这个模块。</p>
-<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">import</span> &#123;area, circumference&#125; from './<span class="built_in">circle</span>';</span><br><span class="line"></span><br><span class="line">console.<span class="built_in">log</span><span class="params">(<span class="string">"圆面积： "</span> + area<span class="params">(<span class="number">4</span>)</span>)</span>;</span><br><span class="line">console.<span class="built_in">log</span><span class="params">(<span class="string">"圆周长： "</span> + circumference<span class="params">(<span class="number">14</span>)</span>)</span>;</span><br></pre></td></tr></table></figure>
-<p>上面的写法是逐一指定要导入的方法。另一种写法是使用<code>module</code>关键字，整体导入。</p>
-<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"></span><br><span class="line">module <span class="keyword">circle</span> from <span class="string">'./circle'</span>;</span><br><span class="line"></span><br><span class="line">console.<span class="keyword">log</span>(<span class="string">"圆面积： "</span> + <span class="keyword">circle</span>.area(<span class="number">4</span>));</span><br><span class="line">console.<span class="keyword">log</span>(<span class="string">"圆周长： "</span> + <span class="keyword">circle</span>.circumference(<span class="number">14</span>));</span><br></pre></td></tr></table></figure>
-<p><code>module</code>关键字后面跟一个变量，表示导入的模块定义在该变量上。</p>
-<h2 id="export-default语句"><a href="#export-default语句" class="headerlink" title="export default语句"></a>export default语句</h2><p>如果不想为某个属性或方法指定输入的名称，可以使用<code>export default</code>语句。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// export-default.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'foo'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面代码中的<code>foo</code>方法，就被称为该模块的默认方法。</p>
-<p>在其他模块导入该模块时，<code>import</code>语句可以为默认方法指定任意名字。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// import-default.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> customName <span class="keyword">from</span> <span class="string">'export-default'</span>;</span><br><span class="line"></span><br><span class="line">customName(); <span class="comment">// 'foo'</span></span><br></pre></td></tr></table></figure>
-<p>显然，一个模块只能有一个默认方法。</p>
-<p>如果要输出默认属性，只需将值跟在<code>export default</code>之后即可。</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="reserved">export</span> <span class="reserved">default</span> <span class="number">42</span>;</span><br></pre></td></tr></table></figure>
-<h2 id="模块的继承"><a href="#模块的继承" class="headerlink" title="模块的继承"></a>模块的继承</h2><p>模块之间也可以继承。</p>
-<p>假设有一个<code>circleplus</code>模块，继承了<code>circle</code>模块。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// circleplus.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> * from <span class="string">'./circle'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> * from <span class="string">'circle'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">var</span> e = <span class="number">2.71828182846</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.exp(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面代码中的“export *”，表示输出<code>circle</code>模块的所有属性和方法，<code>export default</code>命令定义模块的默认方法。</p>
-<p>这时，也可以将circle的属性或方法，改名后再输出。</p>
-<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// circleplus.js</span></span><br><span class="line">    </span><br><span class="line">export &#123; area <span class="keyword">as</span> circleArea &#125; <span class="keyword">from</span> <span class="string">'circle'</span>;</span><br></pre></td></tr></table></figure>
-<p>上面代码表示，只输出<code>circle</code>模块的<code>area</code>方法，且将其改名为<code>circleArea</code>。</p>
-<p>加载上面模块的写法如下。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span> math from <span class="string">"circleplus"</span>;</span><br><span class="line"><span class="keyword">import</span> exp <span class="keyword">from</span> <span class="string">"circleplus"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(exp(math.E));</span><br></pre></td></tr></table></figure>
-<p>上面代码中的”import exp”表示，将<code>circleplus</code>模块的默认方法加载为<code>exp</code>方法。</p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/09/19/JS的单例模式/" itemprop="url">
-                JS的单例模式
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-09-19T10:46:51+08:00" content="2015-09-19">
-            2015-09-19
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/09/19/JS的单例模式/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/19/JS的单例模式/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p>维基百科对单例模式的介绍如下：</p>
-<blockquote>
-<p>在应用单例模式时，生成单例的类必须保证只有一个实例的存在，很多时候整个系统只需要拥有一个全局对象，才有利于协调系统整体的行为。比如在整个系统的配置文件中，配置数据有一个单例对象进行统一读取和修改，其他对象需要配置数据的时候也统一通过该单例对象来获取配置数据，这样就可以简化复杂环境下的配置管理。</p>
-</blockquote>
-<h2 id="实现一、最简单的字面量写法"><a href="#实现一、最简单的字面量写法" class="headerlink" title="实现一、最简单的字面量写法"></a>实现一、最简单的字面量写法</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="nimrod"></span><br><span class="line">    <span class="keyword">var</span> singleton = &#123;</span><br><span class="line">        attr: <span class="number">1</span>,</span><br><span class="line">        <span class="keyword">method</span>: function()&#123; <span class="keyword">return</span> this.attr;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> t1 = singleton;</span><br><span class="line">    <span class="keyword">var</span> t2 = singleton;</span><br><span class="line"></span><br><span class="line">    alert(t1 === t2); // <span class="literal">true</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>十分简单，并且非常使用，不足之处在于没有什么封装性，所有的属性方法都是暴露的。对于一些需要使用私有变量的情况就显得心有余而力不足了。当然在对于 this 的问题上也是有一定弊端的。</p>
-<h2 id="实现二、构造函数内部判断"><a href="#实现二、构造函数内部判断" class="headerlink" title="实现二、构造函数内部判断"></a>实现二、构造函数内部判断</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="actionscript"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">Construct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 确保只有单例</span></span><br><span class="line">        <span class="keyword">if</span>( Construct.unique !== <span class="literal">undefined</span> )&#123;</span><br><span class="line">            <span class="keyword">return</span> Construct.unique; </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 其他代码</span></span><br><span class="line">        <span class="keyword">this</span>.name = <span class="string">"NYF"</span>;</span><br><span class="line">        <span class="keyword">this</span>.age=<span class="string">"24"</span>;</span><br><span class="line">        Construct.unique = <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> t1 = <span class="keyword">new</span> Construct() ;</span><br><span class="line">    <span class="keyword">var</span> t2 = <span class="keyword">new</span> Construct() ;</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>也是非常简单，无非就是提出一个属性来做判断，但是该方式也没有安全性，一旦我在外部修改了Construct的unique属性，那么单例模式也就被破坏了。</p>
-<h2 id="实现三、闭包方式"><a href="#实现三、闭包方式" class="headerlink" title="实现三、闭包方式"></a>实现三、闭包方式</h2><p>对于打着”灵活”牌子的JS来说，任何问题都能找到 n 种答案，只不过让我自己去掂量孰优孰劣而已，下面就简单的举几个使用闭包实现单例模式的方法，无非也就是将创建了的单例缓存而已。</p>
-<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="stylus"></span><br><span class="line">    <span class="tag">var</span> single = (<span class="function"><span class="title">function</span><span class="params">()</span></span></span></span><span class="expression">&#123;</span><br><span class="line">        <span class="variable">var</span> <span class="variable">unique</span>;</span><br><span class="line">        <span class="variable">function</span> <span class="variable">Constructor</span>() &#123;</span><br><span class="line">            <span class="variable">this.name</span> = <span class="string">"NYF"</span>;</span><br><span class="line">            <span class="variable">this.age</span>=<span class="string">"24"</span>;</span><br><span class="line">        &#125;</span><span class="xml"><span class="oxygene"></span><br><span class="line">        unique = <span class="keyword">new</span> <span class="function"><span class="keyword">Constructor</span><span class="params">()</span>;</span></span><br><span class="line">        return unique;</span><br><span class="line"></span><br><span class="line">    &#125;)();</span><br><span class="line">    <span class="keyword">var</span> t1 = single;</span><br><span class="line">    <span class="keyword">var</span> t2 = single;</span><br><span class="line"></span><br><span class="line">    alert(t1 === t2);</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>只要 每次讲 var t1 = single; var t2 = single;即可。 与对象字面量方式类似。不过相对而言更安全一点，当然也不是绝对安全。</p>
-<p>如果希望会用调用 single() 方式来使用，那么也只需要将内部的 return 改为</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> unique;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>以上方式也可以使用 new 的方式来进行（形式主义的赶脚）。当然这边只是给了闭包的一种例子而已，也可以在 Construct 中判断单例是否存在 等等。 各种方式在各个不同情况做好选着即可。</p>
-<p>参考原文<a href="http://my.oschina.net/humaotegong/blog/410666?p=1" target="_blank" rel="external">http://my.oschina.net/humaotegong/blog/410666?p=1</a></p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1234,7 +1279,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

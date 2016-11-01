@@ -188,6 +188,215 @@
           
           
             
+              <a class="post-title-link" href="/2015/10/29/ES6学习笔记-Module的基本用法/" itemprop="url">
+                ES6学习笔记:Module的基本用法
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-10-29T11:06:32+08:00" content="2015-10-29">
+            2015-10-29
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/29/ES6学习笔记-Module的基本用法/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/29/ES6学习笔记-Module的基本用法/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h2 id="export和import"><a href="#export和import" class="headerlink" title="export和import"></a>export和import</h2><p>ES6实现了模块功能，试图解决JavaScript代码上的依赖和部署上的问题，取代现有的<code>CommonJs</code>的<code>AMD</code>规范，成为浏览器和服务器通用的模块解决方案。</p>
+<p>模块功能有两个关键字： <code>export</code>和<code>import</code>。<code>export</code>用于用户自定义模块，规定对外接口；<code>import</code>用于输入其它模块提供的功能，同时创造命名空间(<code>namespace</code>)，防止函数名冲突。</p>
+<p>ES6允许将独立的JS文件作为模块，也就是说，允许一个<code>JavaScript</code>脚本文件调用另一个脚本文件。最简单的模块就是一个JS文件，里面使用<code>export</code>关键字输出变量。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// profile.js</span></span><br><span class="line"><span class="literal">export</span> <span class="keyword">var</span> firstName = <span class="string">'David'</span>;</span><br><span class="line"><span class="literal">export</span> <span class="keyword">var</span> lastName = <span class="string">'Belle'</span>;</span><br><span class="line"><span class="literal">export</span> <span class="keyword">var</span> year = <span class="number">1973</span>;</span><br></pre></td></tr></table></figure>
+<p>上面是<code>profile.js</code>的内容，ES6将其视为一个模块，里面用<code>export</code>关键字输出了三个变量。<code>export</code>的写法，除了上面这样，还有另外一种，两者是等价的。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// profile.js</span></span><br><span class="line"><span class="keyword">var</span> firstName = <span class="string">'David'</span>;</span><br><span class="line"><span class="keyword">var</span> lastName = <span class="string">'Belle'</span>;</span><br><span class="line"><span class="keyword">var</span> year = <span class="number">1973</span>;</span><br><span class="line"></span><br><span class="line"><span class="literal">export</span> &#123;firstName, lastName, year&#125;;</span><br></pre></td></tr></table></figure>
+<p>使用<code>export</code>定义模块后，其他JS文件就可以通过<code>import</code>关键字加载这个模块(文件)。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;firstName, lastName, year&#125; <span class="keyword">from</span> <span class="string">'./profile'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setHeader</span>(<span class="params">element</span>) </span>&#123;</span><br><span class="line">    element.textContent = firstName + <span class="string">' '</span> + lastName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码中<code>import</code>关键字接受一个对象(用大括号表示)，里面指定要从其他模块导入的变量。大括号里面的变量名，必须与被导入模块对外接口的名称相同。</p>
+<p>如果想为输入的属性或方法重新取一个名字，import语句要写成这样。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;someMethod, another <span class="keyword">as</span> newName&#125; <span class="keyword">from</span> <span class="string">'./profile'</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="模块的整体加载"><a href="#模块的整体加载" class="headerlink" title="模块的整体加载"></a>模块的整体加载</h2><p><code>export</code>关键字除了输出变量，还可以输出方法或类(<code>class</code>)。下面是<code>circle.js</code>文件的内容，它输出两个方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// circle.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">area</span>(<span class="params">redius</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.PI * radius * radius;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">circumference</span>(<span class="params">radius</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span> * <span class="built_in">Math</span>.PI * radius;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后，<code>main.js</code>引用这个模块。</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">import</span> &#123;area, circumference&#125; from './<span class="built_in">circle</span>';</span><br><span class="line"></span><br><span class="line">console.<span class="built_in">log</span><span class="params">(<span class="string">"圆面积： "</span> + area<span class="params">(<span class="number">4</span>)</span>)</span>;</span><br><span class="line">console.<span class="built_in">log</span><span class="params">(<span class="string">"圆周长： "</span> + circumference<span class="params">(<span class="number">14</span>)</span>)</span>;</span><br></pre></td></tr></table></figure>
+<p>上面的写法是逐一指定要导入的方法。另一种写法是使用<code>module</code>关键字，整体导入。</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"></span><br><span class="line">module <span class="keyword">circle</span> from <span class="string">'./circle'</span>;</span><br><span class="line"></span><br><span class="line">console.<span class="keyword">log</span>(<span class="string">"圆面积： "</span> + <span class="keyword">circle</span>.area(<span class="number">4</span>));</span><br><span class="line">console.<span class="keyword">log</span>(<span class="string">"圆周长： "</span> + <span class="keyword">circle</span>.circumference(<span class="number">14</span>));</span><br></pre></td></tr></table></figure>
+<p><code>module</code>关键字后面跟一个变量，表示导入的模块定义在该变量上。</p>
+<h2 id="export-default语句"><a href="#export-default语句" class="headerlink" title="export default语句"></a>export default语句</h2><p>如果不想为某个属性或方法指定输入的名称，可以使用<code>export default</code>语句。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// export-default.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'foo'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码中的<code>foo</code>方法，就被称为该模块的默认方法。</p>
+<p>在其他模块导入该模块时，<code>import</code>语句可以为默认方法指定任意名字。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// import-default.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> customName <span class="keyword">from</span> <span class="string">'export-default'</span>;</span><br><span class="line"></span><br><span class="line">customName(); <span class="comment">// 'foo'</span></span><br></pre></td></tr></table></figure>
+<p>显然，一个模块只能有一个默认方法。</p>
+<p>如果要输出默认属性，只需将值跟在<code>export default</code>之后即可。</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="reserved">export</span> <span class="reserved">default</span> <span class="number">42</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="模块的继承"><a href="#模块的继承" class="headerlink" title="模块的继承"></a>模块的继承</h2><p>模块之间也可以继承。</p>
+<p>假设有一个<code>circleplus</code>模块，继承了<code>circle</code>模块。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// circleplus.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> * from <span class="string">'./circle'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> * from <span class="string">'circle'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">var</span> e = <span class="number">2.71828182846</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.exp(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码中的“export *”，表示输出<code>circle</code>模块的所有属性和方法，<code>export default</code>命令定义模块的默认方法。</p>
+<p>这时，也可以将circle的属性或方法，改名后再输出。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// circleplus.js</span></span><br><span class="line">    </span><br><span class="line">export &#123; area <span class="keyword">as</span> circleArea &#125; <span class="keyword">from</span> <span class="string">'circle'</span>;</span><br></pre></td></tr></table></figure>
+<p>上面代码表示，只输出<code>circle</code>模块的<code>area</code>方法，且将其改名为<code>circleArea</code>。</p>
+<p>加载上面模块的写法如下。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span> math from <span class="string">"circleplus"</span>;</span><br><span class="line"><span class="keyword">import</span> exp <span class="keyword">from</span> <span class="string">"circleplus"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(exp(math.E));</span><br></pre></td></tr></table></figure>
+<p>上面代码中的”import exp”表示，将<code>circleplus</code>模块的默认方法加载为<code>exp</code>方法。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/09/19/JS的单例模式/" itemprop="url">
+                JS的单例模式
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-09-19T10:46:51+08:00" content="2015-09-19">
+            2015-09-19
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/09/19/JS的单例模式/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/19/JS的单例模式/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>维基百科对单例模式的介绍如下：</p>
+<blockquote>
+<p>在应用单例模式时，生成单例的类必须保证只有一个实例的存在，很多时候整个系统只需要拥有一个全局对象，才有利于协调系统整体的行为。比如在整个系统的配置文件中，配置数据有一个单例对象进行统一读取和修改，其他对象需要配置数据的时候也统一通过该单例对象来获取配置数据，这样就可以简化复杂环境下的配置管理。</p>
+</blockquote>
+<h2 id="实现一、最简单的字面量写法"><a href="#实现一、最简单的字面量写法" class="headerlink" title="实现一、最简单的字面量写法"></a>实现一、最简单的字面量写法</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="nimrod"></span><br><span class="line">    <span class="keyword">var</span> singleton = &#123;</span><br><span class="line">        attr: <span class="number">1</span>,</span><br><span class="line">        <span class="keyword">method</span>: function()&#123; <span class="keyword">return</span> this.attr;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> t1 = singleton;</span><br><span class="line">    <span class="keyword">var</span> t2 = singleton;</span><br><span class="line"></span><br><span class="line">    alert(t1 === t2); // <span class="literal">true</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>十分简单，并且非常使用，不足之处在于没有什么封装性，所有的属性方法都是暴露的。对于一些需要使用私有变量的情况就显得心有余而力不足了。当然在对于 this 的问题上也是有一定弊端的。</p>
+<h2 id="实现二、构造函数内部判断"><a href="#实现二、构造函数内部判断" class="headerlink" title="实现二、构造函数内部判断"></a>实现二、构造函数内部判断</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="actionscript"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">Construct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 确保只有单例</span></span><br><span class="line">        <span class="keyword">if</span>( Construct.unique !== <span class="literal">undefined</span> )&#123;</span><br><span class="line">            <span class="keyword">return</span> Construct.unique; </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 其他代码</span></span><br><span class="line">        <span class="keyword">this</span>.name = <span class="string">"NYF"</span>;</span><br><span class="line">        <span class="keyword">this</span>.age=<span class="string">"24"</span>;</span><br><span class="line">        Construct.unique = <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> t1 = <span class="keyword">new</span> Construct() ;</span><br><span class="line">    <span class="keyword">var</span> t2 = <span class="keyword">new</span> Construct() ;</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>也是非常简单，无非就是提出一个属性来做判断，但是该方式也没有安全性，一旦我在外部修改了Construct的unique属性，那么单例模式也就被破坏了。</p>
+<h2 id="实现三、闭包方式"><a href="#实现三、闭包方式" class="headerlink" title="实现三、闭包方式"></a>实现三、闭包方式</h2><p>对于打着”灵活”牌子的JS来说，任何问题都能找到 n 种答案，只不过让我自己去掂量孰优孰劣而已，下面就简单的举几个使用闭包实现单例模式的方法，无非也就是将创建了的单例缓存而已。</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="stylus"></span><br><span class="line">    <span class="tag">var</span> single = (<span class="function"><span class="title">function</span><span class="params">()</span></span></span></span><span class="expression">&#123;</span><br><span class="line">        <span class="variable">var</span> <span class="variable">unique</span>;</span><br><span class="line">        <span class="variable">function</span> <span class="variable">Constructor</span>() &#123;</span><br><span class="line">            <span class="variable">this.name</span> = <span class="string">"NYF"</span>;</span><br><span class="line">            <span class="variable">this.age</span>=<span class="string">"24"</span>;</span><br><span class="line">        &#125;</span><span class="xml"><span class="oxygene"></span><br><span class="line">        unique = <span class="keyword">new</span> <span class="function"><span class="keyword">Constructor</span><span class="params">()</span>;</span></span><br><span class="line">        return unique;</span><br><span class="line"></span><br><span class="line">    &#125;)();</span><br><span class="line">    <span class="keyword">var</span> t1 = single;</span><br><span class="line">    <span class="keyword">var</span> t2 = single;</span><br><span class="line"></span><br><span class="line">    alert(t1 === t2);</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>只要 每次讲 var t1 = single; var t2 = single;即可。 与对象字面量方式类似。不过相对而言更安全一点，当然也不是绝对安全。</p>
+<p>如果希望会用调用 single() 方式来使用，那么也只需要将内部的 return 改为</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> unique;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上方式也可以使用 new 的方式来进行（形式主义的赶脚）。当然这边只是给了闭包的一种例子而已，也可以在 Construct 中判断单例是否存在 等等。 各种方式在各个不同情况做好选着即可。</p>
+<p>参考原文<a href="http://my.oschina.net/humaotegong/blog/410666?p=1" target="_blank" rel="external">http://my.oschina.net/humaotegong/blog/410666?p=1</a></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/09/17/假装成黑客/" itemprop="url">
                 假装成黑客
               </a>
@@ -896,231 +1105,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/30/2014蘑菇街校招前端笔试题和我自己的解答/" itemprop="url">
-                2014蘑菇街校招前端笔试题和我自己的解答
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-07-30T20:45:47+08:00" content="2015-07-30">
-            2015-07-30
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/07/30/2014蘑菇街校招前端笔试题和我自己的解答/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/30/2014蘑菇街校招前端笔试题和我自己的解答/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><h2 id="写出position属性的属性值，简述各值的感化与差别"><a href="#写出position属性的属性值，简述各值的感化与差别" class="headerlink" title="写出position属性的属性值，简述各值的感化与差别"></a>写出position属性的属性值，简述各值的感化与差别</h2><blockquote>
-<p>position: static;</p>
-</blockquote>
-<p>元素框正常生成，块级元素生成一个矩形框，作为文档流的一部分，行内元素则会创建一个或多个行框，置于其父元素中</p>
-<blockquote>
-<p>position: relative;</p>
-</blockquote>
-<p>元素框偏移某个距离，元素仍然保持位定位前的形状，它原本所占的空间仍然保留</p>
-<blockquote>
-<p>position: absolute;</p>
-</blockquote>
-<p>元素从文档流完全删除，相对于包含块定位，包含块可能是元素中的另一个元素或者初始包含块（）。元素原先在正常文档流中所占的空间被关闭，且定位后的元素会生成一个块级框</p>
-<blockquote>
-<p>position: fixed;</p>
-</blockquote>
-<p>相当于包含块是视窗的position: absolute;</p>
-<h2 id="写出一个两列等高，左列固定宽度为300px，右列自适应浏览器的布局"><a href="#写出一个两列等高，左列固定宽度为300px，右列自适应浏览器的布局" class="headerlink" title="写出一个两列等高，左列固定宽度为300px，右列自适应浏览器的布局"></a>写出一个两列等高，左列固定宽度为300px，右列自适应浏览器的布局</h2><p>这里参考豆瓣克军大牛的<a href="http://site.douban.com/Jobs/widget/notes/277664/note/180697114/" target="_blank" rel="external">一篇文章</a></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span><br><span class="line">    <span class="tag">body</span> <span class="rules">&#123;</span><br><span class="line">        <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">500px</span></span></span>;</span><br><span class="line">    &#125;</span></span><br><span class="line">    <span class="class">.left</span> <span class="rules">&#123;</span><br><span class="line">        <span class="rule"><span class="attribute">background</span>:<span class="value"> yellow</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">300px</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">float</span>:<span class="value"> left</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">    &#125;</span></span><br><span class="line">    <span class="class">.right</span> <span class="rules">&#123;</span><br><span class="line">        <span class="rule"><span class="attribute">overflow</span>:<span class="value"> hidden</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">zoom</span>:<span class="value"> <span class="number">1</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">background</span>:<span class="value"> green</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">    &#125;</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"left"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"right"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>abcd<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="写一个获取url中参数的值的函数"><a href="#写一个获取url中参数的值的函数" class="headerlink" title="写一个获取url中参数的值的函数"></a>写一个获取url中参数的值的函数</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getRequest</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> url = <span class="built_in">window</span>.location.search;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> oRequest = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (url.indexOf(<span class="string">'?'</span>) !== -<span class="number">1</span>) &#123;</span><br><span class="line"></span><br><span class="line">            url = url.substr(<span class="number">1</span>); <span class="comment">// 取得?以后的字符串</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> reqArr = url.split(<span class="string">'&amp;'</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; reqArr.length; i++) &#123;</span><br><span class="line"></span><br><span class="line">                oRequest[(reqArr[i].split(<span class="string">'='</span>))[<span class="number">0</span>]] = <span class="built_in">unescape</span>((reqArr[i].split(<span class="string">'='</span>))[<span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> oRequest;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>有字符串在的地方就少不了正则表达式</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据参数获取参数值</span></span><br><span class="line">function getQueryString(name) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> <span class="keyword">reg</span> = new RegExp(<span class="string">"(^|&amp;)"</span>+name+<span class="string">"=([^&amp;]*)(&amp;|$)"</span>, <span class="string">"i"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> <span class="keyword">ret</span> = location.<span class="keyword">search</span>.<span class="literal">substr</span>(1).<span class="literal">match</span>(<span class="keyword">reg</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">ret</span> === null ? null : <span class="keyword">ret</span>[2];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.<span class="literal">log</span>(getQueryString(<span class="string">"key"</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回参数与参数的值对象</span></span><br><span class="line">function getRequest() &#123;</span><br><span class="line">    <span class="keyword">var</span> searchStr = decodeURI(<span class="keyword">window</span>.location.<span class="keyword">search</span>);</span><br><span class="line">    <span class="keyword">var</span> <span class="keyword">reg</span> = /([\u4E00-\u9FFFa-zA-Z0-9_]+=[\u4E00-\u9FFFa-zA-Z0-9_]+)/<span class="keyword">g</span>;</span><br><span class="line">    <span class="keyword">var</span> aRes = [];</span><br><span class="line">    <span class="keyword">var</span> oRequest = &#123;&#125;;</span><br><span class="line">    <span class="keyword">var</span> i = 0;</span><br><span class="line">    aRes = searchStr.<span class="literal">match</span>(<span class="keyword">reg</span>);</span><br><span class="line">    <span class="keyword">for</span> (i = 0; i &lt; aRes.length; i++) &#123;</span><br><span class="line">        oRequest[(aRes[i].<span class="keyword">split</span>('='))[0]] = (aRes[i].<span class="keyword">split</span>('='))[1];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> oRequest;</span><br><span class="line">&#125;</span><br><span class="line">console.<span class="literal">log</span>(getRequest());</span><br></pre></td></tr></table></figure>
-<h2 id="写出一个3X5的方格一共有几许个矩形的推导过程以及成果"><a href="#写出一个3X5的方格一共有几许个矩形的推导过程以及成果" class="headerlink" title="写出一个3X5的方格一共有几许个矩形的推导过程以及成果"></a>写出一个3X5的方格一共有几许个矩形的推导过程以及成果</h2><p>每个矩形都是由两条水平直线和两条竖直直线组成的，那么水平直线的取法有 3<em>2/(2</em>1) = 3,竖直线的取法有 5<em>4/(2</em>1) = 10，则矩形个数为30（不知道这里正方形算不算矩形……）</p>
-<ul>
-<li><strong>简单用代码实现下JS中的原型持续，并且画图申明其父类与子类的原型关系</strong></li>
-<li><strong>用JS代码简单介绍本身</strong></li>
-<li><strong>JS中的数据类型？如何断定一个变量是否是String类型</strong></li>
-</ul>
-<p>在ECMAScript有5种基本数据类型： Undefined/Null/Boolean/Number/String， 以及一种复杂数据类型Object。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"abcd"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> str); <span class="comment">// object</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(str) === <span class="string">"[object String]"</span>); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> str1 = <span class="string">"abcd"</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> str1); <span class="comment">// string</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(str1) === <span class="string">"[object String]"</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/29/MySQL子查询与连接/" itemprop="url">
-                MySQL子查询与连接
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-07-29T20:55:43+08:00" content="2015-07-29">
-            2015-07-29
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/back-end/" itemprop="url" rel="index"><span itemprop="name">back-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/07/29/MySQL子查询与连接/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/29/MySQL子查询与连接/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><h2 id="子查询（Subquery）是指出现在其他-SQL-语句内的select子句"><a href="#子查询（Subquery）是指出现在其他-SQL-语句内的select子句" class="headerlink" title="子查询（Subquery）是指出现在其他 SQL 语句内的select子句"></a>子查询（Subquery）是指出现在其他 SQL 语句内的select子句</h2><p>例如：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> t1 <span class="keyword">where</span> col1 = (<span class="keyword">select</span> col2 <span class="keyword">from</span> t2);</span></span><br></pre></td></tr></table></figure>
-<p>其中 <code>select * from t1</code>， 称为<code>Outer Query/Outer Statement</code></p>
-<p><code>select col2 from t2</code> ,称为 <code>SubQuery</code>。</p>
-<h2 id="子查询指嵌套在查询内部，并且始终出现在圆括号内"><a href="#子查询指嵌套在查询内部，并且始终出现在圆括号内" class="headerlink" title="子查询指嵌套在查询内部，并且始终出现在圆括号内"></a>子查询指嵌套在查询内部，并且始终出现在圆括号内</h2><p>子查询有多个关键字或条件，如 <code>distinct</code> , <code>group by</code>, <code>order by</code>, <code>limit</code>, <code>函数</code>等<br>子查询的外层查询可以是 ： <code>select</code>, <code>insert</code>, <code>update</code>, <code>set</code> 或 <code>do</code>。</p>
-<h2 id="子查询可以返回标量、一行、一列或子查询"><a href="#子查询可以返回标量、一行、一列或子查询" class="headerlink" title="子查询可以返回标量、一行、一列或子查询"></a>子查询可以返回标量、一行、一列或子查询</h2><h2 id="由比较运算符（-gt-lt-gt-lt-lt-gt-lt-gt-）引发的子查询"><a href="#由比较运算符（-gt-lt-gt-lt-lt-gt-lt-gt-）引发的子查询" class="headerlink" title="由比较运算符（=,&gt;,&lt;,&gt;=,&lt;=,&lt;&gt;,!=,&lt;=&gt;）引发的子查询"></a>由比较运算符（=,&gt;,&lt;,&gt;=,&lt;=,&lt;&gt;,!=,&lt;=&gt;）引发的子查询</h2><p>语法结构 ： <code>operand comparison_operator subquery</code><br>子查询实例</p>
-<p>求所有商品的平均价格</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> <span class="keyword">round</span>(<span class="keyword">avg</span>(goods_price), <span class="number">2</span>) <span class="keyword">from</span> tdb_goods;</span></span><br></pre></td></tr></table></figure>
-<p>列出所有商品价格在平均价格之上的商品</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> goods_id,goods_name,goods_price <span class="keyword">from</span> tdb_goods</span><br><span class="line"></span><br><span class="line"><span class="keyword">where</span> goods_price &gt;= (<span class="keyword">select</span> <span class="keyword">round</span>(<span class="keyword">avg</span>(goods_price),<span class="number">2</span>) <span class="keyword">from</span> tdb_goods);</span></span><br></pre></td></tr></table></figure>
-<p>用 SOME（任意一个）,ANY（任意一个）,ALL（所有的） 修饰比较运算符</p>
-<h2 id="由-NOT-IN-、-NOT-EXISTS引发的查询"><a href="#由-NOT-IN-、-NOT-EXISTS引发的查询" class="headerlink" title="由 [NOT] IN 、[NOT] EXISTS引发的查询"></a>由 [NOT] IN 、[NOT] EXISTS引发的查询</h2><p><code>= ANY</code>运算符 与<code>IN</code> 等效，<code>!=ALL</code>或<code>&lt;&gt;ALL</code>与<code>NOT IN</code> 等效;<br>如果子查询返回任何行，EXIST将返回TRUE，否则返回false;</p>
-<h2 id="使用-INSERT…SELECT-插入记录（便于使用外键实现）"><a href="#使用-INSERT…SELECT-插入记录（便于使用外键实现）" class="headerlink" title="使用 INSERT…SELECT 插入记录（便于使用外键实现）"></a>使用 INSERT…SELECT 插入记录（便于使用外键实现）</h2><p>在一个数据表的分类中，可能存在大量重复的数据，这时候可以奖建立两个数据表关联，提高查询效率。<br>实例</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">将查询结果写入数据表</span><br><span class="line"><span class="operator"><span class="keyword">Insert</span> tdb_goods_cates(cate_name) <span class="keyword">select</span> goods_cate <span class="keyword">from</span> tdb_goods <span class="keyword">group</span> <span class="keyword">by</span> goods_cate;</span></span><br></pre></td></tr></table></figure>
-<h2 id="多表更新"><a href="#多表更新" class="headerlink" title="多表更新"></a>多表更新</h2><p>多表的更新基本上与单表更新相似。<br>连接类型</p>
-<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">INNER <span class="built_in">JOIN</span>（与<span class="built_in">JOIN</span>,CROSS <span class="built_in">JOIN</span>等价） 内连接，</span><br><span class="line"></span><br><span class="line"><span class="built_in">LEFT</span>[OUTER] <span class="built_in">JOIN</span> 左外连接</span><br><span class="line"></span><br><span class="line"><span class="built_in">RIGHT</span>[OUTER] <span class="built_in">JOIN</span> 右外连接</span><br><span class="line"></span><br><span class="line">SQL语句实例</span><br><span class="line"></span><br><span class="line">update tdb_goods inner <span class="built_in">join</span> tdb_goods_cates <span class="keyword">on</span> goods_cate = cate_name <span class="keyword">set</span> goods_cate = cate_id;</span><br></pre></td></tr></table></figure>
-<h2 id="多表更新之一步到位-–-CREATE-…-SELECT"><a href="#多表更新之一步到位-–-CREATE-…-SELECT" class="headerlink" title="多表更新之一步到位 – CREATE … SELECT"></a>多表更新之一步到位 – CREATE … SELECT</h2><p>SQL语句实例</p>
-<ol>
-<li><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">create</span> <span class="keyword">table</span> tdb_goods_brands</span><br><span class="line"></span><br><span class="line">(</span><br><span class="line"></span><br><span class="line">brand_id <span class="built_in">smallint</span> unsigned <span class="keyword">primary</span> <span class="keyword">key</span> auto_increment,</span><br><span class="line"></span><br><span class="line">brand_name <span class="built_in">varchar</span>(<span class="number">40</span>) <span class="keyword">not</span> <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">)</span><br><span class="line"><span class="keyword">select</span> brand_name <span class="keyword">from</span> tdb_goods <span class="keyword">group</span> <span class="keyword">by</span> brand_name;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>当两个表的字段名相同时，可以为两个表分别起一个别名，例如下面的g和b:</p>
-</li>
-</ol>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">update</span> tdb_goods <span class="keyword">as</span> g <span class="keyword">inner</span> <span class="keyword">join</span> tdb_goods_brands <span class="keyword">as</span> b <span class="keyword">on</span> g.brand_name = b.brand_name <span class="keyword">set</span> g.brand_name = b.brand_id;</span></span><br></pre></td></tr></table></figure>
-<ol>
-<li>修改表的结构</li>
-</ol>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">alter</span> <span class="keyword">table</span> tdb_goods <span class="keyword">change</span> goods_cate cate_id <span class="built_in">smallint</span> unsigned <span class="keyword">not</span> <span class="literal">null</span>,<span class="keyword">change</span> brand_name brand_id <span class="built_in">smallint</span> unsigned <span class="keyword">not</span> <span class="literal">null</span>;</span></span><br></pre></td></tr></table></figure>
-<h2 id="连接的语法结构"><a href="#连接的语法结构" class="headerlink" title="连接的语法结构"></a>连接的语法结构</h2><h2 id="内连接-INNER-JOIN"><a href="#内连接-INNER-JOIN" class="headerlink" title="内连接 INNER JOIN"></a>内连接 INNER JOIN</h2><p>通常使用 ON 关键字来设定连接条件，使用WHERE关键字进行结果集记录的过滤。<br>内连接：显示左表及右表符合条件的记录（交集）。<br>SQL语句实例</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> goods_id,goods_name,cate_name <span class="keyword">from</span> tdb_goods <span class="keyword">inner</span> <span class="keyword">join</span> tdb_goods_cates <span class="keyword">on</span> tdb_goods.cate_id =tdb_goods_cates.cate_id;</span></span><br></pre></td></tr></table></figure>
-<h2 id="外连接-OUTER-JOIN"><a href="#外连接-OUTER-JOIN" class="headerlink" title="外连接 OUTER JOIN"></a>外连接 OUTER JOIN</h2><ol>
-<li>左外连接： 显示左表中的全部和右表中符合条件的部分。</li>
-</ol>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> goods_id,goods_name,cate_name <span class="keyword">from</span> tdb_goods <span class="keyword">left</span> <span class="keyword">join</span> tdb_goods_cates <span class="keyword">on</span> tdb_goods.cate_id = tdb_goods_cates.cate_id;</span></span><br></pre></td></tr></table></figure>
-<ol>
-<li>右外连接： 显示右表中的全部和左表中符合条件的部分。</li>
-</ol>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> goods_id,goods_name,cate_name <span class="keyword">from</span> tdb_goods <span class="keyword">right</span> <span class="keyword">join</span> tdb_goods_cates <span class="keyword">on</span> tdb_goods.cate_id =tdb_goods_cates.cate_id;</span></span><br></pre></td></tr></table></figure>
-<h2 id="多表连接"><a href="#多表连接" class="headerlink" title="多表连接"></a>多表连接</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> goods_id,goods_name,cate_name,brand_name,goods_price <span class="keyword">from</span> tdb_goods <span class="keyword">as</span> g</span><br><span class="line"></span><br><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> tdb_goods_cates <span class="keyword">as</span> c <span class="keyword">on</span> g.cate_id = c.cate_id</span><br><span class="line"></span><br><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> tdb_goods_brands <span class="keyword">as</span> b <span class="keyword">on</span> g.brand_id = b.brand_id\G;</span></span><br></pre></td></tr></table></figure></span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1160,7 +1144,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
