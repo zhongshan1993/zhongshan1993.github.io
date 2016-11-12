@@ -188,6 +188,220 @@
           
           
             
+              <a class="post-title-link" href="/2016/11/12/为什么要使用-Flow-？/" itemprop="url">
+                为什么要使用 Flow ？
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-11-12T23:41:26+08:00" content="2016-11-12">
+            2016-11-12
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/翻译/" itemprop="url" rel="index"><span itemprop="name">翻译</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/11/12/为什么要使用-Flow-？/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/为什么要使用-Flow-？/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p><a href="https://flowtype.org/" target="_blank" rel="external">Flow</a>是一个由 Facebook 开源的 JavaScript 静态类型检查器。旨在解决JavaScript编程中的多种痛点，写出更优雅、更易理解的 JavaScript 代码。</p>
+<p>引用 Flow 主页上的介绍：</p>
+<blockquote>
+<p>Flow 可以在 JavaScript 代码运行之前检测错误，包括</p>
+<ul>
+<li>静态类型转换，</li>
+<li>空指针引用，</li>
+<li>和可怕的调用函数未定义的错误</li>
+</ul>
+</blockquote>
+<p>以及</p>
+<blockquote>
+<p>Flow 还会逐步地将类型断言融入到你的代码中</p>
+</blockquote>
+<p>所以 Flow 可以解决很多常见的 JavaScript 问题，你可以逐步将其引入你的代码库中。这很酷吧！</p>
+<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><p>在我们使用Flow之前，我们要先弄清楚什么是类型。我们看一下<a href="https://en.wikipedia.org/wiki/Data_type" target="_blank" rel="external">维基百科上的数据类型文章中的定义</a>：</p>
+<blockquote>
+<p>类型是用来标识各种不同种类的数据的，如实数类型、整型或布尔型。它可以确定该类型的可能值，可对该类型的值进行的操作，其数据的含义，以及该类型的值可用的存储方式。</p>
+</blockquote>
+<p>用我自己的话简单来讲，类型就是你程序中约束数据的规则，这些规则帮助计算机确定你可以在数据上做哪些事情，不能做哪些事情。如果你不小心试图破坏这些规则，它可以提醒你，这一点大有裨益。</p>
+<p>当你使用不同的语言编写代码时，你会发现，类型的表现方式可能会迥然不同，从必须声明到可选，再到几乎不需要。通常，编程语言的类型系统分为两类：强类型 vs. 弱类型，以及动态类型 vs. 静态类型。</p>
+<h3 id="强类型-vs-弱类型"><a href="#强类型-vs-弱类型" class="headerlink" title="强类型 vs. 弱类型"></a>强类型 vs. 弱类型</h3><p><a href="https://en.wikipedia.org/wiki/Strong_and_weak_typing" target="_blank" rel="external">维基百科有一篇很好的文章介绍这一点</a>，目前人们普遍认为，强类型和弱类型有些模棱两可，因为二者之间还没有一个成文的约定。我决定按前面讲到的那篇维基百科上的文章来讲。</p>
+<blockquote>
+<p>隐式类型转换和“类型双关”</p>
+</blockquote>
+<hr>
+<p>在像 python 这样的强类型语言中，变量在第一次声明之后就不能再改变它的类型，除非你临时显式转换为其他类型，或者之后重新声明。</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">x</span> = <span class="number">5</span></span><br><span class="line"><span class="keyword">print</span> <span class="keyword">x</span> + <span class="string">""</span> # cannot <span class="built_in">add</span> integers <span class="keyword">to</span> strings</span><br></pre></td></tr></table></figure>
+<p>这样会抛出下列错误</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">`TypeError</span>: unsupported operand <span class="keyword">type</span>(s) <span class="keyword">for</span> +: <span class="symbol">'int'</span> <span class="keyword">and</span> <span class="symbol">'str'</span>`</span><br></pre></td></tr></table></figure>
+<p>但这样写是可以的</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">x =</span> <span class="number">5</span></span><br><span class="line"><span class="variable">x =</span> <span class="string">""</span></span><br><span class="line">print x + <span class="string">""</span> <span class="comment"># redeclared x so it's fine</span></span><br></pre></td></tr></table></figure>
+<p>或者这样</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">5</span></span><br><span class="line"><span class="built_in">print</span> str(x) + <span class="string">""</span> <span class="comment"># casted x to a string so it's fine</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p>在 JavaScript 等弱类型语言中，由于变量在使用时被隐式转换，会变得更加灵活。你可以将字符串和对象相加，数组和对象相加，数值和null相加。更糟糕的是，运算出错时并不会抛出异常。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">console.<span class="function"><span class="title">log</span><span class="params">(&#123;&#125; + &#123;&#125;)</span></span> <span class="comment">// NaN</span></span><br><span class="line">console.<span class="function"><span class="title">log</span><span class="params">(&#123;&#125; + [])</span></span> <span class="comment">// 0</span></span><br><span class="line">console.<span class="function"><span class="title">log</span><span class="params">([] + [])</span></span> <span class="comment">// ''</span></span><br><span class="line">console.<span class="function"><span class="title">log</span><span class="params">(&#123;&#125; + <span class="number">2</span>)</span></span> <span class="comment">// [object Object]2</span></span><br><span class="line">console.<span class="function"><span class="title">log</span><span class="params">(&#123;&#125; + <span class="string">'hello'</span>)</span></span> <span class="comment">// [object Object]hello</span></span><br></pre></td></tr></table></figure>
+<p>我想你能想象到可能发生的各种问题，而这些问题都不会抛出错误。</p>
+<h3 id="动态类型-vs-静态类型"><a href="#动态类型-vs-静态类型" class="headerlink" title="动态类型 vs. 静态类型"></a>动态类型 vs. 静态类型</h3><p>动态类型 vs. 静态类型比强类型 vs. 弱类型有更多的争议。我不会说二者哪个更好，也不会逐一全面分析它们的优点。相反，我只是简单介绍一下二者的优点，如果你想了解更多关于它们二者哪个更好的辩论，可以看看下面的文章。</p>
+<ul>
+<li><a href="http://programmers.stackexchange.com/questions/59606/is-type-safety-worth-the-trade-offs" target="_blank" rel="external">Is type safety worth the trade-offs?</a></li>
+<li><a href="http://programmers.stackexchange.com/questions/122205/what-is-the-supposed-productivity-gain-of-dynamic-typing" target="_blank" rel="external">What is the supposed productivity gain of dynamic typing?</a></li>
+</ul>
+<p>现在给出我自己的免责观点：</p>
+<p>在静态类型的语言中，你需要显式地写出变量的类型。很多人都了解 Java 这种强类型的静态类型语言，你需要在 Java 语言中写明变量类型，如<code>int</code>或<code>String</code>，以及函数的返回值类型和参数类型，如<code>int add(int a, int b)</code>：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> class Hello &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) &#123;</span><br><span class="line">    <span class="built_in">int</span> x = <span class="number">5</span>;</span><br><span class="line">    <span class="built_in">int</span> y = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">String</span> s = <span class="string">"1.23131"</span>;</span><br><span class="line"></span><br><span class="line">    System.out.<span class="built_in">println</span>(<span class="built_in">add</span>(x, y)); <span class="comment">// 15</span></span><br><span class="line">    System.out.<span class="built_in">println</span>(<span class="built_in">add</span>(x, s)); <span class="comment">// Incompatible types: String cannot be converted to int</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">int</span> <span class="built_in">add</span>(<span class="built_in">int</span> a, <span class="built_in">int</span> b) &#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为<code>String</code>类型和<code>int</code>类型不能相加，这段代码在编译时第8行会报错。</p>
+<p>注意：</p>
+<ul>
+<li>错误在编译的时候就会捕获，而不是这代码运行的时候，这意味着，只有你修复了错误才能运行代码。</li>
+<li>如果你使用IDE编写代码，IDE会提示你<code>add(x, s)</code>写法错误。因为你事先指定了语言类型，所以IDE可以在更高级别进行分析，而无须编译，以发现错误。</li>
+</ul>
+<ul>
+<li>如果函数被命名为其他很随意的名字而不是<code>add</code>，你仍然可以看出它需要接受两个整型参数并返回一个整型结果，这是非常有用的信息。</li>
+</ul>
+<hr>
+<p>在动态类型语言中，你根本不用指明变量的类型。其主要好处是你的代码不会那么混乱，你不必在开始编程之前考虑类型，这提升了生产力。python  就是一门强类型的动态类型语言，下面的代码可以实现与上一段代码相同的功能。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">  x = <span class="number">5</span></span><br><span class="line">  y = <span class="number">10</span></span><br><span class="line">  s = <span class="string">"1.23131"</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">print</span> add(x, y) <span class="comment"># 15</span></span><br><span class="line">  <span class="keyword">print</span> add(x, s) <span class="comment"># TypeError: unsupported operand type(s) for +: 'int' and 'str'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(a, b)</span>:</span></span><br><span class="line">  <span class="keyword">return</span> a + b</span><br></pre></td></tr></table></figure>
+<p>运行代码时，这段代码将在第7行抛出错误，因为<code>string</code>类型和<code>int</code>类型是不能相加的。</p>
+<p>值得注意的几点：</p>
+<ul>
+<li>这样写代码更加简洁。</li>
+<li>你不能确定变量<code>a</code>和<code>b</code>的类型，<code>int</code>、<code>string</code>、<code>float</code>等类型都是有可能的。</li>
+<li>这段代码仍然会在运行时抛出错误，注意是在运行时而不是在编译时，这与静态类型语言比较是一个很大的区别。也意味着测试对于动态类型的语言更加重要，因为即使代码包含类型错误，也可能不会有太大问题。</li>
+</ul>
+<hr>
+<p><strong> 静态类型语言中的类型推断 </strong></p>
+<p>我之前说过，静态类型语言需要显式地写出类型，这句话并不完全正确。在没有类型推断的语言（如 Java ）中，这是对的，但在类型推断语言中，计算机可以帮助你来确定使用什么类型。例如，在下面的例子中，是用 Haskell 写的一段与前文代码功能相同的一段代码，这是一门以其真正强大的类型系统而闻名的语言。在我写 <code>let x = 1</code> <code>和</code>let add’ = (+)`时，Haskell 会自动推断其类型，而不需要显式写出。</p>
+<p><strong> Haskell </strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">main :: IO()</span><br><span class="line">main = <span class="operator"><span class="keyword">do</span></span><br><span class="line">  let x = <span class="number">1</span></span><br><span class="line">  let y = <span class="number">2</span></span><br><span class="line">  let s = <span class="string">""</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">-- Type inference</span></span><br><span class="line">  let <span class="keyword">add</span><span class="string">' = (+)</span><br><span class="line"></span><br><span class="line">  print (add x y)  -- 3</span><br><span class="line">  print (add'</span> x y) <span class="comment">-- 3</span></span><br><span class="line">  print (<span class="keyword">add</span> x s)  <span class="comment">-- throws error</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- With Explicit Types</span></span><br><span class="line"><span class="keyword">add</span> :: <span class="built_in">Int</span> -&gt; <span class="built_in">Int</span> -&gt; <span class="built_in">Int</span></span><br><span class="line"><span class="keyword">add</span> = (+)</span></span><br></pre></td></tr></table></figure>
+<p>在 Flow 等其他类型系统中都有类型推断。然而，即使类型推断让你的编码更加简单，编码量更加少，你也不应该完全依赖于它。</p>
+<h2 id="回到JavaScript和Flow上面来"><a href="#回到JavaScript和Flow上面来" class="headerlink" title="回到JavaScript和Flow上面来"></a>回到JavaScript和Flow上面来</h2><p>现在我们了解了更多关于类型的东西，可以回到手头上的问题来，这会让你在写 JavaScript 的时候犯更少的错误。</p>
+<p>JavaScript 既是弱类型语言又是动态类型语言，这是一个灵活但又及其容易出错的组合。正如前文所说，由于隐式转换的原因，不同类型的值之间所有的操作都不会抛出错误，无论这些操作是否有效（弱类型），并且在从来不用显式地写出类型（动态类型）。</p>
+<p>这种动态类型和弱类型的大杂烩是相当不幸的，从下面的例子和许多人对这门语言的批判中就可以体现。</p>
+<ul>
+<li><a href="https://www.destroyallsoftware.com/talks/wat" target="_blank" rel="external">wat</a></li>
+</ul>
+<p>这些问题的大多数解决方案是 Flow，通过静态类型和类型推理，如前文所述，解决了许多语言的痛点。</p>
+<p>这不是一篇教程，如果你需要教程可以移步<a href="https://flowtype.org/docs/getting-started.html" target="_blank" rel="external">flow入门指南</a>。</p>
+<p>让我们继续分析，回到我们在讲弱类型部分的第一个JS示例，这次我们使用 Flow 来检查代码。</p>
+<p>我们将<code>// @flow</code>添加到代码的第一行，然后使用命令行工具<code>flow</code>来检查代码（集成在IDE中也是有可能的）：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// @flow</span></span><br><span class="line"><span class="comment">// ^^^^^ that's necessary to activate flow</span></span><br><span class="line"><span class="comment">// flow is opt-in to allow you to gradually add types</span></span><br><span class="line"></span><br><span class="line">console.<span class="function"><span class="title">log</span><span class="params">(&#123;&#125; + &#123;&#125;)</span></span> <span class="comment">// NaN</span></span><br><span class="line">console.<span class="function"><span class="title">log</span><span class="params">(&#123;&#125; + [])</span></span> <span class="comment">// 0</span></span><br><span class="line">console.<span class="function"><span class="title">log</span><span class="params">([] + [])</span></span> <span class="comment">// ''</span></span><br><span class="line">console.<span class="function"><span class="title">log</span><span class="params">(&#123;&#125; + <span class="number">2</span>)</span></span> <span class="comment">// [object Object]2</span></span><br><span class="line">console.<span class="function"><span class="title">log</span><span class="params">(&#123;&#125; + <span class="string">'hello'</span>)</span></span> <span class="comment">// [object Object]hello</span></span><br></pre></td></tr></table></figure>
+<p>于是<strong>每一行代码</strong>都会立即生成类似于下面的错误。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">index<span class="class">.js</span>:<span class="number">3</span></span><br><span class="line">  <span class="number">3</span>: console.<span class="function"><span class="title">log</span><span class="params">(&#123;&#125; + &#123;&#125;)</span></span> <span class="comment">// NaN</span></span><br><span class="line">                 ^^ <span class="tag">object</span> literal. This type cannot be added to</span><br><span class="line">  <span class="number">3</span>: console.<span class="function"><span class="title">log</span><span class="params">(&#123;&#125; + &#123;&#125;)</span></span> <span class="comment">// NaN</span></span><br><span class="line">                 ^^^^^^^ string</span><br></pre></td></tr></table></figure>
+<p>不需要做任何额外的工作来添加类型注释，Flow 就已经指明了代码中的错误。<code>wat</code>视频中提到的那些问题也不会再出现。</p>
+<h3 id="注释代码的好处"><a href="#注释代码的好处" class="headerlink" title="注释代码的好处"></a>注释代码的好处</h3><p>虽然 Flow 会帮助发现上面的错误，但是你要想真正从中获益，你必须自己编写类型注释，这意味着你可以使用 Flow 的内置类型，如<code>number</code>、<code>string</code>、<code>null</code>、<code>boolean</code>等等，来指定值的类型或自定义某些类型别名，请看下面的例子：</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">type <span class="keyword">Person</span> = &#123;</span><br><span class="line">  age: number,</span><br><span class="line">  name: string,</span><br><span class="line">  <span class="keyword">gender</span>: 'male' | 'female'</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在你可以将函数：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">xyz</span><span class="params">(x, y, z)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x + y + z</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>转换成</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// @flow</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">xyz</span><span class="params">(x: number, y: number, z: number)</span><span class="type">: number</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x + y + z</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上述实例中，我们知道函数的参数x、y、z应该接受三个数值，并且其返回值也应该是数值。如果你试图这样传参，<code>xyz({}, &#39;2&#39;, [])</code>，在JavaScript是百分之百可以的，而 Flow 则会抛出错误。随着你越来越多地开始这样写，Flow 会更加了解你的代码库，并更好地提示你代码中的错误。</p>
+<h2 id="一些例子"><a href="#一些例子" class="headerlink" title="一些例子"></a>一些例子</h2><p><strong>捕获函数参数数量不正确的错误。</strong></p>
+<p>代码如下：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// @flow</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">xyz</span><span class="params">(x: number, y: number, z: number)</span><span class="type">: number</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x + y + z</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">xyz(<span class="number">1</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>报错如下：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">index.js:<span class="number">7</span></span><br><span class="line">  <span class="number">7</span>: xyz(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">     ^^^^^^^^^ function call</span><br><span class="line">  <span class="number">7</span>: xyz(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">     ^^^^^^^^^ undefined (too few arguments, expected <span class="keyword">default</span>/rest parameters). <span class="type">This</span> <span class="class"><span class="keyword">type</span> <span class="title">is</span> <span class="title">incompatible</span> <span class="keyword"><span class="keyword">with</span></span></span><br><span class="line"></span>  <span class="number">3</span>: function xyz(x: number, y: number, z: number): number &#123;</span><br><span class="line">                                           ^^^^^^ number</span><br></pre></td></tr></table></figure>
+<p><strong>捕获函数参数类型不正确的错误。</strong></p>
+<p>代码如下：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// @flow</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">xyz</span><span class="params">(x: number, y: number, z: number)</span><span class="type">: number</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x + y + z</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">xyz(<span class="number">1</span>, <span class="number">2</span>, <span class="string">''</span>)</span><br></pre></td></tr></table></figure>
+<p>报错如下：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">index.js:<span class="number">7</span></span><br><span class="line">  <span class="number">7</span>: xyz(<span class="number">1</span>, <span class="number">2</span>, '')</span><br><span class="line">     ^^^^^^^^^^^^^ function call</span><br><span class="line">  <span class="number">7</span>: xyz(<span class="number">1</span>, <span class="number">2</span>, '')</span><br><span class="line">               ^^ string. <span class="type">This</span> <span class="class"><span class="keyword">type</span> <span class="title">is</span> <span class="title">incompatible</span> <span class="keyword"><span class="keyword">with</span></span></span><br><span class="line"></span>  <span class="number">3</span>: function xyz(x: number, y: number, z: number): number &#123;</span><br><span class="line">                                           ^^^^^^ number</span><br></pre></td></tr></table></figure>
+<p><strong>确认你不要忘记检查 NULL。</strong></p>
+<p>代码如下：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// @flow</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">xyz</span><span class="params">(x: number, y: number, z: number)</span><span class="type">: ?number</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> Math.random() &lt; <span class="number">0.5</span> ? x + y + z : <span class="literal">null</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printNumber</span><span class="params">(x: number)</span><span class="type">: void</span> </span>&#123;</span><br><span class="line">  console.log(x)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">printNumber(xyz(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+<p>报错如下：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">index.js:<span class="number">11</span></span><br><span class="line"> <span class="number">11</span>: printNumber(xyz(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>))</span><br><span class="line">     ^^^^^^^^^^^^^^^^^^^^^^^^^ function call</span><br><span class="line"> <span class="number">11</span>: printNumber(xyz(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>))</span><br><span class="line">                 ^^^^^^^^^^^^ <span class="literal">null</span>. <span class="type">This</span> <span class="class"><span class="keyword">type</span> <span class="title">is</span> <span class="title">incompatible</span> <span class="keyword"><span class="keyword">with</span></span></span><br><span class="line"></span>  <span class="number">7</span>: function printNumber(x: number): void &#123;</span><br><span class="line">                             ^^^^^^ number</span><br></pre></td></tr></table></figure>
+<p><strong>确认你的返回值是否正确。</strong></p>
+<p>代码如下：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// @flow</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">xyz</span><span class="params">(x: number, y: number, z: number)</span><span class="type">: number</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> Math.random() &lt; <span class="number">0.5</span></span><br><span class="line">    ? x + y + z</span><br><span class="line">    : <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>报错如下：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">index.js:<span class="number">6</span></span><br><span class="line">  <span class="number">6</span>:     : <span class="literal">null</span></span><br><span class="line">           ^^^^ <span class="literal">null</span>. This type <span class="keyword">is</span> incompatible <span class="keyword">with</span> the expected <span class="keyword">return</span> type of</span><br><span class="line">  <span class="number">3</span>: <span class="function"><span class="keyword">function</span> <span class="title">xyz</span><span class="params">(x: number, y: number, z: number)</span><span class="type">: number</span> </span>&#123;</span><br><span class="line">                                                    ^^^^^^ number</span><br></pre></td></tr></table></figure>
+<p><strong>确认对象包含所有它应该包含的属性。</strong></p>
+<p>代码如下：</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// @flow</span><br><span class="line"></span><br><span class="line">type <span class="keyword">Person</span> = &#123;</span><br><span class="line">  age: number,</span><br><span class="line">  name: string,</span><br><span class="line">  <span class="keyword">gender</span>: 'male' | 'female'</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const <span class="keyword">person</span>: <span class="keyword">Person</span> = &#123; name: 'joe', age: 10 &#125;</span><br></pre></td></tr></table></figure>
+<p>报错如下：</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">index.js:9</span><br><span class="line">  9: const <span class="keyword">person</span>: <span class="keyword">Person</span> = &#123; name: 'joe', age: 10 &#125;</span><br><span class="line">                   ^^^^^^ property `<span class="keyword">gender</span>`. Property not found in</span><br><span class="line">  9: const <span class="keyword">person</span>: <span class="keyword">Person</span> = &#123; name: 'joe', age: 10 &#125;</span><br><span class="line">                            ^^^^^^^^^^^^^^^^^^^^^^^^ object literal</span><br></pre></td></tr></table></figure>
+<p><strong>确认不存在的对象属性不被访问。</strong></p>
+<p>代码如下：</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// @flow</span><br><span class="line"></span><br><span class="line">type <span class="keyword">Person</span> = &#123;</span><br><span class="line">  age: number,</span><br><span class="line">  name: string,</span><br><span class="line">  <span class="keyword">gender</span>: 'male' | 'female'</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const <span class="keyword">person</span>: <span class="keyword">Person</span> = &#123; name: 'joe', age: 10, <span class="keyword">gender</span>: 'male' &#125;</span><br><span class="line">console.log(<span class="keyword">person</span>.job)</span><br></pre></td></tr></table></figure>
+<p>报错如下：</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">index.js:9</span><br><span class="line">  9: console.log(<span class="keyword">person</span>.job)</span><br><span class="line">                        ^^^ property `job`. Property not found in</span><br><span class="line">  9: console.log(<span class="keyword">person</span>.job)</span><br><span class="line">                 ^^^^^^ object type</span><br></pre></td></tr></table></figure>
+<h2 id="更深入的探讨"><a href="#更深入的探讨" class="headerlink" title="更深入的探讨"></a>更深入的探讨</h2><p>还有一些常见的好处，我可能忘了。但上面的例子已经涵盖了绝大部分。如果你在想，“就只有这些吗？”，那么还可以进行更加深入的研究。</p>
+<p><a href="https://github.com/gcanti" target="_blank" rel="external">Giulio Canti</a> 写了相当多的关于 Flow 更高级的东西，而不仅仅是使用 Flow 来限制变量类型、参数类型以及返回类型。</p>
+<ul>
+<li><a href="https://medium.com/@gcanti/phantom-types-with-flow-828aff73232b#.su86baahz" target="_blank" rel="external">Phantom Types with Flow</a>这篇文章中介绍了你可以使用；类型来检测用户的输入是否合法。</li>
+<li><a href="Refinement Types with Flow">Refinement Types with Flow</a>这篇文章中谈到你可以创建具有内置约束的类型。</li>
+<li><a href="https://medium.com/@gcanti/higher-kinded-types-in-flow-275b657992b7#.1oa0j4u1a" target="_blank" rel="external">Higher Kinded Types with Flow</a>这篇文章中谈到你可以创建更高层级的类型。</li>
+<li><a href="https://medium.com/@gcanti/the-eff-monad-implemented-in-flow-40803670c3eb#.i067byfnq" target="_blank" rel="external">The Eff Monad Implemented in Flow</a>这篇文章中谈到您可以将代码的副作用（译者注：side effects,“副作用”一词请参考<a href="https://www.zhihu.com/question/30779564" target="_blank" rel="external">https://www.zhihu.com/question/30779564</a>）表示为类型。</li>
+</ul>
+<p>他还撰写了<a href="https://github.com/gcanti/flow-static-land" target="_blank" rel="external">flow-static-land</a>，这是很让人兴奋的。</p>
+<h2 id="长话短说的总结"><a href="#长话短说的总结" class="headerlink" title="长话短说的总结"></a>长话短说的总结</h2><ul>
+<li>JavaScript 既是弱类型语言又是动态类型语言，极其容易出错，也是它成为糟糕语言的一个重要原因。</li>
+<li>由于前期成本很低，并且具有缓慢演进的能力，Flow 通过向 JavaScript 添加类型系统来解决这两个问题。</li>
+</ul>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2016/11/02/ECMAScript 2016的那些你不知道的事儿 - NCZOnline/" itemprop="url">
                 ECMAScript 2016的那些你不知道的事儿 - NCZOnline
               </a>
@@ -1153,98 +1367,11 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/11/26/javascript用栈的思想实现数制转换/" itemprop="url">
-                javascript用栈的思想实现数制转换
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-11-26T11:31:43+08:00" content="2015-11-26">
-            2015-11-26
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/11/26/javascript用栈的思想实现数制转换/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/26/javascript用栈的思想实现数制转换/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p><strong>可以利用栈将一个数字从一种数制转换成另一种数制。假设想将数字n转换为以b为基数的数字，实现转换的算法如下：</strong></p>
-<ol>
-<li>最高位为 n%b ，将此位压入栈。</li>
-<li>使用 n/b 代替n。</li>
-<li>重复步骤1和2，直到n等于0，且没有余数。</li>
-<li>持续将栈内元素弹出，直到栈为空，依次将这些元素排列，就得到转换后的数字的字符串形式。</li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">Stack</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.dataStore = [];</span><br><span class="line">        <span class="keyword">this</span>.top = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">this</span>.push = push;</span><br><span class="line">        <span class="keyword">this</span>.pop = pop;</span><br><span class="line">        <span class="keyword">this</span>.peek = peek;</span><br><span class="line">        <span class="keyword">this</span>.clear = clear;</span><br><span class="line">        <span class="keyword">this</span>.length = length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">push</span>(<span class="params">element</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.dataStore[<span class="keyword">this</span>.top++] = element;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">peek</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.dataStore[<span class="keyword">this</span>.top-<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">pop</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.dataStore[--<span class="keyword">this</span>.top];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">clear</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.top = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">length</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.top;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 数制转换函数 */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">mulBase</span>(<span class="params">num, base</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> s = <span class="keyword">new</span> Stack();</span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            s.push(num%base);</span><br><span class="line">            num = <span class="built_in">Math</span>.floor(num /= base);</span><br><span class="line">        &#125; <span class="keyword">while</span>(num &gt; <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">var</span> converted = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">while</span>(s.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            converted += s.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> converted;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    alert(mulBase(<span class="number">10</span>, <span class="number">2</span>));</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
   </nav>
 
 
@@ -1279,7 +1406,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">41</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
