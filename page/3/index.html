@@ -188,6 +188,94 @@
           
           
             
+              <a class="post-title-link" href="/2015/07/31/运用DIV拖拽实现resize和碰撞检测/" itemprop="url">
+                运用DIV拖拽实现resize和碰撞检测
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-07-31T20:42:09+08:00" content="2015-07-31">
+            2015-07-31
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/07/31/运用DIV拖拽实现resize和碰撞检测/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/31/运用DIV拖拽实现resize和碰撞检测/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h2 id="Div由拖拽改变大小"><a href="#Div由拖拽改变大小" class="headerlink" title="Div由拖拽改变大小"></a>Div由拖拽改变大小</h2><p><a href="http://zhongshan1993.github.io/myDemo/singlePage/drag-changeDivSize.html" target="_blank" rel="external">演示demo</a><br>当我们运用html元素”textarea”写一个文本输入框时，浏览器会自动生成以下样式<br><img src="http://7xksst.com1.z0.glb.clouddn.com/QQ截图20150731125810.png" alt=""><br>用鼠标拖动右下角的小三角就可以对文本框的大小进行重新设置，于是我们试着在一个div中实现与上述相似的功能</p>
+<p><strong>先看布局</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span><br><span class="line">    <span class="id">#div1</span> <span class="rules">&#123;</span><br><span class="line">        <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">10px</span></span></span>; </span><br><span class="line">        <span class="rule"><span class="attribute">height</span>:<span class="value"><span class="number">10px</span></span></span>; </span><br><span class="line">        <span class="rule"><span class="attribute">background</span>:<span class="value">red</span></span>; </span><br><span class="line">        <span class="rule"><span class="attribute">position</span>:<span class="value">absolute</span></span>; </span><br><span class="line">        <span class="rule"><span class="attribute">z-index</span>:<span class="value"><span class="number">2</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">0</span></span></span>;   </span><br><span class="line">        <span class="rule"><span class="attribute">cursor</span>:<span class="value"> nw-resize</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="function">url</span>(images/drag_ico.gif)</span></span>;</span><br><span class="line">    &#125;</span></span><br><span class="line">    <span class="id">#div2</span> <span class="rules">&#123;</span><br><span class="line">        <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">200px</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">150px</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#ccc</span></span></span>;</span><br><span class="line">    &#125;</span></span><br><span class="line">    <span class="class">.box</span> <span class="rules">&#123;</span><br><span class="line">        <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1px</span> dashed <span class="hexcolor">#000</span></span></span>;</span><br><span class="line">    &#125;</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"div2"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"div1"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>用父元素div2代替“文本框”，用div1代替小三角，这里的定位，为后面的js实现方法打下了基础<br><img src="http://7xksst.com1.z0.glb.clouddn.com/QQ截图20150731130554.png" alt=""></p>
+<p><strong>JS的实现方法</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span><br><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> oDiv = <span class="built_in">document</span>.getElementById(<span class="string">'div1'</span>);</span><br><span class="line">    <span class="keyword">var</span> oDiv2 = <span class="built_in">document</span>.getElementById(<span class="string">'div2'</span>);</span><br><span class="line">        </span><br><span class="line">    oDiv.onmousedown = <span class="function"><span class="keyword">function</span>(<span class="params">ev</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> oEvent = ev || event;</span><br><span class="line">        <span class="keyword">var</span> disX = oEvent.clientX - oDiv.offsetLeft;</span><br><span class="line">        <span class="keyword">var</span> disY = oEvent.clientY - oDiv.offsetTop;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params">ev</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> oEvent = ev || event;</span><br><span class="line">            oDiv2.style.width = oEvent.clientX - disX + oDiv.offsetWidth + <span class="string">'px'</span>;</span><br><span class="line">            oDiv2.style.height = oEvent.clientY - disY + oDiv.offsetHeight + <span class="string">'px'</span>;</span><br><span class="line">            </span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">document</span>.onmouseup = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">document</span>.onmousemove = <span class="literal">null</span>;</span><br><span class="line">            <span class="built_in">document</span>.onmouseup = <span class="literal">null</span>;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>将小三角移动的x轴和y轴长度反应到其父元素的宽高上面，便得到了这样的效果</p>
+<h2 id="在拖动过程中检测两个div是否有重合"><a href="#在拖动过程中检测两个div是否有重合" class="headerlink" title="在拖动过程中检测两个div是否有重合"></a>在拖动过程中检测两个div是否有重合</h2><p>布局并不麻烦，两个div，定宽高、背景颜色即可<br><a href="http://zhongshan1993.github.io/myDemo/singlePage/drag-testCrash.html" target="_blank" rel="external">演示demo</a><br>逆向思维：既然我们要检测div在运动过程中是否重合，那如果知道什么时候不重合，剩下的情况就是重合了，在这里，分析不重合的情况显然比分析重合的情况要容易<br>如图，当r1<l2, b1<t2,="" l1="">r2, t2&gt;b2，这四个条件只要有任意一个成立，都会导致两个div不重合，这里的t,l,b,r在下面的代码中有详细定义。<br><img src="http://7xksst.com1.z0.glb.clouddn.com/QQ截图20150731132238.png" alt=""></l2,></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span><br><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> oDiv = <span class="built_in">document</span>.getElementById(<span class="string">'div1'</span>);</span><br><span class="line">    <span class="keyword">var</span> oDiv2 = <span class="built_in">document</span>.getElementById(<span class="string">'div2'</span>);</span><br><span class="line">    </span><br><span class="line">    oDiv.onmousedown = <span class="function"><span class="keyword">function</span>(<span class="params">ev</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> oEvent = ev || event;</span><br><span class="line">        <span class="keyword">var</span> disX = oEvent.clientX - oDiv.offsetLeft;</span><br><span class="line">        <span class="keyword">var</span> disY = oEvent.clientY - oDiv.offsetTop;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params">ev</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> oEvent = ev || event;</span><br><span class="line">            </span><br><span class="line">            oDiv.style.left = oEvent.clientX - disX + <span class="string">'px'</span>;</span><br><span class="line">            oDiv.style.top = oEvent.clientY - disY + <span class="string">'px'</span>;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">var</span> l1 = oDiv.offsetLeft;</span><br><span class="line">            <span class="keyword">var</span> r1 = l1 + oDiv.offsetWidth;</span><br><span class="line">            <span class="keyword">var</span> t1 = oDiv.offsetTop;</span><br><span class="line">            <span class="keyword">var</span> b1 = t1 + oDiv.offsetHeight;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> l2 = oDiv2.offsetLeft;</span><br><span class="line">            <span class="keyword">var</span> r2 = l2 + oDiv2.offsetWidth;</span><br><span class="line">            <span class="keyword">var</span> t2 = oDiv2.offsetTop;</span><br><span class="line">            <span class="keyword">var</span> b2 = t2 + oDiv2.offsetHeight;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (r1 &lt; l2 || l1 &gt; r2 || b1 &lt; t2 || t1 &gt; b2) &#123;</span><br><span class="line">                oDiv2.style.backgroundColor = <span class="string">'yellow'</span>;</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 发生碰撞的时候</span></span><br><span class="line">                oDiv2.style.backgroundColor = <span class="string">'green'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">document</span>.onmouseup = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">document</span>.onmousemove = <span class="literal">null</span>;</span><br><span class="line">            <span class="built_in">document</span>.onmouseup = <span class="literal">null</span>;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/07/30/2014蘑菇街校招前端笔试题和我自己的解答/" itemprop="url">
                 2014蘑菇街校招前端笔试题和我自己的解答
               </a>
@@ -1175,91 +1263,11 @@ swap分区（交换分区，内存2倍，不超过2GB）
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/17/javascript一种比较通用的继承过程/" itemprop="url">
-                javascript一种比较通用的继承过程
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-07-17T11:11:59+08:00" content="2015-07-17">
-            2015-07-17
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/07/17/javascript一种比较通用的继承过程/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/17/javascript一种比较通用的继承过程/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="inform7"></span><br><span class="line">    function <span class="keyword">Person</span>(name, <span class="keyword">gender</span>) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.<span class="keyword">gender</span> = <span class="keyword">gender</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">Person</span>.prototype.showName = function() &#123;</span><br><span class="line">        alert(this.name);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">Person</span>.prototype.showGender =function() &#123;</span><br><span class="line">        alert(this.<span class="keyword">gender</span>);</span><br><span class="line">    &#125;</span><br><span class="line">　　</span><br><span class="line">    function Worker(name, <span class="keyword">gender</span>, job) &#123;</span><br><span class="line">　　　　　　　// Step1</span><br><span class="line">        <span class="keyword">Person</span>.call(this, name, <span class="keyword">gender</span>);</span><br><span class="line">        this.job = job;</span><br><span class="line">    &#125;</span><br><span class="line">　　　// Step2</span><br><span class="line">    for (var i in <span class="keyword">Person</span>.prototype) &#123;</span><br><span class="line">        Worker.prototype<span class="comment">[i]</span> = <span class="keyword">Person</span>.prototype<span class="comment">[i]</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    Worker.prototype.showJob = function() &#123;</span><br><span class="line">        alert(this.job);</span><br><span class="line">    &#125;</span><br><span class="line">    var oW1 = new Worker(<span class="string">"hello"</span>, <span class="string">"male"</span>, <span class="string">"coder"</span>);</span><br><span class="line">    oW1.showJob();</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
   </nav>
 
 
@@ -1294,7 +1302,7 @@ swap分区（交换分区，内存2倍，不超过2GB）
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">41</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
