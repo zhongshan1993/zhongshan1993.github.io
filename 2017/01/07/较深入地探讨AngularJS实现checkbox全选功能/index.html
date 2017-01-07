@@ -1,0 +1,718 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+    <meta name="description" content="Zhongshan's Blog" />
+
+
+
+  <meta name="keywords" content="JS," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="全选功能在网页开发中算是一个极为常见的功能了。尤其在开发系统的管理后台时，维护人员可能要做重复的机械动作，手动更改每一条数据的状态，这时候如果有全选功能，应该会让我们程序同学和策划同学被人背地里吐槽的几率小很多。
+一、要实现的需求一图胜千言，先来看图。
+
+再来细化一下功能：
+
+需要有一个checkbox负责全选和取消全选
+全选后，取消其中一项，全选取消
+取消全选后，再手动选上所有项，全选check">
+<meta property="og:type" content="article">
+<meta property="og:title" content="较深入地探讨AngularJS实现checkbox全选功能">
+<meta property="og:url" content="http://yoursite.com/2017/01/07/较深入地探讨AngularJS实现checkbox全选功能/index.html">
+<meta property="og:site_name" content="钟山">
+<meta property="og:description" content="全选功能在网页开发中算是一个极为常见的功能了。尤其在开发系统的管理后台时，维护人员可能要做重复的机械动作，手动更改每一条数据的状态，这时候如果有全选功能，应该会让我们程序同学和策划同学被人背地里吐槽的几率小很多。
+一、要实现的需求一图胜千言，先来看图。
+
+再来细化一下功能：
+
+需要有一个checkbox负责全选和取消全选
+全选后，取消其中一项，全选取消
+取消全选后，再手动选上所有项，全选check">
+<meta property="og:image" content="http://7xksst.com1.z0.glb.clouddn.com/15684709.jpg">
+<meta property="og:image" content="http://7xksst.com1.z0.glb.clouddn.com/GIF.gif">
+<meta property="og:updated_time" content="2017-01-07T15:57:10.634Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="较深入地探讨AngularJS实现checkbox全选功能">
+<meta name="twitter:description" content="全选功能在网页开发中算是一个极为常见的功能了。尤其在开发系统的管理后台时，维护人员可能要做重复的机械动作，手动更改每一条数据的状态，这时候如果有全选功能，应该会让我们程序同学和策划同学被人背地里吐槽的几率小很多。
+一、要实现的需求一图胜千言，先来看图。
+
+再来细化一下功能：
+
+需要有一个checkbox负责全选和取消全选
+全选后，取消其中一项，全选取消
+取消全选后，再手动选上所有项，全选check">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 较深入地探讨AngularJS实现checkbox全选功能 // 钟山 </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5a2d0a4cdbf5a39b405be1bde03decdb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">钟山</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+<form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ziircGxZ7ZMf75HN6yzE','2.0.0');
+</script>
+
+<div class="site-search-toggle"></div>
+    </div>
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              较深入地探讨AngularJS实现checkbox全选功能
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2017-01-07T23:49:48+08:00" content="2017-01-07">
+            2017-01-07
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2017/01/07/较深入地探讨AngularJS实现checkbox全选功能/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/07/较深入地探讨AngularJS实现checkbox全选功能/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><center><img src="http://7xksst.com1.z0.glb.clouddn.com/15684709.jpg" alt="image"></center>
+
+<p>全选功能在网页开发中算是一个极为常见的功能了。尤其在开发系统的管理后台时，维护人员可能要做重复的机械动作，手动更改每一条数据的状态，这时候如果有全选功能，应该会让我们程序同学和策划同学被人背地里吐槽的几率小很多。</p>
+<h2 id="一、要实现的需求"><a href="#一、要实现的需求" class="headerlink" title="一、要实现的需求"></a>一、要实现的需求</h2><p>一图胜千言，先来看图。</p>
+<p><img src="http://7xksst.com1.z0.glb.clouddn.com/GIF.gif" alt="image"></p>
+<p>再来细化一下功能：</p>
+<ol>
+<li>需要有一个checkbox负责全选和取消全选</li>
+<li>全选后，取消其中一项，全选取消</li>
+<li>取消全选后，再手动选上所有项，全选checkbox自动勾上</li>
+</ol>
+<h2 id="二、思路1-给数组中的每一项绑定checked属性"><a href="#二、思路1-给数组中的每一项绑定checked属性" class="headerlink" title="二、思路1 给数组中的每一项绑定checked属性"></a>二、思路1 给数组中的每一项绑定<code>checked</code>属性</h2><p>通过<code>checkedArray</code>这个数组，存储已经选中的数组元素，其作用主要是实现上文中的第3项功能，代码如下。</p>
+<ul>
+<li><p>HTML</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="tag">div</span> ng-controller=<span class="string">"myCtrl"</span>&gt;</span><br><span class="line">	&lt;<span class="tag">label</span> <span class="keyword">for</span>=<span class="string">"select-all"</span>&gt;全选</span><br><span class="line">		&lt;<span class="tag">input</span> </span><br><span class="line">			type=<span class="string">"checkbox"</span> </span><br><span class="line">			id=<span class="string">"select-all"</span></span><br><span class="line">			ng-change=<span class="string">"selectAll()"</span></span><br><span class="line">			ng-model=<span class="string">"all"</span> &gt;</span><br><span class="line">	&lt;/label&gt;</span><br><span class="line">	&lt;ul&gt;</span><br><span class="line">		&lt;<span class="tag">li</span> ng-repeat=<span class="string">"item in list"</span>&gt;</span><br><span class="line">			&lt;<span class="tag">input</span> type=<span class="string">"checkbox"</span> ng-model=<span class="string">"item.checked"</span> ng-change=<span class="string">"selectOne()"</span>&gt;</span><br><span class="line">			&lt;<span class="tag">span</span> ng-bind=<span class="string">"item.id"</span>&gt;&lt;/span&gt;</span><br><span class="line">		&lt;/li&gt;</span><br><span class="line">	&lt;/ul&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JS</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'myApp'</span>, []);</span><br><span class="line">app.controller(<span class="string">'myCtrl'</span>, [<span class="string">'$scope'</span>, <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$scope</span>)</span></span>&#123;</span><br><span class="line">	<span class="variable">$scope</span>.<span class="keyword">list</span> = [</span><br><span class="line">		&#123;</span><br><span class="line">			id: <span class="string">'001'</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			id: <span class="string">'002'</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			id: <span class="string">'003'</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			id: <span class="string">'004'</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			id: <span class="string">'005'</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			id: <span class="string">'006'</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			id: <span class="string">'007'</span>,</span><br><span class="line">		&#125;</span><br><span class="line">	];</span><br><span class="line">	<span class="variable">$scope</span>.checkedArray = [];</span><br><span class="line">	<span class="variable">$scope</span>.selectAll = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="variable">$scope</span>.all) &#123;</span><br><span class="line">			<span class="variable">$scope</span>.checkedArray = [];</span><br><span class="line">			angular.<span class="keyword">forEach</span>(<span class="variable">$scope</span>.<span class="keyword">list</span>, <span class="function"><span class="keyword">function</span><span class="params">(item)</span> </span>&#123;</span><br><span class="line">				item.checked = <span class="keyword">true</span>;</span><br><span class="line">				<span class="variable">$scope</span>.checkedArray.push(item.id);</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123; <span class="comment">// 清空全选</span></span><br><span class="line">			<span class="variable">$scope</span>.checkedArray = [];</span><br><span class="line">			angular.<span class="keyword">forEach</span>(<span class="variable">$scope</span>.<span class="keyword">list</span>, <span class="function"><span class="keyword">function</span><span class="params">(item)</span> </span>&#123;</span><br><span class="line">				item.checked = <span class="keyword">false</span>;</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="variable">$scope</span>.selectOne = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		angular.<span class="keyword">forEach</span>(<span class="variable">$scope</span>.<span class="keyword">list</span>, <span class="function"><span class="keyword">function</span><span class="params">(item)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">var</span> localIndex = <span class="variable">$scope</span>.checkedArray.indexOf(item.id);</span><br><span class="line">			<span class="comment">// 选中</span></span><br><span class="line">			<span class="keyword">if</span> (localIndex === -<span class="number">1</span> &amp;&amp; item.checked) &#123;</span><br><span class="line">				<span class="variable">$scope</span>.checkedArray.push(item.id);</span><br><span class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (localIndex !== -<span class="number">1</span> &amp;&amp; !item.checked) &#123; <span class="comment">// 取消选中</span></span><br><span class="line">				<span class="variable">$scope</span>.checkedArray.splice(localIndex, <span class="number">1</span>);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="variable">$scope</span>.all = <span class="variable">$scope</span>.<span class="keyword">list</span>.length === <span class="variable">$scope</span>.checkedArray.length;</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;]);</span><br></pre></td></tr></table></figure>
+<p>这种思路比较完整地实现了我们需要的功能，但是在实际项目中，数组<code>list</code>中的元素引入了一个可能不需要的属性<code>checked</code>，这种写法引入了脏属性，在表单提交的时候，可能需要额外处理<code>checked</code>属性，构造合法的请求数据格式，引起不必要的麻烦。</p>
+<h2 id="三、思路2-ng-true-value等指令的运用"><a href="#三、思路2-ng-true-value等指令的运用" class="headerlink" title="三、思路2 ng-true-value等指令的运用"></a>三、思路2 <code>ng-true-value</code>等指令的运用</h2><p>思路阐述：</p>
+<ol>
+<li>根据现有的<code>list</code>数组初始化一个初始化一个数组<code>checkedArray</code>，并在<code>ng-repeat</code>的时候，将其每一项初始化为<code>false</code>；</li>
+<li>考虑到要给服务端返回选中的id数组，引入<code>ng-true-value</code>指令，<code>ng-true-value=&quot;item.id&quot;</code>；</li>
+<li>使用<code>$watchCollection</code>方法监控数组<code>checkedArray</code>变化，并使用数组的every 方法判断是否都不是<code>false</code>，决定全选<code>checkbox</code>的状态。</li>
+</ol>
+<p>代码如下。</p>
+<ul>
+<li>HTML</li>
+</ul>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="variable">ng-controller=</span><span class="string">"myCtrl"</span>&gt;</span><br><span class="line">    &lt;label <span class="variable">for=</span><span class="string">"select-all"</span>&gt;全选</span><br><span class="line">        &lt;input <span class="variable">type=</span><span class="string">"checkbox"</span> <span class="variable">id=</span><span class="string">"select-all"</span> <span class="variable">ng-click=</span><span class="string">"selectAll()"</span> <span class="variable">ng-model=</span><span class="string">"isAll"</span>&gt;</span><br><span class="line">    &lt;/label&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">        &lt;li <span class="variable">ng-repeat=</span><span class="string">"item in list track by $index"</span> <span class="variable">ng-init=</span><span class="string">"checkedArray[$index]=false"</span>&gt;</span><br><span class="line">            &lt;input <span class="variable">type=</span><span class="string">"checkbox"</span> <span class="variable">ng-model=</span><span class="string">"checkedArray[$index]"</span> <span class="variable">ng-true-value=</span><span class="string">"&#123;&#123;item.id&#125;&#125;"</span> <span class="variable">ng-false-value=</span><span class="string">"false"</span>&gt;</span><br><span class="line">            &lt;span <span class="variable">ng-bind=</span><span class="string">"item.id"</span>&gt;&lt;/span&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">    &lt;input <span class="variable">type=</span><span class="string">"button"</span> <span class="variable">value=</span><span class="string">"获取所有选中的元素"</span> <span class="variable">ng-click=</span><span class="string">"getCheckedList()"</span>&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>JS</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'myApp'</span>, []);</span><br><span class="line">app.controller(<span class="string">'myCtrl'</span>, [<span class="string">'$scope'</span>, <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$scope</span>)</span> </span>&#123;</span><br><span class="line">    <span class="variable">$scope</span>.<span class="keyword">list</span> = [&#123;</span><br><span class="line">        <span class="string">'id'</span>: <span class="number">101</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        <span class="string">'id'</span>: <span class="number">102</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        <span class="string">'id'</span>: <span class="number">103</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        <span class="string">'id'</span>: <span class="number">104</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        <span class="string">'id'</span>: <span class="number">105</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        <span class="string">'id'</span>: <span class="number">106</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        <span class="string">'id'</span>: <span class="number">107</span></span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    <span class="variable">$scope</span>.checkedArray = <span class="keyword">new</span> <span class="keyword">Array</span>(<span class="variable">$scope</span>.<span class="keyword">list</span>.length);</span><br><span class="line"></span><br><span class="line">    <span class="variable">$scope</span>.selectAll = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$scope</span>.isAll) &#123;</span><br><span class="line">            <span class="variable">$scope</span>.checkedArray = <span class="variable">$scope</span>.<span class="keyword">list</span>.map(<span class="function"><span class="keyword">function</span><span class="params">(item)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> item.id;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable">$scope</span>.checkedArray = <span class="variable">$scope</span>.<span class="keyword">list</span>.map(<span class="function"><span class="keyword">function</span><span class="params">(item)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$scope</span>.<span class="variable">$watchCollection</span>(<span class="string">'checkedArray'</span>, <span class="function"><span class="keyword">function</span><span class="params">(newCollection)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (newCollection.every(<span class="function"><span class="keyword">function</span><span class="params">(item)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> item !== <span class="keyword">false</span>;</span><br><span class="line">            &#125;)) &#123;</span><br><span class="line">            <span class="variable">$scope</span>.isAll = <span class="keyword">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable">$scope</span>.isAll = <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="variable">$scope</span>.getCheckedList = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        console.log(<span class="variable">$scope</span>.checkedArray.filter(<span class="function"><span class="keyword">function</span><span class="params">(item)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> item</span><br><span class="line">        &#125;));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;]);</span><br></pre></td></tr></table></figure>
+<p>四、思路3 组合指令</p>
+<p>全选是一个很常见的功能，如果能做成指令复用，将会大大提高我们的开发效率。我们依照要实现的功能，拆分成四个指令：<code>commonOperate</code>、<code>checkSingle</code>、<code>checkAll</code>、<code>operateBatch</code>。</p>
+<p>将公共的方法和属性写在指令<code>commonOperate</code>中，在其他三个指令中<code>require</code>这个指令，完成单选、全选、导出选中项的功能。这种写法的好处是可以嵌入到现有的模板中，使用及其方便快捷。</p>
+<ul>
+<li>HTML</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"myCtrl"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">common-operate</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">table</span> <span class="attribute">border</span>=<span class="value">"1"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">thead</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">th</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">check-all</span>&gt;</span> NO.<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">th</span>&gt;</span>name<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">th</span>&gt;</span>gender<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="title">thead</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">tbody</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">td</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">check-single</span>=<span class="value">"1"</span>&gt;</span> 1<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">td</span>&gt;</span>David<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">td</span>&gt;</span>male<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">td</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">check-single</span>=<span class="value">"2"</span>&gt;</span> 2<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">td</span>&gt;</span>Bob<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">td</span>&gt;</span>male<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">td</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">check-single</span>=<span class="value">"3"</span>&gt;</span> 3<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">td</span>&gt;</span>Kate<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">td</span>&gt;</span>female<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">td</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">check-single</span>=<span class="value">"4"</span>&gt;</span> 4<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">td</span>&gt;</span>Xiaoming<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">td</span>&gt;</span>male<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="title">tbody</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">button</span> <span class="attribute">type</span>=<span class="value">"button"</span> <span class="attribute">operate-batch</span>=<span class="value">"getBatch"</span>&gt;</span>导出选中项目<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>JS</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'myApp'</span>, []);</span><br><span class="line"></span><br><span class="line">app.controller(<span class="string">'myCtrl'</span>, [<span class="string">'$scope'</span>, <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$scope</span>)</span> </span>&#123;</span><br><span class="line">    <span class="variable">$scope</span>.getBatch = <span class="function"><span class="keyword">function</span><span class="params">(list)</span> </span>&#123;</span><br><span class="line">        console.log(<span class="keyword">list</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;]);</span><br><span class="line"></span><br><span class="line">app.directive(<span class="string">'commonOperate'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        restrict: <span class="string">'EA'</span>,</span><br><span class="line">        controller: [<span class="string">'$scope'</span>, <span class="string">'$element'</span>, <span class="string">'$attrs'</span>, <span class="string">'$timeout'</span>,</span><br><span class="line">            <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$scope</span>, <span class="variable">$element</span>, <span class="variable">$attrs</span>, <span class="variable">$timeout</span>)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">var</span> checkedClassName = <span class="variable">$attrs</span>[<span class="string">'commonOperate'</span>],</span><br><span class="line">                    checkList = [];</span><br><span class="line">                this.scope = <span class="variable">$scope</span>;</span><br><span class="line">                <span class="variable">$scope</span>.checkCommonOperateCheckList = checkList;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 设置选中状态</span></span><br><span class="line">                this.setCheckedStatus = <span class="function"><span class="keyword">function</span><span class="params">(element, needStatus)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">if</span> (checkedClassName) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (needStatus) &#123;</span><br><span class="line">                            element.removeClass(checkedClassName)</span><br><span class="line">                                .addClass(checkedClassName);</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            element.removeClass(checkedClassName);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        element.prop(<span class="string">'checked'</span>, needStatus);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 获取点击之前的状态</span></span><br><span class="line">                this.getCheckedStatus = <span class="function"><span class="keyword">function</span><span class="params">(element)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> checkedClassName ? element.hasClass(checkedClassName)</span><br><span class="line">                        : !element.prop(<span class="string">'checked'</span>);</span><br><span class="line">                &#125;;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 清除选中列表</span></span><br><span class="line">                this.clearCheckList = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                    checkList = [];</span><br><span class="line">                    <span class="variable">$timeout</span>(<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                        <span class="variable">$scope</span>.checkCommonOperateCheckList = checkList;</span><br><span class="line">                    &#125;);</span><br><span class="line">                    this.setCheckedStatus(<span class="variable">$element</span>.find(<span class="string">'[check-single]'</span>), <span class="keyword">false</span>);</span><br><span class="line">                &#125;;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 获取选中列表</span></span><br><span class="line">                this.getCheckList = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> checkList;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 增加选中列表</span></span><br><span class="line">                this.setCheckList = <span class="function"><span class="keyword">function</span><span class="params">(checkId, needStatus)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">var</span> selectAllDOM = <span class="variable">$element</span>.find(<span class="string">'[check-all]'</span>);</span><br><span class="line">                    <span class="keyword">if</span> (needStatus) &#123;</span><br><span class="line">                        checkList.push(checkId);</span><br><span class="line">                        <span class="keyword">if</span> (checkList.length === <span class="variable">$element</span>.find(<span class="string">'[check-single]'</span>).length) &#123;</span><br><span class="line">                            this.setCheckedStatus(selectAllDOM, <span class="keyword">true</span>);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        this.setCheckedStatus(selectAllDOM, <span class="keyword">false</span>);</span><br><span class="line">                        <span class="keyword">var</span> localIndex = checkList.indexOf(checkId);</span><br><span class="line">                        <span class="keyword">if</span> (localIndex !== -<span class="number">1</span>) &#123;</span><br><span class="line">                            checkList.splice(localIndex, <span class="number">1</span>);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="variable">$timeout</span>(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">                        <span class="variable">$scope</span>.espCommonOperateCheckList = checkList;</span><br><span class="line">                    &#125;, <span class="number">0</span>);</span><br><span class="line">                    <span class="keyword">return</span> checkList;</span><br><span class="line">                &#125;;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 全选</span></span><br><span class="line">                this.selectAll = <span class="function"><span class="keyword">function</span><span class="params">(needStatus)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">var</span> singleList = <span class="variable">$element</span>.find(<span class="string">'[check-single]'</span>);</span><br><span class="line">                    this.setCheckedStatus(singleList, needStatus);</span><br><span class="line">                    <span class="keyword">if</span> (needStatus) &#123;</span><br><span class="line">                        checkList = singleList.map(<span class="function"><span class="keyword">function</span> <span class="params">(item)</span> </span>&#123;</span><br><span class="line">                            <span class="keyword">return</span> $(item).attr(<span class="string">'check-single'</span>);</span><br><span class="line">                        &#125;);</span><br><span class="line">                        <span class="variable">$timeout</span>(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">                            <span class="variable">$scope</span>.espCommonOperateCheckList = checkList;</span><br><span class="line">                        &#125;, <span class="number">0</span>);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        this.clearCheckList();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.directive(<span class="string">'checkSingle'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        restrict: <span class="string">'A'</span>,</span><br><span class="line">        <span class="keyword">require</span>: <span class="string">'^commonOperate'</span>,</span><br><span class="line">        link: <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$scope</span>, <span class="variable">$element</span>, <span class="variable">$attrs</span>, commonOperate)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> itemId = <span class="variable">$attrs</span>[<span class="string">'checkSingle'</span>];</span><br><span class="line">            <span class="keyword">var</span> mapValue = <span class="variable">$attrs</span>[<span class="string">'mapValue'</span>];</span><br><span class="line">            <span class="variable">$element</span>.click(<span class="function"><span class="keyword">function</span><span class="params">(e)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">var</span> needStatus = !commonOperate.getCheckedStatus(<span class="variable">$element</span>);</span><br><span class="line">                commonOperate.setCheckList(itemId, needStatus);</span><br><span class="line">                commonOperate.setCheckedStatus(<span class="variable">$element</span>, needStatus);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.directive(<span class="string">'checkAll'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        restrict: <span class="string">'A'</span>,</span><br><span class="line">        scope: &#123;</span><br><span class="line">            reloadPage: <span class="string">'=?'</span>,</span><br><span class="line">            page: <span class="string">'=?'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="keyword">require</span>: <span class="string">'^commonOperate'</span>,</span><br><span class="line">        link: <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$scope</span>, <span class="variable">$element</span>, <span class="variable">$attrs</span>, commonOperate)</span> </span>&#123;</span><br><span class="line">            <span class="variable">$element</span>.click(<span class="function"><span class="keyword">function</span> <span class="params">(e)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">var</span> needStatus = !commonOperate.getCheckedStatus(<span class="variable">$element</span>);</span><br><span class="line">                commonOperate.selectAll(needStatus);</span><br><span class="line">                commonOperate.setCheckedStatus(<span class="variable">$element</span>, needStatus);</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="variable">$scope</span>.<span class="variable">$watch</span>(<span class="string">'reloadPage'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">                commonOperate.setCheckedStatus(<span class="variable">$element</span>, <span class="keyword">false</span>);</span><br><span class="line">                commonOperate.clearCheckList();</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="variable">$scope</span>.<span class="variable">$watch</span>(<span class="string">'page'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">                commonOperate.setCheckedStatus(<span class="variable">$element</span>, <span class="keyword">false</span>);</span><br><span class="line">                commonOperate.clearCheckList();</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.directive(<span class="string">'operateBatch'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        restrict: <span class="string">'A'</span>,</span><br><span class="line">        <span class="keyword">require</span>: <span class="string">'^commonOperate'</span>,</span><br><span class="line">        link: <span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$scope</span>, <span class="variable">$element</span>, <span class="variable">$attrs</span>, commonOperate)</span> </span>&#123;</span><br><span class="line">            <span class="variable">$element</span>.click(<span class="function"><span class="keyword">function</span> <span class="params">(e)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">var</span> funcName = <span class="variable">$attrs</span>[<span class="string">'operateBatch'</span>];</span><br><span class="line">                <span class="keyword">if</span> (funcName &amp;&amp; commonOperate.scope[funcName]) &#123;</span><br><span class="line">                    commonOperate.scope[funcName](commonOperate.getCheckList());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>从以上的代码中可以看出，当需要为现有的页面加入全选功能时，只需要将这几个指令嵌入到相关的DOM上即可，极大地提高了其复用性。</p>
+<p>最近几天好不容易闲下来，有时间思考一些东西，这篇博客花了两天时间构思，一天时间写内容和demo，第三个思路是参考同事写的东西，整理得来。写之前总觉得自己有千言万语，到了真正动笔的时候，又不知道从哪里下手，真心羡慕那些能写出赏心悦目文字的作者。</p>
+<p>加油2017。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag">#JS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/12/为什么要使用-Flow-？/" rel="next">为什么要使用 Flow ？</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+                  <div class="ds-thread" data-thread-key="2017/01/07/较深入地探讨AngularJS实现checkbox全选功能/"
+                       data-title="较深入地探讨AngularJS实现checkbox全选功能" data-url="http://yoursite.com/2017/01/07/较深入地探讨AngularJS实现checkbox全选功能/">
+                  </div>
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Zhongshan" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Zhongshan</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">Zhongshan's Blog</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhongshan1993" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhongshan93" target="_blank">Weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.cnblogs.com/zhongshanblog/" target="_blank">Cnblogs</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://zhongshan1993.github.io/diary/" target="_blank">MyDiary</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、要实现的需求"><span class="nav-number">1.</span> <span class="nav-text">一、要实现的需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、思路1-给数组中的每一项绑定checked属性"><span class="nav-number">2.</span> <span class="nav-text">二、思路1 给数组中的每一项绑定checked属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、思路2-ng-true-value等指令的运用"><span class="nav-number">3.</span> <span class="nav-text">三、思路2 ng-true-value等指令的运用</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhongshan</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhongshan1993"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	  <script type="text/javascript">
+  		var duoshuo_user_ID = 0
+  	  </script>
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

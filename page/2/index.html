@@ -188,6 +188,117 @@
           
           
             
+              <a class="post-title-link" href="/2016/03/14/用margin还是用padding/" itemprop="url">
+                用margin还是用padding?
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-03-14T11:33:52+08:00" content="2016-03-14">
+            2016-03-14
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/转载/" itemprop="url" rel="index"><span itemprop="name">转载</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/03/14/用margin还是用padding/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/14/用margin还是用padding/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p><strong>本文转载自<a href="http://www.hicss.net/" target="_blank" rel="external">海玉的博客</a>{:target=”_blank”}</strong><br><strong>原文地址：<a href="http://www.hicss.net/use-margin-or-padding/" target="_blank" rel="external">http://www.hicss.net/use-margin-or-padding/</a></strong></p>
+<p>用<code>margin</code>还是用<code>padding</code>这个问题是每个学习CSS进阶时的必经之路。</p>
+<blockquote>
+<p>CSS边距属性定义元素周围的空间。通过使用单独的属性，可以对上、右、下、左的外边距进行设置。也可以使用简写的外边距属性同时改变所有的外边距。——W3School</p>
+<p>边界(margin)：元素周围生成额外的空白区。“空白区”通常是指其他元素不能出现且父元素背景可见的区域。——CSS权威指南</p>
+</blockquote>
+<p><code>padding</code>称呼为内边距，其判断的依据即边框离内容正文的距离，而我喜欢CSS权威指南解释的“补白”（或者叫“留白”），因为他很形象。补白(<code>padding</code>)：补白位于元素框的边界与内容区之间。很自然，用于影响这个区域的属性是<code>padding</code>。</p>
+<p>关于什么时候用<code>margin</code>什么时候用<code>padding</code>，网上有许许多多的讨论，大多数似乎讨论到点上面，却又有些隔靴搔痒的感觉，总是答不到点上。而且<code>margin</code>和<code>padding</code>在许多地方往往效果都是一模一样，而且你也不能说这个一定得用<code>margin</code>那个一定要用<code>padding</code>，因为实际的效果都一样，你说<code>margin</code>用起来好他说<code>padding</code>用起来会更好，但往往争论无果。根据网上的总结归纳大致发现这几条还是比较靠谱的：</p>
+<blockquote>
+<p>何时应当使用margin：<br>需要在border外侧添加空白时。<br>空白处不需要背景（色）时。<br>上下相连的两个盒子之间的空白，需要相互抵消时。如15px + 20px的margin，将得到20px的空白。<br>何时应当时用padding：<br>需要在border内测添加空白时。<br>空白处需要背景（色）时。<br>上下相连的两个盒子之间的空白，希望等于两者之和时。如15px + 20px的padding，将得到35px的空白。</p>
+</blockquote>
+<p>个人认为：<code>margin</code>是用来隔开元素与元素的间距；<code>padding</code>是用来隔开元素与内容的间隔。<code>margin</code>用于布局分开元素使元素与元素互不相干；<code>padding</code>用于元素与内容之间的间隔，让内容（文字）与（包裹）元素之间有一段“呼吸距离”。</p>
+<p>举个例子吧<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">html</span> <span class="attribute">xmlns</span>=<span class="value">"http://www.w3.org/1999/xhtml"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">meta</span> <span class="attribute">http-equiv</span>=<span class="value">"Content-Type"</span> <span class="attribute">content</span>=<span class="value">"text/html; charset=utf-8"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">title</span>&gt;</span>用Margin还是用Padding<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span><br><span class="line"><span class="class">.top</span><span class="rules">&#123;<span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">160px</span></span></span>; <span class="rule"><span class="attribute">height</span>:<span class="value"><span class="number">50px</span></span></span>; <span class="rule"><span class="attribute">background</span>:<span class="value"><span class="hexcolor">#ccf</span></span></span>;&#125;</span></span><br><span class="line"><span class="class">.middle</span><span class="rules">&#123;<span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">160px</span></span></span>; <span class="rule"><span class="attribute">background</span>:<span class="value"><span class="hexcolor">#cfc</span></span></span>; <span class="rule"><span class="attribute">border-top</span>:<span class="value"><span class="number">1px</span> solid <span class="hexcolor">#ccc</span></span></span>;&#125;</span></span><br><span class="line"><span class="class">.middle</span> <span class="class">.firstChild</span><span class="rules">&#123;<span class="rule"><span class="attribute">margin-top</span>:<span class="value"><span class="number">20px</span></span></span>;&#125;</span></span><br><span class="line"><span class="class">.middle</span> <span class="class">.secondChild</span><span class="rules">&#123;<span class="rule"><span class="attribute">margin-top</span>:<span class="value"><span class="number">15px</span></span></span>;&#125;</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"top"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"middle"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"firstChild"</span>&gt;</span>我是firstChild，我只是想和我的父元素隔开点距离，这样看起来舒服。<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"secondChild"</span>&gt;</span>我要和楼上隔开点的距离。恩，能与底边有点呼吸距离就更好了。<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>我是<code>firstChild</code>，我只是想和我的父元素隔开点距离，这样看起来舒服。<br>我是<code>secondChild</code>，我要和楼上隔开点的距离。恩，能与底边有点呼吸距离就更好了。</p>
+<p>上面这个效果看起来很不错，达到了我们需要实现的目标。然而，我们细细查看下这个代码，对照下我们上文所说的规则，firstChild用了<code>margin-top:20px</code>来隔开父元素与他的距离，secondChild也用<code>margin-top:15</code>来隔开他与firstChild的距离，咋看之下挺符合我们所说的<code>margin</code>是用来隔开元素与元素的间距。但是他符合我们所说的<code>margin</code>用于布局分开元素使元素与元素互不相干吗？</p>
+<p>这里我想说的是NO，firstChild同middle属于一种父子元素关系，又是一种包裹元素与内容的关系，他们之间从拟人化的角度来讲，不应该是老死不相干的局面。我们再来看我们为什么要让firstChild与他的父元素隔开的距离，从表现的角度上来看，文字与边靠的太近，肯定不好看。让文字与元素边隔开的距离，既美观，又使得文字有了足够的“呼吸空间”，方便阅读，这恰恰符合<code>padding</code>用于元素与内容之间的间隔让内容（文字）与（包裹）元素之间有个“呼吸距离”。</p>
+<p>我们再来看，firstChild使用<code>margin-top</code>引发了垂直外边距合并的隐患，middle如果不加一个类似<code>border-top:1px solid #ccc</code>的话标准浏览器下就会呈现子元素顶了父元素<code>margin</code>隐患（这是个垂直外边距合并问题，可以查看不要告诉我你懂<code>margin</code>，这篇文章内有详细介绍）。可见这个时候<code>margin</code>显然不是很好的选择。</p>
+<p>我们来试着这么修改：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">html</span> <span class="attribute">xmlns</span>=<span class="value">"http://www.w3.org/1999/xhtml"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">meta</span> <span class="attribute">http-equiv</span>=<span class="value">"Content-Type"</span> <span class="attribute">content</span>=<span class="value">"text/html; charset=utf-8"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">title</span>&gt;</span>用Margin还是用Padding<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span><br><span class="line"><span class="class">.top</span><span class="rules">&#123;<span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">160px</span></span></span>; <span class="rule"><span class="attribute">height</span>:<span class="value"><span class="number">50px</span></span></span>; <span class="rule"><span class="attribute">background</span>:<span class="value"><span class="hexcolor">#ccf</span></span></span>;&#125;</span></span><br><span class="line"><span class="class">.middle_2</span><span class="rules">&#123;<span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">160px</span></span></span>; <span class="rule"><span class="attribute">background</span>:<span class="value"><span class="hexcolor">#cfc</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">20px</span> <span class="number">0px</span></span></span>;&#125;</span></span><br><span class="line"><span class="class">.middle_2</span> <span class="class">.firstChild</span><span class="rules">&#123;&#125;</span></span><br><span class="line"><span class="class">.middle_2</span> <span class="class">.secondChild</span><span class="rules">&#123;<span class="rule"><span class="attribute">margin-top</span>:<span class="value"><span class="number">15px</span></span></span>;&#125;</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"top"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"middle_2"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"firstChild"</span>&gt;</span>我是firstChild，我只是想和我的父元素隔开点距离，这样看起来舒服<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"secondChild"</span>&gt;</span>我是secondChild，我要和楼上隔开点的距离。恩，能与底边有点呼吸距离就更好了。<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>我是firstChild，我只是想和我的父元素隔开点距离，这样看起来舒服<br>我是secondChild，我要和楼上隔开点的距离。恩，能与底边有点呼吸距离就更好了。</p>
+<p>我们来看看这么写的好处吧：</p>
+<ol>
+<li>外观依旧良好，结构清晰也没有破坏布局。</li>
+<li>不会产生垂直外边距合并这样的问题。</li>
+<li>书写规范、代码量减少、重用性好。</li>
+</ol>
+<p>我们可以看到在middle_2中去除了不需要的<code>border-top</code>，改为更为实用的<code>padding:20px 0</code>，让middle_2中的内容有了足够的“呼吸空间”，以后还可以随时随地修改这个<code>padding</code>，让内容文字的“呼吸空间”增大或者缩小，随时随地只修改一个middle_2的<code>padding</code>就能搞定所有包裹元素与内部内容的规划。</p>
+<p>请注意这里是父元素应用<code>padding</code>，使得与其内容产生间隙，这是符合我们翻译为“补白”精髓（所以我一直喜欢称<code>padding</code>为“补白”而不是内边距），而<code>padding</code>也恰恰是在这儿最能体检他的价值。这个例子把第一个元素的<code>margin-top</code>去除，在父元素中应用<code>padding</code>。反过来，你会想，既然<code>margin-top</code>不好用，那么我第一个元素用<code>padding-top</code>不是也能达到效果么。恭喜你，你已经前进了一步了，的确使用padding-top即让第一元素与外包裹元素产生了呼吸距离，而且也不会出现所谓的垂直外边距重叠问题， 但是我依旧不推荐你这么做。为什么呢？我们来设想这么一个情况吧，假如有一天，你这个模块要产生变动，新需求要删除这个firstChild，替换为otherChild，会怎么样呢？</p>
+<p>新的需求要求我们新加一个otherChild，替换原来的firstChild：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">html</span> <span class="attribute">xmlns</span>=<span class="value">"http://www.w3.org/1999/xhtml"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">meta</span> <span class="attribute">http-equiv</span>=<span class="value">"Content-Type"</span> <span class="attribute">content</span>=<span class="value">"text/html; charset=utf-8"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">title</span>&gt;</span>用Margin还是用Padding<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span><br><span class="line"><span class="class">.top</span><span class="rules">&#123;<span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">160px</span></span></span>; <span class="rule"><span class="attribute">height</span>:<span class="value"><span class="number">50px</span></span></span>; <span class="rule"><span class="attribute">background</span>:<span class="value"><span class="hexcolor">#ccf</span></span></span>;&#125;</span></span><br><span class="line"><span class="class">.middle_3</span><span class="rules">&#123;<span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">160px</span></span></span>; <span class="rule"><span class="attribute">background</span>:<span class="value"><span class="hexcolor">#cfc</span></span></span>;&#125;</span></span><br><span class="line"><span class="class">.middle_3</span> <span class="class">.otherChild</span><span class="rules">&#123;<span class="rule"><span class="attribute">font-weight</span>:<span class="value">bold</span></span>; <span class="rule"><span class="attribute">font-style</span>:<span class="value"> italic</span></span>;&#125;</span></span><br><span class="line"><span class="class">.middle_3</span> <span class="class">.secondChild</span><span class="rules">&#123;<span class="rule"><span class="attribute">margin-top</span>:<span class="value"><span class="number">10px</span></span></span>;&#125;</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"top"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"middle_3"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"otherChild"</span>&gt;</span>我是新来的otherChild，我也想和我的父元素隔开点距离，这样看起来舒服，咦？！为什么我是在顶部？<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"secondChild"</span>&gt;</span>我是secondChild，我要和楼上隔开点的距离。恩，能与底边有点呼吸距离就更好了。<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>我是新来的otherChild，我也想和我的父元素隔开点距离，这样看起来舒服，咦？！为什么我是在顶部？<br>我是secondChild，我要和楼上隔开点的距离。恩，能与底边有点呼吸距离就更好了。</p>
+<p>发现问题了么？如果你把原先的firstChild给删除掉了，新来的元素根本就没有定义上边距或者上补白，那么他就会自然顶在头部，不是理想的效果。的确，你可以为了他新写一个css来让他距离头部多一点空隙，但是你该怎么写？直接改otherChild吗？如果其他页面里面也有otherChild那么你会把其他地方的otherChild布局打乱。恩，那么我用.<code>middle_3 .otherChild{padding-top:10px;}</code>怎么样可以吧。恩，可以可以，可是你不觉得这么累吗？每次修改，都要增加这一个多余的代码就为了简简单单的隔开点距离，久而久之，你的css文件代码会臃肿不堪，可移植性大大削弱。</p>
+<p>每次开发的时候我一直对自己讲，你写的代码总有一天会被别的开发人员所替换、修改、更新。而一个优秀的前端写出的css不但在现在结构坚固并且还能为日后的开发人员提供方便。修改我的代码，改前改后的式样位置都一样，让之后的开发人员根本上避免接触到再次“修复”开发的机会，那才是一名真正前端的追求。这里你把包裹的div类似“封装”好一个环境，而且这个div内已经留有足够的内容的“呼吸空间”，你只需要改内容，内容所要考虑到得位置边距问题，外包的div元素早已经帮你预留好了，你用起来方便，今后改起来也方便，直接找到middle修改<code>padding</code>即可。</p>
+<p>所谓大道万千，运用之妙存乎一心。该用<code>margin</code>的时候就大胆的用他，该用<code>padding</code>也不用退缩不前，实战中累积出来的经验往往是最有用的，而当你不确定是用<code>margin</code>好还是用<code>padding</code>，请在看看这个原则吧，或许你会有一个自己的答案。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/11/26/javascript用栈的思想实现数制转换/" itemprop="url">
                 javascript用栈的思想实现数制转换
               </a>
@@ -1017,93 +1128,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/02/CSS3旋转齿轮/" itemprop="url">
-                CSS3旋转齿轮
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-08-02T21:27:21+08:00" content="2015-08-02">
-            2015-08-02
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/08/02/CSS3旋转齿轮/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/02/CSS3旋转齿轮/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p><strong><a href="http://zhongshan1993.github.io/myDemo/singlePage/rotateGear.html" target="_blank" rel="external">查看DEMO</a></strong></p>
-<p>通过 CSS3，我们能够创建动画，这可以在许多网页中取代动画图片、Flash 动画以及 JavaScript。</p>
-<p><strong>先来认识一下css3的animation</strong><br><img src="http://i.imgur.com/BnKREEu.png" alt=""></p>
-<p>animation的简写<code>animation: name duration timing-function delay iteration-count direction;</code></p>
-<p><strong>其次就是@keyframes</strong></p>
-<p><img src="http://i.imgur.com/Zk9RQee.png" alt=""></p>
-<p><strong>好了，接下来运用上述两个属性做一个可以旋转的齿轮</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span><br><span class="line">    <span class="class">.img</span> <span class="rules">&#123;</span><br><span class="line">        <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span> auto</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">text-align</span>:<span class="value"> center</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">400px</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">400px</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="rule"><span class="attribute">animation-name</span>:<span class="value">myrotate</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">animation-duration</span>:<span class="value"><span class="number">3s</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">animation-timing-function</span>:<span class="value">linear</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">animation-delay</span>:<span class="value"><span class="number">0s</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">animation-iteration-count</span>:<span class="value">infinite</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">animation-direction</span>:<span class="value">normal</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">animation-play-state</span>:<span class="value">running</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="rule"><span class="attribute">-moz-animation-name</span>:<span class="value">myrotate</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-moz-animation-duration</span>:<span class="value"><span class="number">3s</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-moz-animation-timing-function</span>:<span class="value">linear</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-moz-animation-delay</span>:<span class="value"><span class="number">0s</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-moz-animation-iteration-count</span>:<span class="value">infinite</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-moz-animation-direction</span>:<span class="value">normal</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-moz-animation-play-state</span>:<span class="value">running</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="rule"><span class="attribute">-webkit-animation-name</span>:<span class="value">myrotate</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-webkit-animation-duration</span>:<span class="value"><span class="number">3s</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-webkit-animation-timing-function</span>:<span class="value">linear</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-webkit-animation-delay</span>:<span class="value"><span class="number">0s</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-webkit-animation-iteration-count</span>:<span class="value">infinite</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-webkit-animation-direction</span>:<span class="value">normal</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-webkit-animation-play-state</span>:<span class="value">running</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="rule"><span class="attribute">-o-animation-name</span>:<span class="value">myrotate</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-o-animation-duration</span>:<span class="value"><span class="number">3s</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-o-animation-timing-function</span>:<span class="value">linear</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-o-animation-delay</span>:<span class="value"><span class="number">0s</span></span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-o-animation-iteration-count</span>:<span class="value">infinite</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-o-animation-direction</span>:<span class="value">normal</span></span>;</span><br><span class="line">        <span class="rule"><span class="attribute">-o-animation-play-state</span>:<span class="value">running</span></span>;</span><br><span class="line">    &#125;</span></span><br><span class="line">    </span><br><span class="line">    <span class="at_rule">@<span class="keyword">keyframes</span> myrotate </span>&#123;</span><br><span class="line">        <span class="tag">from</span> <span class="rules">&#123;<span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">0deg</span>)</span></span>;&#125;</span></span><br><span class="line">        <span class="tag">to</span> <span class="rules">&#123;<span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">360deg</span>)</span></span>;&#125;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="at_rule">@<span class="keyword">-moz-keyframes</span> myrotate </span>&#123;</span><br><span class="line">        <span class="tag">from</span> <span class="rules">&#123;<span class="rule"><span class="attribute">-moz-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">0deg</span>)</span></span>;&#125;</span></span><br><span class="line">        <span class="tag">to</span> <span class="rules">&#123;<span class="rule"><span class="attribute">-moz-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">360deg</span>)</span></span>;&#125;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="at_rule">@<span class="keyword">-webkit-keyframes</span> myrotate </span>&#123;</span><br><span class="line">        <span class="tag">from</span> <span class="rules">&#123;<span class="rule"><span class="attribute">-webkit-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">0deg</span>)</span></span>;&#125;</span></span><br><span class="line">        <span class="tag">to</span> <span class="rules">&#123;<span class="rule"><span class="attribute">-webkit-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">360deg</span>)</span></span>;&#125;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="at_rule">@<span class="keyword">-o-keyframes</span> myrotate </span>&#123;</span><br><span class="line">        <span class="tag">from</span> <span class="rules">&#123;<span class="rule"><span class="attribute">-o-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">0deg</span>)</span></span>;&#125;</span></span><br><span class="line">        <span class="tag">to</span> <span class="rules">&#123;<span class="rule"><span class="attribute">-o-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">360deg</span>)</span></span>;&#125;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"img"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"chilun.png"</span> <span class="attribute">alt</span>=<span class="value">""</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1143,7 +1167,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">41</span>
+              <span class="site-state-item-count">42</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1210,7 +1234,7 @@
             <div class="copyright" >
   
   &copy; &nbsp; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="icon-heart"></i>
   </span>
