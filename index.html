@@ -188,6 +188,104 @@
           
           
             
+              <a class="post-title-link" href="/2017/06/29/探讨使得div占满父级元素余下高度的几种方式/" itemprop="url">
+                探讨使得div占满父级元素余下高度的几种方式
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2017-06-29T00:08:38+08:00" content="2017-06-29">
+            2017-06-29
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2017/06/29/探讨使得div占满父级元素余下高度的几种方式/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/29/探讨使得div占满父级元素余下高度的几种方式/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>上下两个div，上面的div固定高度，下面的div自动地撑满父元素的余下高度，这是在做网页布局时经常用到的一种，最近公司的几个项目，我也经常遇到这种场景。因此，打算写一篇文章做个总结，以便在日后的工作中，使用起来更得心应手。</p>
+<p>由于自己一直在用一种方式实现，所以此文的另一个目的，是想尽量多的罗列其实现方法，找到最适合的那一个。</p>
+<p>先抛出实现效果图如下。</p>
+<p><img src="http://7xksst.com1.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20170604212427.png" alt="实现效果图"></p>
+<h2 id="一、calc实现"><a href="#一、calc实现" class="headerlink" title="一、calc实现"></a>一、calc实现</h2><p>calc就是英文单词calculate(计算)的缩写，是CSS3的一个新增功能，我们可以使用可以使用calc()给元素的border、margin、pading、font-size和width等属性设置动态值。说到这里，我们应该大概能明白calc实现上述效果的方式了，关于calc具体的使用方式，这里不再详述，如果想了解可以看<a href="http://www.w3cplus.com/css3/how-to-use-css3-calc-function.html" target="_blank" rel="external">这里</a>。</p>
+<p>我们先来看HTML和CSS代码，<a href="https://codepen.io/zhongshan1993/pen/zzYXop" target="_blank" rel="external">实现链接</a></p>
+<p>html:</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"container"</span>&gt;</span><br><span class="line">  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"one"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"two"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>css:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.container</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">240px</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">400px</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">10px</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span> auto</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#f00</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="class">.container</span> &gt; <span class="tag">div</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="class">.one</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100px</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#000</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="class">.two</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="function">calc</span>(<span class="number">100%</span> - <span class="number">100px</span>)</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#ff0</span></span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="二、绝对定位实现"><a href="#二、绝对定位实现" class="headerlink" title="二、绝对定位实现"></a>二、绝对定位实现</h2><p>绝对定位实现算是一种比较笨拙的实现方式，但是也绝对实用，其实现思路也和calc基本一致，令第二个div的左边缘、右边缘以及下边缘全部和父元素的边缘平齐，上边缘与父元素的上边缘空出第一个div的高度即可。</p>
+<p>点击<a href="https://codepen.io/zhongshan1993/pen/XgWQMz" target="_blank" rel="external">这里</a>查看实现链接</p>
+<p>html:</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"container"</span>&gt;</span><br><span class="line">  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"one"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"two"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>css:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.container</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">240px</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">400px</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">10px</span> solid transparent</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span> auto</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#f00</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="class">.container</span> &gt; <span class="tag">div</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="class">.one</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100px</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#000</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="class">.two</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">100px</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">bottom</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">left</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#ff0</span></span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="三、flex实现"><a href="#三、flex实现" class="headerlink" title="三、flex实现"></a>三、flex实现</h2><p>flex意为弹性布局，因此，严格来说，它实现的效果与前两种方式还是有一定差别的，我们并不需要写死上面那个div的高度，只需要定义出它应该占据父元素高度的比例即可。点击<a href="https://codepen.io/zhongshan1993/pen/JJjVOa" target="_blank" rel="external">这里</a>查看实现代码。</p>
+<p>html:<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"container"</span>&gt;</span><br><span class="line">  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"one"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"two"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure></p>
+<p>css:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.container</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">display</span>:<span class="value"> flex</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">flex-direction</span>:<span class="value"> column <span class="comment">/* 排列方向 */</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">240px</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">400px</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">10px</span> solid transparent</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span> auto</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#f00</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="class">.container</span> &gt; <span class="tag">div</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="class">.one</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">flex</span>:<span class="value"> <span class="number">1</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#000</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="class">.two</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#ff0</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">flex</span>:<span class="value"> <span class="number">3</span></span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2017/01/07/较深入地探讨AngularJS实现checkbox全选功能/" itemprop="url">
                 较深入地探讨AngularJS实现checkbox全选功能
               </a>
@@ -1273,119 +1371,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2016/03/17/选一种更好的清除浮动方案/" itemprop="url">
-                选一种更好的清除浮动方案
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2016-03-17T11:37:24+08:00" content="2016-03-17">
-            2016-03-17
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
-
-              
-              
-                ， 
-              
-
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/翻译/" itemprop="url" rel="index"><span itemprop="name">翻译</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2016/03/17/选一种更好的清除浮动方案/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/17/选一种更好的清除浮动方案/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p>原文链接<a href="http://stackoverflow.com/questions/211383/which-method-of-clearfix-is-best" target="_blank" rel="external">http://stackoverflow.com/questions/211383/which-method-of-clearfix-is-best</a></p>
-<p>清除浮动的方式多种多样，以下每种方案在不同情况下，都有它出色的地方。</p>
-<h2 id="重提clearfix"><a href="#重提clearfix" class="headerlink" title="重提clearfix"></a>重提clearfix</h2><p>在<a href="http://cssmojo.com/the-very-latest-clearfix-reloaded/" target="_blank" rel="external">CSS Mojo</a>中Thierry Koblentz单独写了一篇文章来重温<code>clearfix</code>，强烈建议摈弃<code>display: table</code>的写法，而改用<code>display: block</code>的写法，其优点是避免包含块之间的<code>margin</code>塌陷（collapse）。</p>
-<p>最近的一种代码量更少的清除浮动方案是这样的：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">.container</span>:<span class="value">after &#123;</span><br><span class="line">    content: <span class="string">''</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">display</span>:<span class="value"> block</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">clear</span>:<span class="value"> both</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="“忘掉上面的写法吧”，让我们看看在现代浏览器上怎么写"><a href="#“忘掉上面的写法吧”，让我们看看在现代浏览器上怎么写" class="headerlink" title="“忘掉上面的写法吧”，让我们看看在现代浏览器上怎么写"></a>“忘掉上面的写法吧”，让我们看看在现代浏览器上怎么写</h2><p>在<a href="http://cssmojo.com/the-very-latest-clearfix-reloaded/" target="_blank" rel="external">CSS Mojo</a>中Thierry Koblentz还指出，针对现代浏览器开发时，我们可以弃用<code>zoom</code>和<code>:before</code>等属性/值，简化写法：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">.container</span>:<span class="value">after &#123;</span><br><span class="line">    content: <span class="string">''</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">display</span>:<span class="value"> table</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">clear</span>:<span class="value"> both</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这种写法特意没有支持IE6/7……</p>
-<p>提醒一句：如果你重新开始一个新项目，放心做吧，但是不要使用这种写法，虽然你没有支持旧版本的IE浏览器，但是可以避免<code>margin</code>塌陷。</p>
-<h2 id="代码更少的清除浮动"><a href="#代码更少的清除浮动" class="headerlink" title="代码更少的清除浮动"></a>代码更少的清除浮动</h2><p>这是最近广为接受的一种方案<a href="http://nicolasgallagher.com/micro-clearfix-hack/" target="_blank" rel="external">Micro Clearfix by Nicolas Gallagher</a>。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">.container</span>:<span class="value">before,</span><br><span class="line">.container:after &#123;</span><br><span class="line">  content:<span class="string">""</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">display</span>:<span class="value">table</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="rule"><span class="attribute">.container</span>:<span class="value">after &#123;</span><br><span class="line">  clear:both</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class">.container</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">zoom</span>:<span class="value"><span class="number">1</span></span></span>; <span class="comment">/* For IE 6/7 (触发 hasLayout) */</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
-<h2 id="overflow属性"><a href="#overflow属性" class="headerlink" title="overflow属性"></a>overflow属性</h2><p>当定位元素不显示在容器外时，这种方案通常是首选。</p>
-<p><a href="http://www.quirksmode.org/css/clearing.html" target="_blank" rel="external">http://www.quirksmode.org/css/clearing.html</a>，这篇文章解释了这种写法的一个常见问题，也就是在容器上设置<code>width: 100%</code>。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.container</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">overflow</span>:<span class="value"> hidden</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">display</span>:<span class="value"> inline-block</span></span>; <span class="comment">/* 用来触发IE的hasLayout */</span></span><br><span class="line">    <span class="rule"><span class="attribute">display</span>:<span class="value"> block</span></span>; <span class="comment">/* 覆盖上一条属性，重新设置为block */</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>触发IE浏览器的<code>hasLayout</code>不止有<code>display</code>这一个属性，其他的属性也可以做相同的工作。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.container</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">overflow</span>:<span class="value"> hidden</span></span>; <span class="comment">/* 清除浮动 */</span></span><br><span class="line">    <span class="rule"><span class="attribute">zoom</span>:<span class="value"> <span class="number">1</span></span></span>;  <span class="comment">/* 用来触发IE的hasLayout */</span></span><br><span class="line">    <span class="rule"><span class="attribute">display</span>:<span class="value"> block</span></span>; <span class="comment">/* 元素必须为块级元素，如果只应用于块级元素，这条可不写 */</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
-<p><code>overflow</code>清除浮动的另一种方案是使用下划线hack，IE浏览器会识别带有下划线的属性，但是其他的浏览器不可以，下面是利用<code>zoom</code>属性触发IE hasLayout的写法：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.container</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">overflow</span>:<span class="value"> hidden</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">_overflow</span>:<span class="value"> visible</span></span>; <span class="comment">/* for IE */</span></span><br><span class="line">    <span class="rule"><span class="attribute">_zoom</span>:<span class="value"> <span class="number">1</span></span></span>; <span class="comment">/* for IE */</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>尽管这样很有用，但理想方案是不使用hack。</p>
-<h2 id="after-伪元素"><a href="#after-伪元素" class="headerlink" title=":after 伪元素"></a>:after 伪元素</h2><p>这种旧的方案以使用杂乱的CSS为代价，但好处是它会允许定位元素超出容器的边界。</p>
-<p><a href="http://www.positioniseverything.net/easyclearing.html" target="_blank" rel="external">http://www.positioniseverything.net/easyclearing.html</a></p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.container</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">display</span>:<span class="value"> inline-block</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="rule"><span class="attribute">.container</span>:<span class="value">after &#123;</span><br><span class="line">    content: <span class="string">" "</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">display</span>:<span class="value"> block</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">clear</span>:<span class="value"> both</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">overflow</span>:<span class="value"> hidden</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">visibility</span>:<span class="value"> hidden</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class">.container</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">display</span>:<span class="value"> block</span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
-<h2 id="使用行内样式，clear属性"><a href="#使用行内样式，clear属性" class="headerlink" title="使用行内样式，clear属性"></a>使用行内样式，clear属性</h2><p>一种快捷但是很乱的写法</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">br</span> <span class="attribute">style</span>=<span class="value">"clear:both"</span> /&gt;</span> <span class="comment">&lt;!-- So dirty! --&gt;</span></span><br></pre></td></tr></table></figure>
-<p>因为很多因素，这种方案很不理想：</p>
-<p>不符合代码复用的思想，让你的代码看起来很不专业。<br>以后有其他的清除浮动方案可使用时，你必须回头来整理这些杂乱的html。</p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1425,7 +1410,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">43</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

@@ -188,6 +188,119 @@
           
           
             
+              <a class="post-title-link" href="/2016/03/17/选一种更好的清除浮动方案/" itemprop="url">
+                选一种更好的清除浮动方案
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-03-17T11:37:24+08:00" content="2016-03-17">
+            2016-03-17
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
+
+              
+              
+                ， 
+              
+
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/翻译/" itemprop="url" rel="index"><span itemprop="name">翻译</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/03/17/选一种更好的清除浮动方案/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/17/选一种更好的清除浮动方案/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>原文链接<a href="http://stackoverflow.com/questions/211383/which-method-of-clearfix-is-best" target="_blank" rel="external">http://stackoverflow.com/questions/211383/which-method-of-clearfix-is-best</a></p>
+<p>清除浮动的方式多种多样，以下每种方案在不同情况下，都有它出色的地方。</p>
+<h2 id="重提clearfix"><a href="#重提clearfix" class="headerlink" title="重提clearfix"></a>重提clearfix</h2><p>在<a href="http://cssmojo.com/the-very-latest-clearfix-reloaded/" target="_blank" rel="external">CSS Mojo</a>中Thierry Koblentz单独写了一篇文章来重温<code>clearfix</code>，强烈建议摈弃<code>display: table</code>的写法，而改用<code>display: block</code>的写法，其优点是避免包含块之间的<code>margin</code>塌陷（collapse）。</p>
+<p>最近的一种代码量更少的清除浮动方案是这样的：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">.container</span>:<span class="value">after &#123;</span><br><span class="line">    content: <span class="string">''</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">display</span>:<span class="value"> block</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">clear</span>:<span class="value"> both</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="“忘掉上面的写法吧”，让我们看看在现代浏览器上怎么写"><a href="#“忘掉上面的写法吧”，让我们看看在现代浏览器上怎么写" class="headerlink" title="“忘掉上面的写法吧”，让我们看看在现代浏览器上怎么写"></a>“忘掉上面的写法吧”，让我们看看在现代浏览器上怎么写</h2><p>在<a href="http://cssmojo.com/the-very-latest-clearfix-reloaded/" target="_blank" rel="external">CSS Mojo</a>中Thierry Koblentz还指出，针对现代浏览器开发时，我们可以弃用<code>zoom</code>和<code>:before</code>等属性/值，简化写法：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">.container</span>:<span class="value">after &#123;</span><br><span class="line">    content: <span class="string">''</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">display</span>:<span class="value"> table</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">clear</span>:<span class="value"> both</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种写法特意没有支持IE6/7……</p>
+<p>提醒一句：如果你重新开始一个新项目，放心做吧，但是不要使用这种写法，虽然你没有支持旧版本的IE浏览器，但是可以避免<code>margin</code>塌陷。</p>
+<h2 id="代码更少的清除浮动"><a href="#代码更少的清除浮动" class="headerlink" title="代码更少的清除浮动"></a>代码更少的清除浮动</h2><p>这是最近广为接受的一种方案<a href="http://nicolasgallagher.com/micro-clearfix-hack/" target="_blank" rel="external">Micro Clearfix by Nicolas Gallagher</a>。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">.container</span>:<span class="value">before,</span><br><span class="line">.container:after &#123;</span><br><span class="line">  content:<span class="string">""</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">display</span>:<span class="value">table</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="rule"><span class="attribute">.container</span>:<span class="value">after &#123;</span><br><span class="line">  clear:both</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class">.container</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">zoom</span>:<span class="value"><span class="number">1</span></span></span>; <span class="comment">/* For IE 6/7 (触发 hasLayout) */</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="overflow属性"><a href="#overflow属性" class="headerlink" title="overflow属性"></a>overflow属性</h2><p>当定位元素不显示在容器外时，这种方案通常是首选。</p>
+<p><a href="http://www.quirksmode.org/css/clearing.html" target="_blank" rel="external">http://www.quirksmode.org/css/clearing.html</a>，这篇文章解释了这种写法的一个常见问题，也就是在容器上设置<code>width: 100%</code>。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.container</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">overflow</span>:<span class="value"> hidden</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">display</span>:<span class="value"> inline-block</span></span>; <span class="comment">/* 用来触发IE的hasLayout */</span></span><br><span class="line">    <span class="rule"><span class="attribute">display</span>:<span class="value"> block</span></span>; <span class="comment">/* 覆盖上一条属性，重新设置为block */</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>触发IE浏览器的<code>hasLayout</code>不止有<code>display</code>这一个属性，其他的属性也可以做相同的工作。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.container</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">overflow</span>:<span class="value"> hidden</span></span>; <span class="comment">/* 清除浮动 */</span></span><br><span class="line">    <span class="rule"><span class="attribute">zoom</span>:<span class="value"> <span class="number">1</span></span></span>;  <span class="comment">/* 用来触发IE的hasLayout */</span></span><br><span class="line">    <span class="rule"><span class="attribute">display</span>:<span class="value"> block</span></span>; <span class="comment">/* 元素必须为块级元素，如果只应用于块级元素，这条可不写 */</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p><code>overflow</code>清除浮动的另一种方案是使用下划线hack，IE浏览器会识别带有下划线的属性，但是其他的浏览器不可以，下面是利用<code>zoom</code>属性触发IE hasLayout的写法：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.container</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">overflow</span>:<span class="value"> hidden</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">_overflow</span>:<span class="value"> visible</span></span>; <span class="comment">/* for IE */</span></span><br><span class="line">    <span class="rule"><span class="attribute">_zoom</span>:<span class="value"> <span class="number">1</span></span></span>; <span class="comment">/* for IE */</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>尽管这样很有用，但理想方案是不使用hack。</p>
+<h2 id="after-伪元素"><a href="#after-伪元素" class="headerlink" title=":after 伪元素"></a>:after 伪元素</h2><p>这种旧的方案以使用杂乱的CSS为代价，但好处是它会允许定位元素超出容器的边界。</p>
+<p><a href="http://www.positioniseverything.net/easyclearing.html" target="_blank" rel="external">http://www.positioniseverything.net/easyclearing.html</a></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.container</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">display</span>:<span class="value"> inline-block</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="rule"><span class="attribute">.container</span>:<span class="value">after &#123;</span><br><span class="line">    content: <span class="string">" "</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">display</span>:<span class="value"> block</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">clear</span>:<span class="value"> both</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">overflow</span>:<span class="value"> hidden</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">visibility</span>:<span class="value"> hidden</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class">.container</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">display</span>:<span class="value"> block</span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用行内样式，clear属性"><a href="#使用行内样式，clear属性" class="headerlink" title="使用行内样式，clear属性"></a>使用行内样式，clear属性</h2><p>一种快捷但是很乱的写法</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">br</span> <span class="attribute">style</span>=<span class="value">"clear:both"</span> /&gt;</span> <span class="comment">&lt;!-- So dirty! --&gt;</span></span><br></pre></td></tr></table></figure>
+<p>因为很多因素，这种方案很不理想：</p>
+<p>不符合代码复用的思想，让你的代码看起来很不专业。<br>以后有其他的清除浮动方案可使用时，你必须回头来整理这些杂乱的html。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2016/03/14/用margin还是用padding/" itemprop="url">
                 用margin还是用padding?
               </a>
@@ -1045,89 +1158,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/18/深夜，用canvas画一个时钟/" itemprop="url">
-                深夜，用canvas画一个时钟
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-08-18T21:22:07+08:00" content="2015-08-18">
-            2015-08-18
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/08/18/深夜，用canvas画一个时钟/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/18/深夜，用canvas画一个时钟/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p><a href="http://zhongshan1993.github.io/myDemo/singlePage/canvasClock.html" target="_blank" rel="external"><strong>查看demo</strong></a></p>
-<p>这几天准备阿里巴巴的笔试，可以说已经是心力交瘁，自从阿里和蘑菇街的内推被刷掉之后，开始越来越怀疑起自己的能力来，虽然这点打击应该是微不足道的。毕竟校招在刚刚开始拉开帷幕，精彩的还在后头，内推不过，还有机会去秋招，这次秋招不过，还有明年的春招。但是明年的春招我可能等不起了，我迫不及待地需要一份工作，需要一份我向往的工作。</p>
-<p>今天看书看到canvas部分，便用它来写了一个时钟，原理很简单,用<code>context.arc(100, 100, 99, 0, Math.PI*2, false);</code>绘制圆形作为表盘，<code>context.fillText(i, textX, textY);</code>绘制表盘上的数字，<code>context.lineTo(secondsX, secondsY);</code>绘制秒针，时针和分针的原理与此相同。接着就是正弦和余弦函数的运用。</p>
-<p>开代码：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="doctype">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">title</span>&gt;</span>canvas时钟<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"drawing"</span> <span class="attribute">width</span>=<span class="value">"400"</span> <span class="attribute">height</span>=<span class="value">"400"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="openscad"></span><br><span class="line">        var draw = document.getElementById<span class="params">('drawing')</span>;</span><br><span class="line">        var time = null;</span><br><span class="line">        var seconds = <span class="number">0</span>;</span><br><span class="line">        var minutes = <span class="number">0</span>;</span><br><span class="line">        var hours = <span class="number">0</span>;</span><br><span class="line">        var secondsAngle = <span class="number">0</span>;</span><br><span class="line">        var minutesAngle = <span class="number">0</span>;</span><br><span class="line">        var hoursAngle = <span class="number">0</span>;</span><br><span class="line">        var secondsX = <span class="number">0</span>;</span><br><span class="line">        var secondsY = <span class="number">0</span>;</span><br><span class="line">        var minutesX = <span class="number">0</span>;</span><br><span class="line">        var minutesY = <span class="number">0</span>;</span><br><span class="line">        var hoursX = <span class="number">0</span>;</span><br><span class="line">        var hoursY = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> <span class="params">(draw.getContext)</span> &#123;</span><br><span class="line">            var context = draw.getContext<span class="params">('<span class="number">2</span>d')</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 绘制外圆</span></span><br><span class="line">            context.arc<span class="params">(<span class="number">100</span>, <span class="number">100</span>, <span class="number">99</span>, <span class="number">0</span>, Math.<span class="literal">PI</span>*<span class="number">2</span>, <span class="literal">false</span>)</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 绘制内圆</span></span><br><span class="line">            context.moveTo<span class="params">(<span class="number">194</span>, <span class="number">100</span>)</span>;</span><br><span class="line">            context.arc<span class="params">(<span class="number">100</span>, <span class="number">100</span>, <span class="number">94</span>, <span class="number">0</span>, Math.<span class="literal">PI</span>*<span class="number">2</span>, <span class="literal">false</span>)</span>;</span><br><span class="line">            context.stroke<span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">            context.font = <span class="string">"bold 14px Arial"</span>;</span><br><span class="line">            context.textAlign = 'center';</span><br><span class="line">            context.textBaseline = 'middle';</span><br><span class="line">            <span class="comment">// context.fillText('12', 100, 20);</span></span><br><span class="line">            var i = <span class="number">1</span>;</span><br><span class="line">            var textAngle = <span class="number">0</span>;</span><br><span class="line">            var textX = <span class="number">0</span>;</span><br><span class="line">            var textY = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> <span class="params">(i = <span class="number">1</span>; i &lt; <span class="number">13</span>; i++)</span> &#123;</span><br><span class="line">                textAngle = i <span class="built_in">*</span> <span class="params">(Math.<span class="literal">PI</span>*<span class="number">2</span>/<span class="number">12</span>)</span>;</span><br><span class="line">                textY = <span class="number">100</span> - <span class="number">83</span><span class="built_in">*</span>Math.<span class="built_in">cos</span><span class="params">(textAngle)</span>;</span><br><span class="line">                textX = <span class="number">100</span> + <span class="number">83</span><span class="built_in">*</span>Math.<span class="built_in">sin</span><span class="params">(textAngle)</span>;</span><br><span class="line">                context.fillText<span class="params">(i, textX, textY)</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            drawClock<span class="params">()</span>;</span><br><span class="line">            setInterval<span class="params">(drawClock, <span class="number">1000</span>)</span>;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">getTime</span><span class="params">()</span> &#123;</span></span><br><span class="line">            var date = new Date<span class="params">()</span>;</span><br><span class="line">            var res = &#123;&#125;;</span><br><span class="line">            res.seconds = date.getSeconds<span class="params">()</span>;</span><br><span class="line">            res.minutes = date.getMinutes<span class="params">()</span>;</span><br><span class="line">            res.hours = date.getHours<span class="params">()</span>;</span><br><span class="line">            return res;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">drawClock</span><span class="params">()</span> &#123;</span></span><br><span class="line">            <span class="comment">// 开始路径</span></span><br><span class="line">            context.beginPath<span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">            context.clearRect<span class="params">(<span class="number">35</span>, <span class="number">35</span>, <span class="number">130</span>, <span class="number">130</span>)</span>;</span><br><span class="line">            </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            time = getTime<span class="params">()</span>;</span><br><span class="line">            seconds = time.seconds;</span><br><span class="line">            minutes = time.minutes;</span><br><span class="line">            hours = time.hours &gt; <span class="number">12</span> ? time.hours-<span class="number">12</span>: time.hours;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 绘制秒针</span></span><br><span class="line">            <span class="comment">// context.rePaint();</span></span><br><span class="line">            context.moveTo<span class="params">(<span class="number">100</span>, <span class="number">100</span>)</span>;</span><br><span class="line">            secondsAngle = <span class="params">(seconds/<span class="number">60</span>)</span><span class="built_in">*</span>Math.<span class="literal">PI</span><span class="built_in">*</span><span class="number">2</span>;</span><br><span class="line">            secondsY = <span class="number">100</span> - <span class="number">65</span><span class="built_in">*</span>Math.<span class="built_in">cos</span><span class="params">(secondsAngle)</span>;</span><br><span class="line">            secondsX = <span class="number">100</span> + <span class="number">65</span><span class="built_in">*</span>Math.<span class="built_in">sin</span><span class="params">(secondsAngle)</span>;</span><br><span class="line">            context.lineTo<span class="params">(secondsX, secondsY)</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 绘制分针</span></span><br><span class="line">            context.moveTo<span class="params">(<span class="number">100</span>, <span class="number">100</span>)</span>;</span><br><span class="line">            minutesAngle = <span class="params">(<span class="params">(minutes*<span class="number">60</span>+seconds)</span>/<span class="params">(<span class="number">60</span>*<span class="number">60</span>)</span>)</span><span class="built_in">*</span>Math.<span class="literal">PI</span><span class="built_in">*</span><span class="number">2</span>;</span><br><span class="line">            minutesY = <span class="number">100</span> - <span class="number">50</span><span class="built_in">*</span>Math.<span class="built_in">cos</span><span class="params">(minutesAngle)</span>;</span><br><span class="line">            minutesX = <span class="number">100</span> + <span class="number">50</span><span class="built_in">*</span>Math.<span class="built_in">sin</span><span class="params">(minutesAngle)</span>;</span><br><span class="line">            context.lineTo<span class="params">(minutesX, minutesY)</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 绘制时针</span></span><br><span class="line">            context.moveTo<span class="params">(<span class="number">100</span>, <span class="number">100</span>)</span>;</span><br><span class="line">            hoursAngle = <span class="params">(<span class="params">(hours*<span class="number">60</span>*<span class="number">60</span>+minutes*<span class="number">60</span>+seconds)</span>/<span class="params">(<span class="number">12</span>*<span class="number">60</span>*<span class="number">60</span>)</span>)</span><span class="built_in">*</span>Math.<span class="literal">PI</span><span class="built_in">*</span><span class="number">2</span>;</span><br><span class="line">            hoursY = <span class="number">100</span> - <span class="number">35</span><span class="built_in">*</span>Math.<span class="built_in">cos</span><span class="params">(hoursAngle)</span>;</span><br><span class="line">            hoursX = <span class="number">100</span> + <span class="number">35</span><span class="built_in">*</span>Math.<span class="built_in">sin</span><span class="params">(hoursAngle)</span>;</span><br><span class="line">            context.lineTo<span class="params">(hoursX, hoursY)</span>;</span><br><span class="line"></span><br><span class="line">            </span><br><span class="line"></span><br><span class="line">            <span class="comment">// 描边路径</span></span><br><span class="line">            context.stroke<span class="params">()</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure></span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1167,7 +1197,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">43</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

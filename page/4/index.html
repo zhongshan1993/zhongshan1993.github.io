@@ -188,6 +188,85 @@
           
           
             
+              <a class="post-title-link" href="/2015/07/18/ajax函数写法/" itemprop="url">
+                ajax函数写法
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-07-18T11:19:23+08:00" content="2015-07-18">
+            2015-07-18
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/07/18/ajax函数写法/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/18/ajax函数写法/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ajax</span> <span class="params">(url, fnSucc, fnFaild)</span>&#123;</span></span><br><span class="line">    <span class="comment">// 创建ajax对象</span></span><br><span class="line">    <span class="comment">// IE6 以上浏览器</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// var oAjax = new XMLHttpRequest();</span></span><br><span class="line">    <span class="comment">// alert(oAjax);</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// IE6</span></span><br><span class="line">    <span class="comment">// var oAjax = new ActiveXObject("Microsoft.XMLHTTP");</span></span><br><span class="line">    <span class="comment">// alert(oAjax);</span></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="comment">// 全局的变量都是window的属性</span></span><br><span class="line">    <span class="comment">// 用一个不存在的变量时候会出错</span></span><br><span class="line">    <span class="comment">// 用一个不存在的属性时提示undefined</span></span><br><span class="line">    </span><br><span class="line">    var oAjax = null;</span><br><span class="line">    <span class="comment">// 创建ajax对象</span></span><br><span class="line">    <span class="keyword">if</span> <span class="params">(window.XMLHttpRequest)</span> &#123;</span><br><span class="line">        oAjax = new XMLHttpRequest<span class="params">()</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        oAjax = new ActiveXObject<span class="params">(<span class="string">"Microsoft.XMLHTTP"</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 连接服务器</span></span><br><span class="line">    <span class="comment">// open(方法， url， 是否异步)</span></span><br><span class="line">    oAjax.open<span class="params">('GET', url, <span class="literal">true</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 发送请求</span></span><br><span class="line">    oAjax.send<span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 接收返回信息</span></span><br><span class="line">    <span class="comment">// 有状态变化时</span></span><br><span class="line">    oAjax.onreadystatechange = <span class="function"><span class="keyword">function</span> <span class="params">()</span>&#123;</span></span><br><span class="line">        <span class="comment">// 判断是否结束</span></span><br><span class="line">        <span class="keyword">if</span> <span class="params">(oAjax.readyState === <span class="number">4</span>)</span> &#123;</span><br><span class="line">            <span class="comment">// 判断是否成功</span></span><br><span class="line">            <span class="keyword">if</span> <span class="params">(oAjax.status === <span class="number">200</span>)</span> &#123;</span><br><span class="line">                <span class="comment">// 读取响应内容</span></span><br><span class="line">                fnSucc<span class="params">(oAjax.responseText)</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 请求失败</span></span><br><span class="line">                <span class="keyword">if</span> <span class="params">(fnFaild)</span> &#123;</span><br><span class="line">                    fnFaild<span class="params">()</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/07/17/一串跟随鼠标运动的DIV/" itemprop="url">
                 一串跟随鼠标运动的DIV
               </a>
@@ -1040,87 +1119,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/16/实现留言板中ctrl+enter提交的功能/" itemprop="url">
-                实现留言板中ctrl+enter提交的功能
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-05-16T11:16:35+08:00" content="2015-05-16">
-            2015-05-16
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/05/16/实现留言板中ctrl+enter提交的功能/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/16/实现留言板中ctrl+enter提交的功能/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="doctype">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">textarea</span> <span class="attribute">name</span>=<span class="value">""</span> <span class="attribute">id</span>=<span class="value">"txt1"</span> <span class="attribute">cols</span>=<span class="value">"30"</span> <span class="attribute">rows</span>=<span class="value">"10"</span>&gt;</span><span class="tag">&lt;/<span class="title">textarea</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">name</span>=<span class="value">""</span> <span class="attribute">id</span>=<span class="value">"txt2"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"button"</span> <span class="attribute">id</span>=<span class="value">"btn1"</span> <span class="attribute">value</span>=<span class="value">"留言"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span><br><span class="line">        <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> oTxt1 = <span class="built_in">document</span>.getElementById(<span class="string">"txt1"</span>);</span><br><span class="line">            <span class="keyword">var</span> oTxt2 = <span class="built_in">document</span>.getElementById(<span class="string">"txt2"</span>);</span><br><span class="line">            <span class="keyword">var</span> oBtn1 = <span class="built_in">document</span>.getElementById(<span class="string">"btn1"</span>);</span><br><span class="line">　　　　　　　　</span><br><span class="line">            oTxt2.onkeydown = <span class="function"><span class="keyword">function</span> (<span class="params">ev</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">var</span> oEvent = ev || event;</span><br><span class="line">                <span class="keyword">if</span> (oEvent.keyCode === <span class="number">13</span> &amp;&amp; oEvent.ctrlKey) &#123;</span><br><span class="line">                    oTxt1.value += oTxt2.value + <span class="string">'\n'</span>;</span><br><span class="line">                    oTxt2.value = <span class="string">""</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>附上另外两个属性： shiftKey, altKey</p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1160,7 +1158,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">43</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
