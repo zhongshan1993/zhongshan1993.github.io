@@ -1,0 +1,716 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+    <meta name="description" content="Zhongshan's Blog" />
+
+
+
+  <meta name="keywords" content="JS," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="本文将从 Redux 源码入手，一步一步讲解 Redux 的中间件实现机制，重点讲解 applyMiddleware 如何将中间件串联执行，最后，编写一个我们自己的 Redux 中间件。
+这里采用 Redux 的官方示例 TodoMVC 作为 demo，我们会在此工程的基础上拓展和 debug，帮助我们更形象地理解。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redux中间件理解">
+<meta property="og:url" content="http://yoursite.com/2018/06/21/Redux中间件理解/index.html">
+<meta property="og:site_name" content="钟山">
+<meta property="og:description" content="本文将从 Redux 源码入手，一步一步讲解 Redux 的中间件实现机制，重点讲解 applyMiddleware 如何将中间件串联执行，最后，编写一个我们自己的 Redux 中间件。
+这里采用 Redux 的官方示例 TodoMVC 作为 demo，我们会在此工程的基础上拓展和 debug，帮助我们更形象地理解。">
+<meta property="og:image" content="http://7xksst.com1.z0.glb.clouddn.com/redux-middleware.png">
+<meta property="og:updated_time" content="2018-06-21T13:22:49.840Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redux中间件理解">
+<meta name="twitter:description" content="本文将从 Redux 源码入手，一步一步讲解 Redux 的中间件实现机制，重点讲解 applyMiddleware 如何将中间件串联执行，最后，编写一个我们自己的 Redux 中间件。
+这里采用 Redux 的官方示例 TodoMVC 作为 demo，我们会在此工程的基础上拓展和 debug，帮助我们更形象地理解。">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Redux中间件理解 // 钟山 </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5a2d0a4cdbf5a39b405be1bde03decdb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">钟山</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+<form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ziircGxZ7ZMf75HN6yzE','2.0.0');
+</script>
+
+<div class="site-search-toggle"></div>
+    </div>
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Redux中间件理解
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2018-06-21T21:16:12+08:00" content="2018-06-21">
+            2018-06-21
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2018/06/21/Redux中间件理解/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2018/06/21/Redux中间件理解/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>本文将从 Redux 源码入手，一步一步讲解 Redux 的中间件实现机制，重点讲解 applyMiddleware 如何将中间件串联执行，最后，编写一个我们自己的 Redux 中间件。</p>
+<p>这里采用 Redux 的官方示例 <a href="https://github.com/reduxjs/redux/blob/master/examples/todomvc/src/index.js" target="_blank" rel="external">TodoMVC</a> 作为 demo，我们会在此工程的基础上拓展和 debug，帮助我们更形象地理解。</p>
+<a id="more"></a>
+<h2 id="demo工程运行"><a href="#demo工程运行" class="headerlink" title="demo工程运行"></a>demo工程运行</h2><p>先将 <a href="https://github.com/reduxjs/redux/blob/master/examples/todomvc/src/index.js" target="_blank" rel="external">TodoMVC</a> 的源码 clone 至本地，执行 <code>npm i</code> 安装依赖包，执行 <code>npm start</code> 开始运行，一个经典的 TodoMVC 示例。有了demo工程后，我们来解读一下 Redux 的部分关键源码。</p>
+<h2 id="createStore"><a href="#createStore" class="headerlink" title="createStore"></a>createStore</h2><p>Redux 通过 createStore 来创建一个 store 对象，要理解 applyMiddleware 的原理，先从 createStore 入手。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">createStore</span>(<span class="params">reducer, preloadedState, enhancer</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> preloadedState === <span class="string">'function'</span> &amp;&amp; <span class="keyword">typeof</span> enhancer === <span class="string">'undefined'</span>) &#123;</span><br><span class="line">    enhancer = preloadedState</span><br><span class="line">    preloadedState = <span class="literal">undefined</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> enhancer !== <span class="string">'undefined'</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> enhancer !== <span class="string">'function'</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Expected the enhancer to be a function.'</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> enhancer(createStore)(reducer, preloadedState)</span><br><span class="line">  &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>从这一部分的源码可以看到，createStore 的三个参数依次为：reducer，preloadedState 和 enhancer。如果传入的 enhancer 为函数，则 createStore 传入 enhancer 并返回。</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return enhancer<span class="list">(<span class="keyword">createStore</span>)</span><span class="list">(<span class="keyword">reducer</span>, preloadedState)</span></span><br></pre></td></tr></table></figure>
+<p>回到我们的 demo 示例，并没有应用 Redux 中间件，我们来手动添加。</p>
+<p>打开 <code>todomvc/src/index.js</code>，先执行 <code>npm i redux-logger --save</code> 安装 <code>redux-logger</code> 中间件用来打印 Redux 日志，然后应用在代码中。 </p>
+<p>既然存在 enhancer 时，createStore 返回的就是 <code>enhancer(createStore)(reducer, preloadedState)</code>，那么我们可以这样改写。这里的 enhancer 就是 applyMiddleware。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> &#123; render &#125; <span class="keyword">from</span> <span class="string">'react-dom'</span></span><br><span class="line">// 新增引入 applyMiddleware</span><br><span class="line"><span class="keyword">import</span> &#123; createStore, applyMiddleware &#125; <span class="keyword">from</span> <span class="string">'redux'</span></span><br><span class="line">// 引入 redux-logger</span><br><span class="line"><span class="keyword">import</span> logger <span class="keyword">from</span> <span class="string">'redux-logger'</span></span><br><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./components/App'</span></span><br><span class="line"><span class="keyword">import</span> reducer <span class="keyword">from</span> <span class="string">'./reducers'</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'todomvc-app-css/index.css'</span></span><br><span class="line"></span><br><span class="line">const store = applyMiddleware(logger)(createStore)(reducer)</span><br><span class="line"></span><br><span class="line">render(</span><br><span class="line">  &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">    &lt;App /&gt;</span><br><span class="line">  &lt;/Provider&gt;,</span><br><span class="line">  document.getElementById(<span class="string">'root'</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>那么我们不禁要问了，为什么采用了上面的代码就可以实现打印日志的中间件呢？我们来看一下 applyMiddleware 部分的源码。</p>
+<h2 id="applyMiddleware"><a href="#applyMiddleware" class="headerlink" title="applyMiddleware"></a>applyMiddleware</h2><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">export <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">applyMiddleware</span><span class="params">(<span class="rest_arg">...middlewares</span>)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> createStore =&gt; (...args) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> store = createStore(...args)</span><br><span class="line">    let dispatch = () =&gt; &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> Error(</span><br><span class="line">        `Dispatching <span class="keyword">while</span> constructing your middleware <span class="keyword">is</span> not allowed. ` +</span><br><span class="line">          `Other middleware would not be applied to <span class="keyword">this</span> dispatch.`</span><br><span class="line">      )</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> middlewareAPI = &#123;</span><br><span class="line">      getState: store.getState,</span><br><span class="line">      dispatch: (...args) =&gt; dispatch(...args)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> chain = middlewares.map(middleware =&gt; middleware(middlewareAPI))</span><br><span class="line">    dispatch = compose(...chain)(store.dispatch)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      ...store,</span><br><span class="line">      dispatch</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码虽然精简，但是理解起来却不是那么容易，首先是用到了柯里化(currying)，本文不讲解柯里化的知识，如不了解可以搜索了解一下<a href="http://www.ruanyifeng.com/blog/2017/02/fp-tutorial.html" target="_blank" rel="external">函数式编程入门教程</a>。</p>
+<p>applyMiddleware 的总体结构可以看成</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">applyMiddleware</span><span class="params">(<span class="rest_arg">...middlewares</span>)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> createStore =&gt; (...args) =&gt; &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对应到我们在 demo 中写的 <code>applyMiddleware(logger)(createStore)(reducer)</code>，罗列一下形参与实参的对应关系，即</p>
+<blockquote>
+<p>…middlewares =&gt; logger<br>createStore    =&gt; 从 redux 引入的 createStore<br>…args        =&gt; reducer</p>
+</blockquote>
+<p>applyMiddleware 依然使用 createStore 创建了 store 对象并且返回，只是改写了 store 对象的 dispatch 方法。</p>
+<p>我们重点来看被改写的 dispatch 与原生 dispatch 区别。</p>
+<ol>
+<li>将 getState 和 dispatch 作为第一个参数传入中间件数组，获得执行完毕后的 chain 数组。</li>
+</ol>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const <span class="variable">chain =</span> middlewares.<span class="built_in">map</span>(<span class="variable">middleware =</span>&gt; middleware(middlewareAPI))</span><br></pre></td></tr></table></figure>
+<ol>
+<li>组合串联 middleware</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dispatch = <span class="function"><span class="title">compose</span><span class="params">(...chain)</span><span class="params">(store.dispatch)</span></span></span><br></pre></td></tr></table></figure>
+<p>此处便组成了新的dispatch，compose 你可能多多少少听说过，来见识一下它的源码。</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">export <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">compose</span><span class="params">(<span class="rest_arg">...funcs</span>)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (funcs.length === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> arg =&gt; arg</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (funcs.length === <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> funcs[<span class="number">0</span>]</span><br><span class="line">  &#125;</span><br><span class="line">                    </span><br><span class="line">  <span class="keyword">return</span> funcs.reduce((a, b) =&gt; (...args) =&gt; a(b(...args)))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实现原理自行脑补（手动滑稽），我们先理解它干了什么。</p>
+<blockquote>
+<p>dispatch = compose(fn1, fn2, fn3)(store.dispatch)</p>
+</blockquote>
+<p>可以转换为</p>
+<blockquote>
+<p>dispatch = fn1(fn2(fn3(store.dispatch)))</p>
+</blockquote>
+<p>于是，新的 dispatch 就这样产生了，每个中间件会被依次执行，执行过程类似于 Koa 的中间件执行的非常经典的洋葱模型。只有最后一个中间件会触发 Redux 原生的 dispatch，将这个 action 分发出去。</p>
+<p><img src="http://7xksst.com1.z0.glb.clouddn.com/redux-middleware.png" alt=""></p>
+<p>在最后一个中间件中调用原生的 dispatch。</p>
+<p>那么，中间件函数到底是什么样的呢？</p>
+<h2 id="中间件-createLogger-实例"><a href="#中间件-createLogger-实例" class="headerlink" title="中间件 createLogger 实例"></a>中间件 createLogger 实例</h2><p>我们来看精简版的 createLogger 源码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">createLogger</span>(<span class="params">&#123; getState &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> next =&gt; action =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">console</span> = <span class="built_in">window</span>.console;</span><br><span class="line">    <span class="keyword">const</span> prevState = getState();</span><br><span class="line">    <span class="keyword">const</span> returnValue = next(action);</span><br><span class="line">    <span class="keyword">const</span> nextState = getState();</span><br><span class="line">    <span class="keyword">const</span> actionType = <span class="built_in">String</span>(action.type);</span><br><span class="line">    <span class="keyword">const</span> message = <span class="string">`action <span class="subst">$&#123;actionType&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`%c prev state`</span>, <span class="string">`color: #9E9E9E`</span>, prevState);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`%c action`</span>, <span class="string">`color: #03A9F4`</span>, action);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`%c next state`</span>, <span class="string">`color: #4CAF50`</span>, nextState);</span><br><span class="line">    <span class="keyword">return</span> returnValue;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>回到 <code>const chain = middlewares.map(middleware =&gt; middleware(middlewareAPI))</code> 这个步骤，对应地，<code>createLogger(middlewareAPI)</code>返回的结构是：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">next =&gt; action =&gt; &#123;</span><br><span class="line">  <span class="comment">// createLogger主体部分</span></span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来，执行 <code>dispatch = compose(...chain)(store.dispatch)</code>，对应地，<code>dispatch = compose(next =&gt; action =&gt; {...})(store.dispatch)</code>，去掉难以理解的compose，即 <code>dispatch = action =&gt; {...}</code>，最后，store 中原生的 dispatch 被替换成这个新的 dispatch。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">dispatch = action =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="built_in">console</span> = <span class="built_in">window</span>.console;</span><br><span class="line">  <span class="keyword">const</span> prevState = getState();</span><br><span class="line">  <span class="comment">// 这里的next就是原生的 store.dispatch，最后被触发</span></span><br><span class="line">  <span class="keyword">const</span> returnValue = next(action);</span><br><span class="line">  <span class="keyword">const</span> nextState = getState();</span><br><span class="line">  <span class="keyword">const</span> actionType = <span class="built_in">String</span>(action.type);</span><br><span class="line">  <span class="keyword">const</span> message = <span class="string">`action <span class="subst">$&#123;actionType&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`%c prev state`</span>, <span class="string">`color: #9E9E9E`</span>, prevState);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`%c action`</span>, <span class="string">`color: #03A9F4`</span>, action);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`%c next state`</span>, <span class="string">`color: #4CAF50`</span>, nextState);</span><br><span class="line">  <span class="keyword">return</span> returnValue;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="redux-thunk"><a href="#redux-thunk" class="headerlink" title="redux-thunk"></a>redux-thunk</h2><p>普通的 action 都是一个对象，但是异步的 action 返回的却是一个 function，这就需要使用中间件 redux-thunk。我们可以按照中间件的套路，自行写一个 redux-thunk 的实现。</p>
+<p>其固定模式为</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function middleware(&#123; dispatch, getState &#125;) &#123;</span><br><span class="line">  <span class="keyword">return</span> next =&gt; action =&gt; <span class="decorator">&#123;...&#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export <span class="keyword">default</span> <span class="function"><span class="keyword">function</span></span> thunkMiddleware(&#123; dispatch, getState &#125;) &#123;</span><br><span class="line">  <span class="keyword">return</span> next =&gt; <span class="keyword">action</span> =&gt; typeof <span class="keyword">action</span> === <span class="string">'function'</span> ? <span class="keyword">action</span>(dispatch, getState) : next(<span class="keyword">action</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果得到的 action 是个函数，就用 dispatch 和 getState 当作参数来调用它，否则就直接分派给 store，从而实现异步的 action。</p>
+<p>将上面的中间件应用至我们的 demo 中</p>
+<p><code>todomvc/src/index.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> &#123; render &#125; <span class="keyword">from</span> <span class="string">'react-dom'</span></span><br><span class="line">// 新增引入 applyMiddleware</span><br><span class="line"><span class="keyword">import</span> &#123; createStore, applyMiddleware &#125; <span class="keyword">from</span> <span class="string">'redux'</span></span><br><span class="line">// 引入 redux-logger</span><br><span class="line"><span class="keyword">import</span> logger <span class="keyword">from</span> <span class="string">'redux-logger'</span></span><br><span class="line">// 应用thunk</span><br><span class="line"><span class="keyword">import</span> thunk <span class="keyword">from</span> <span class="string">'./thunk'</span></span><br><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./components/App'</span></span><br><span class="line"><span class="keyword">import</span> reducer <span class="keyword">from</span> <span class="string">'./reducers'</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'todomvc-app-css/index.css'</span></span><br><span class="line"></span><br><span class="line">const store = applyMiddleware(thunk, logger)(createStore)(reducer)</span><br><span class="line"></span><br><span class="line">render(</span><br><span class="line">  &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">    &lt;App /&gt;</span><br><span class="line">  &lt;/Provider&gt;,</span><br><span class="line">  document.getElementById(<span class="string">'root'</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><code>todomvc/src/constants/ActionTypes.js</code></p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="reserved">export</span> <span class="reserved">const</span> FETCHING_DATA = <span class="string">'FETCHING_DATA'</span></span><br><span class="line"><span class="reserved">export</span> <span class="reserved">const</span> RECEIVE_USER_DATA = <span class="string">'RECEIVE_USER_DATA'</span></span><br></pre></td></tr></table></figure>
+<p><code>todomvc/src/actions/index.js</code></p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="comment">// 省略原有代码</span></span><br><span class="line">export <span class="function"><span class="keyword">function</span> <span class="title">fetchingData</span><span class="params">(flag)</span> &#123;</span></span><br><span class="line">  return &#123;</span><br><span class="line">      type: types.FETCHING_DATA,</span><br><span class="line">      isFetchingData: flag</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export <span class="function"><span class="keyword">function</span> <span class="title">receiveUserData</span><span class="params">(json)</span> &#123;</span></span><br><span class="line">  return &#123;</span><br><span class="line">      type: types.RECEIVE_USER_DATA,</span><br><span class="line">      profile: json</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export <span class="function"><span class="keyword">function</span> <span class="title">fetchUserInfo</span><span class="params">(username)</span> &#123;</span></span><br><span class="line">  return <span class="function"><span class="keyword">function</span> <span class="params">(dispatch)</span> &#123;</span></span><br><span class="line">    dispatch<span class="params">(fetchingData<span class="params">(<span class="literal">true</span>)</span>)</span></span><br><span class="line">    return fetch<span class="params">(`https://api.github.com/users/$&#123;username&#125;`)</span></span><br><span class="line">      .then<span class="params">(response =&gt; &#123;</span><br><span class="line">        console.log<span class="params">(response)</span></span><br><span class="line">        return response.json<span class="params">()</span></span><br><span class="line">      &#125;)</span></span><br><span class="line">      .then<span class="params">(json =&gt; &#123;</span><br><span class="line">        console.log<span class="params">(json)</span></span><br><span class="line">        return json</span><br><span class="line">      &#125;)</span></span><br><span class="line">      .then<span class="params">(<span class="params">(json)</span> =&gt; &#123;</span><br><span class="line">        dispatch<span class="params">(receiveUserData<span class="params">(json)</span>)</span></span><br><span class="line">      &#125;)</span></span><br><span class="line">      .then<span class="params">(<span class="params">()</span> =&gt; dispatch<span class="params">(fetchingData<span class="params">(<span class="literal">false</span>)</span>)</span>)</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>写这篇文章之前，我对 Redux 中间件一直是一知半解的状态。在深入理解其实现原理后，有了一种恍然大悟的感觉，在今后的开发过程中也更加得心应手。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://segmentfault.com/a/1190000008322583" target="_blank" rel="external">Redux:Middleware你咋就这么难</a></li>
+</ul>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag">#JS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/21/译-CSS居中完全指南/" rel="next">[译] CSS居中完全指南</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+                  <div class="ds-thread" data-thread-key="2018/06/21/Redux中间件理解/"
+                       data-title="Redux中间件理解" data-url="http://yoursite.com/2018/06/21/Redux中间件理解/">
+                  </div>
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Zhongshan" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Zhongshan</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">Zhongshan's Blog</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhongshan1993" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhongshan93" target="_blank">Weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.cnblogs.com/zhongshanblog/" target="_blank">Cnblogs</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://zhongshan1993.github.io/diary/" target="_blank">MyDiary</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#demo工程运行"><span class="nav-number">1.</span> <span class="nav-text">demo工程运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#createStore"><span class="nav-number">2.</span> <span class="nav-text">createStore</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#applyMiddleware"><span class="nav-number">3.</span> <span class="nav-text">applyMiddleware</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中间件-createLogger-实例"><span class="nav-number">4.</span> <span class="nav-text">中间件 createLogger 实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redux-thunk"><span class="nav-number">5.</span> <span class="nav-text">redux-thunk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">7.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhongshan</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhongshan1993"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	  <script type="text/javascript">
+  		var duoshuo_user_ID = 0
+  	  </script>
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

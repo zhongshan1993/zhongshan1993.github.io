@@ -188,6 +188,221 @@
           
           
             
+              <a class="post-title-link" href="/2016/04/12/JS中引用的小问题/" itemprop="url">
+                JS中引用的小问题
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-04-12T23:11:13+08:00" content="2016-04-12">
+            2016-04-12
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/04/12/JS中引用的小问题/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/12/JS中引用的小问题/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>今天做简单的冒泡排序时，由于需要用图示法来展示冒泡排序的过程。于是便对每一次数组位置调换记录了快照，然后在渲染。开始的代码是这样的：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="dns"></span><br><span class="line">    var arr = [<span class="number">5,4,3,2</span>,1]<span class="comment">;</span></span><br><span class="line">    var i = 0,</span><br><span class="line">        j = 0,</span><br><span class="line">        temp = 0<span class="comment">;</span></span><br><span class="line">        len = arr.length<span class="comment">;</span></span><br><span class="line">        snapshoot = [],</span><br><span class="line">    for (i=0<span class="comment">; i &lt; len; i++) &#123;</span></span><br><span class="line">    for (j = len-1<span class="comment">; j &gt; i; j--) &#123;</span></span><br><span class="line">      if (arr[j-1] &gt; arr[j]) &#123;</span><br><span class="line">        temp = arr[j-1]<span class="comment">;</span></span><br><span class="line">        arr[j-1] = arr[j]<span class="comment">;</span></span><br><span class="line">        arr[j] = temp<span class="comment">;</span></span><br><span class="line">        // 记录快照</span><br><span class="line">        snapshoot.push(arr)<span class="comment">;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里最后<code>snapshoot</code>最后的元素都是一个相同的数组：<code>[1,2,3,4,5]</code>，即排序完成后的<code>arr</code>，是什么原因导致了这样的结果呢？因为<code>snapshoot</code>中的<code>arr</code>都指向同一个数组。</p>
+<p>这里的解决方法多种多样，只要解除<code>push</code>后<code>snapshoot</code>中元素的指向即可。<br>如： </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">snapshoot</span><span class="class">.push</span>(<span class="tag">JSON</span><span class="class">.parse</span>(<span class="tag">JSON</span><span class="class">.stringify</span>(<span class="tag">arr</span>)));</span><br></pre></td></tr></table></figure>
+<p>抑或：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">snapshoot</span><span class="class">.push</span>(<span class="tag">arr</span><span class="class">.concat</span>());</span><br></pre></td></tr></table></figure>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2016/03/20/CSS居中完全指南/" itemprop="url">
+                CSS居中完全指南
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-03-20T20:44:12+08:00" content="2016-03-20">
+            2016-03-20
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/翻译/" itemprop="url" rel="index"><span itemprop="name">翻译</span></a></span>
+
+              
+              
+                ， 
+              
+
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/翻译/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/03/20/CSS居中完全指南/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/20/CSS居中完全指南/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>原文地址<a href="https://css-tricks.com/centering-css-complete-guide/" target="_blank" rel="external">https://css-tricks.com/centering-css-complete-guide/</a></p>
+<p>CSS居中事件是CSS的难点之一。有人埋怨，为什么一个“居中”要这么难呢？而我认为，这个问题并不是那么复杂，而是因为在不同情况下，总是有多种不同的解决方式，但我们不知道该用哪种。</p>
+<p>所以我写了一个决策树，希望能使这个问题更加简单一点。</p>
+<h2 id="水平居中"><a href="#水平居中" class="headerlink" title="水平居中"></a>水平居中</h2><h3 id="如果需要水平居中的元素是行内元素或是类行内元素（如text和links）"><a href="#如果需要水平居中的元素是行内元素或是类行内元素（如text和links）" class="headerlink" title="如果需要水平居中的元素是行内元素或是类行内元素（如text和links）"></a>如果需要水平居中的元素是行内元素或是类行内元素（如<code>text</code>和<code>links</code>）</h3><p>当需要将一个块级元素下的行内元素水平居中时，只需要使用如下代码：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.center-children</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">text-align</span>:<span class="value"> center</span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这对设置<code>display</code>属性为<code>inline</code>，<code>inline-block</code>，<code>inline-table</code>，<code>inline-flex</code>等属性的元素有效。</p>
+<h3 id="当需要水平居中一个块级元素时"><a href="#当需要水平居中一个块级元素时" class="headerlink" title="当需要水平居中一个块级元素时"></a>当需要水平居中一个块级元素时</h3><p>我们可以通过将块级元素的<code>margin-right</code>和<code>margin-left</code>属性设置为<code>auto</code>来居中它（这时，这个元素必须设定宽度<code>width</code>，否则宽度会为100%而不需要居中），常常我们会这样写：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.center-me</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span> auto</span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>居中的块级元素或其父元素不管是哪种宽度，这种方法都有效。<br>值得注意的是，这对浮动元素是无效的。但是，可以看看<a href="https://css-tricks.com/float-center/" target="_blank" rel="external">居中浮动元素的小技巧</a>。</p>
+<h3 id="当需要居中两个或两个以上的块级元素时"><a href="#当需要居中两个或两个以上的块级元素时" class="headerlink" title="当需要居中两个或两个以上的块级元素时"></a>当需要居中两个或两个以上的块级元素时</h3><p>如果你需要在同一行内居中两个或两个以上的块级元素，最好是改变它们的<code>display</code>属性，以下是将<code>display</code>属性设为<code>inline-block</code>和<code>flex</code>的例子：</p>
+<p><a href="http://codepen.io/chriscoyier/pen/ebing" target="_blank" rel="external">查看DEMO</a><br><img src="http://7xksst.com1.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20160320190719.png" alt=""></p>
+<p>如果你想居中从上到下依次排列的几个块级元素，那么<a href="#当需要水平居中一个块级元素时">当需要水平居中一个块级元素时</a>依然有效。</p>
+<h2 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a>垂直居中</h2><p>CSS垂直居中需要一点小技巧。</p>
+<h3 id="如果需要垂直居中的元素是行内元素或是类行内元素（如text和links）"><a href="#如果需要垂直居中的元素是行内元素或是类行内元素（如text和links）" class="headerlink" title="如果需要垂直居中的元素是行内元素或是类行内元素（如text和links）"></a>如果需要垂直居中的元素是行内元素或是类行内元素（如<code>text</code>和<code>links</code>）</h3><h4 id="如果垂直居中元素只占一行"><a href="#如果垂直居中元素只占一行" class="headerlink" title="如果垂直居中元素只占一行"></a>如果垂直居中元素只占一行</h4><p>由于<code>padding-top</code>和<code>padding-bottom</code>相等，<code>inline</code>或<code>text</code>元素即可表现为垂直居中。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.link</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">padding-top</span>:<span class="value"> <span class="number">30px</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">padding-bottom</span>:<span class="value"> <span class="number">30px</span></span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>如果由于某些原因不能使用<code>padding</code>属性，在已知该文本不会被包含的前提下，可以将该文本元素的<code>line-height</code>和<code>height</code>设为相等，即可居中。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.center-text-trick</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100px</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">line-height</span>:<span class="value"> <span class="number">100px</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">white-space</span>:<span class="value"> nowrap</span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="如果垂直居中元素占多行"><a href="#如果垂直居中元素占多行" class="headerlink" title="如果垂直居中元素占多行"></a>如果垂直居中元素占多行</h4><p>将<code>padding-top</code>和<code>padding-bottom</code>设为相等也能让包含多行文本的元素居中。但是有时候这种方法也无济于事，那么这个元素或许是类<code>table-cell</code>元素或者就是<code>table-cell</code>元素，这种情况下，就和处理单行文本元素的方式不同了。</p>
+<p><a href="http://codepen.io/chriscoyier/pen/ekoFx" target="_blank" rel="external">查看DEMO</a></p>
+<p><img src="http://7xksst.com1.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20160320194847.png" alt=""></p>
+<p>如果table的方式过时了，或许你可以用<code>flexbox</code>，设置flex属性的父元素可以轻松地居中其子元素。</p>
+<p><a href="http://codepen.io/chriscoyier/pen/uHygv" target="_blank" rel="external">查看DEMO</a></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.flex-center-vertically</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">display</span>:<span class="value"> flex</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">justify-content</span>:<span class="value"> center</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">flex-direction</span>:<span class="value"> column</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">400px</span></span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>记住，之所以这里的父元素包含块都设置了高度<code>height</code>，是因为这和父元素的固定高度真的有很大关系（%、px等）。</p>
+<p>如果以上的技巧都已经过时，你可以使用“伪元素”，在包含块中放一个100%高度的伪元素，通过这种方法，文本元素也可在包含块中居中。</p>
+<p><a href="http://codepen.io/chriscoyier/pen/ofwgD" target="_blank" rel="external">查看DEMO</a></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.ghost-center</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="rule"><span class="attribute">.ghost-center</span>:<span class="value">:before &#123;</span><br><span class="line">  content: <span class="string">" "</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">display</span>:<span class="value"> inline-block</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">1%</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">vertical-align</span>:<span class="value"> middle</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class">.ghost-center</span> <span class="tag">p</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">display</span>:<span class="value"> inline-block</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">vertical-align</span>:<span class="value"> middle</span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="当需要垂直居中一个块级元素时"><a href="#当需要垂直居中一个块级元素时" class="headerlink" title="当需要垂直居中一个块级元素时"></a>当需要垂直居中一个块级元素时</h3><h4 id="垂直居中已知高度的块级元素"><a href="#垂直居中已知高度的块级元素" class="headerlink" title="垂直居中已知高度的块级元素"></a>垂直居中已知高度的块级元素</h4><p>由于许多原因，常常不能确定网页布局中元素的高度，例如：以为宽度的变化，文本重新排列会改变元素的高度；改变文本的CSS属性会改变元素高度；文本长度的改变也会导致元素高度的改变；像<code>image</code>这种有固定长宽比的元素，调整大小后也会导致高度的改变。</p>
+<p>但是，如果你知道高度，你可以使用如下方式垂直居中：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.parent</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="class">.child</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">50%</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100px</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">margin-top</span>:<span class="value"> -<span class="number">50px</span></span></span>; <span class="comment">/* account for padding and border if not using box-sizing: border-box; */</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="垂直居中未知高度的块级元素"><a href="#垂直居中未知高度的块级元素" class="headerlink" title="垂直居中未知高度的块级元素"></a>垂直居中未知高度的块级元素</h4><p>这时候，我们仍然可以把元素向上移动其高度的一半来垂直居中它。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.parent</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="class">.child</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">50%</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">translateY</span>(-<span class="number">50%</span>)</span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="也可以使用flexbox"><a href="#也可以使用flexbox" class="headerlink" title="也可以使用flexbox"></a>也可以使用<code>flexbox</code></h4><p>见怪不惊，<code>flexbox</code>会容易得多。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.parent</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">display</span>:<span class="value"> flex</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">flex-direction</span>:<span class="value"> column</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">justify-content</span>:<span class="value"> center</span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="水平垂直居中"><a href="#水平垂直居中" class="headerlink" title="水平垂直居中"></a>水平垂直居中</h2><p>你可以以任何方式组合以上的写法，来达到完美居中元素的目的。但我发现不外乎这三种情况。</p>
+<h3 id="如果元素有固定宽度和高度"><a href="#如果元素有固定宽度和高度" class="headerlink" title="如果元素有固定宽度和高度"></a>如果元素有固定宽度和高度</h3><p>将元素固定定位，<code>left</code>和<code>top</code>设为50%，设置负外边距，<code>margin-left</code>设为<code>width</code>的一半，<code>margin-top</code>设为<code>height</code>的一半，兼容大多数浏览器。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.parent</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="class">.child</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">300px</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100px</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">20px</span></span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">50%</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">left</span>:<span class="value"> <span class="number">50%</span></span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="rule"><span class="attribute">margin</span>:<span class="value"> -<span class="number">70px</span> <span class="number">0</span> <span class="number">0</span> -<span class="number">170px</span></span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="未知宽高的元素"><a href="#未知宽高的元素" class="headerlink" title="未知宽高的元素"></a>未知宽高的元素</h3><p>如果宽高未知，你可以使用<code>transform</code>属性。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.parent</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="class">.child</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">50%</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">left</span>:<span class="value"> <span class="number">50%</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">translate</span>(-<span class="number">50%</span>, -<span class="number">50%</span>)</span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用flexbox"><a href="#使用flexbox" class="headerlink" title="使用flexbox"></a>使用<code>flexbox</code></h3><p>你需要使用两个居中属性来水平垂直居中元素。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.parent</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">display</span>:<span class="value"> flex</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">justify-content</span>:<span class="value"> center</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">align-items</span>:<span class="value"> center</span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>完全可以用CSS来达到居中元素的目的。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2016/03/17/选一种更好的清除浮动方案/" itemprop="url">
                 选一种更好的清除浮动方案
               </a>
@@ -990,174 +1205,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/09/05/日志文件名更新/" itemprop="url">
-                日志文件名更新
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-09-05T11:03:17+08:00" content="2015-09-05">
-            2015-09-05
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/back-end/" itemprop="url" rel="index"><span itemprop="name">back-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/09/05/日志文件名更新/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/05/日志文件名更新/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p><a href="https://github.com/zhongshan1993/diary" target="_blank" rel="external">日志地址</a></p>
-<p><strong>从七月初开始用md在github上写技术日志,每天一篇,提醒自己不能放松。</strong></p>
-<p><strong>后来逐渐发现如果文件名上只有日期的话,会很不方便查阅,于是便想着将每篇日志的标题放到文件名上来,这样在没有网络的时候，我也可以随时在本地找到。</strong></p>
-<p><strong>这样改的话工程量毕竟很大,于是今天试着用PHP对文件进行操作,统一更改文件名。</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="preprocessor">&lt;?php</span>  </span><br><span class="line">header(<span class="string">"Content-Type:text/html;charset=utf-8"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 日志所在文件夹</span></span><br><span class="line"><span class="variable">$diaryDir</span> = <span class="string">"./07/"</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tree</span><span class="params">(<span class="variable">$directory</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="variable">$mydir</span> = dir(<span class="variable">$directory</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;ul&gt;\n"</span>;</span><br><span class="line">    <span class="keyword">while</span>(<span class="variable">$file</span> = <span class="variable">$mydir</span>-&gt;read())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>((is_dir(<span class="string">"$directory/$file"</span>)) &amp;&amp; (<span class="variable">$file</span>!=<span class="string">"."</span>) &amp;&amp; (<span class="variable">$file</span>!=<span class="string">".."</span>))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"&lt;li&gt;&lt;font color=\"#ff00cc\"&gt;&lt;b&gt;$file&lt;/b&gt;&lt;/font&gt;&lt;/li&gt;\n"</span>;</span><br><span class="line">            tree(<span class="string">"$directory/$file"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="variable">$file</span> != <span class="string">"."</span> &amp;&amp; <span class="variable">$file</span> != <span class="string">".."</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 在这里进行文件处理</span></span><br><span class="line">            <span class="variable">$reg</span> = <span class="string">"/#&#123;1&#125;\s+(.*)\s+#&#123;1&#125;/"</span>;</span><br><span class="line">            <span class="variable">$arr</span> = <span class="keyword">array</span>();</span><br><span class="line">            <span class="variable">$str</span> = htmlspecialchars(file_get_contents(<span class="variable">$diaryDir</span>.<span class="variable">$file</span>));</span><br><span class="line">            <span class="comment">// echo $str;</span></span><br><span class="line">            preg_match(<span class="variable">$reg</span>, <span class="variable">$str</span>, <span class="variable">$arr</span>);</span><br><span class="line"></span><br><span class="line">            print_r(trim(<span class="variable">$arr</span>[<span class="number">1</span>]));</span><br><span class="line">            rename(<span class="variable">$diaryDir</span>.<span class="variable">$file</span>, <span class="variable">$diaryDir</span>.substr(<span class="variable">$file</span>, <span class="number">0</span>, <span class="number">10</span>).<span class="string">'('</span>.iconv(<span class="string">'UTF-8'</span>, <span class="string">'GB2312'</span>, <span class="variable">$arr</span>[<span class="number">1</span>]).<span class="string">')'</span>.<span class="string">'.md'</span>);</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;/ul&gt;\n"</span>;</span><br><span class="line">    <span class="variable">$mydir</span>-&gt;close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//开始运行</span></span><br><span class="line">tree(<span class="variable">$diaryDir</span>);</span></span><br></pre></td></tr></table></figure>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/19/用两种方法实现一个点绕着另一个点旋转/" itemprop="url">
-                用两种方法实现一个点绕着另一个点旋转
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-08-19T21:24:07+08:00" content="2015-08-19">
-            2015-08-19
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/08/19/用两种方法实现一个点绕着另一个点旋转/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/19/用两种方法实现一个点绕着另一个点旋转/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><h2 id="CSS3方法"><a href="#CSS3方法" class="headerlink" title="CSS3方法"></a>CSS3方法</h2><p><a href="https://zhongshan1993.github.io/myDemo/singlePage/rotateCircle2.html" target="_blank" rel="external">DEMO演示</a></p>
-<p><code>@keyframes</code>,<code>animation</code>, <code>transform</code>三样便可以搞定</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="doctype">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span><span class="css"></span><br><span class="line">        <span class="id">#center</span> <span class="rules">&#123;</span><br><span class="line">            <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">10px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">10px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">border-radius</span>:<span class="value"> <span class="number">5px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#000</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">200px</span> auto</span></span>;</span><br><span class="line">        &#125;</span></span><br><span class="line">        <span class="id">#dot</span> <span class="rules">&#123;</span><br><span class="line">            <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">10px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">10px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">background</span>:<span class="value"> red</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">border-radius</span>:<span class="value"> <span class="number">5px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">left</span>:<span class="value"> <span class="number">200px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line"></span><br><span class="line">            <span class="rule"><span class="attribute">-o-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">90deg</span>)</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">-moz-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">90deg</span>)</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">-webkit-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">90deg</span>)</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">-ms-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">90deg</span>)</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">90deg</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">            <span class="rule"><span class="attribute">-o-transform-origin</span>:<span class="value"> -<span class="number">2000%</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">-webkit-transform-origin</span>:<span class="value"> -<span class="number">2000%</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">-moz-transform-origin</span>:<span class="value"> -<span class="number">2000%</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">-ms-transform-origin</span>:<span class="value"> -<span class="number">2000%</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">transform-origin</span>:<span class="value"> -<span class="number">2000%</span></span></span>;</span><br><span class="line"></span><br><span class="line">            <span class="rule"><span class="attribute">animation</span>:<span class="value"> rot <span class="number">3s</span> linear <span class="number">0s</span> infinite</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">-o-animation</span>:<span class="value"> rot <span class="number">3s</span> linear <span class="number">0s</span> infinite</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">-ms-animation</span>:<span class="value"> rot <span class="number">3s</span> linear <span class="number">0s</span> infinite</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">-webkit-animation</span>:<span class="value"> rot <span class="number">3s</span> linear <span class="number">0s</span> infinite</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">-moz-animation</span>:<span class="value"> rot <span class="number">3s</span> linear <span class="number">0s</span> infinite</span></span>;</span><br><span class="line">        &#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="at_rule">@<span class="keyword">keyframes</span> rot </span>&#123;</span><br><span class="line">            <span class="tag">from</span><span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">0deg</span>)</span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line">            <span class="tag">to</span><span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">360deg</span>)</span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="at_rule">@<span class="keyword">-o-keyframes</span> rot </span>&#123;</span><br><span class="line">            <span class="tag">from</span><span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">-o-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">0deg</span>)</span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line">            <span class="tag">to</span><span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">-o-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">360deg</span>)</span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="at_rule">@<span class="keyword">-webkit-keyframes</span> rot </span>&#123;</span><br><span class="line">            <span class="tag">from</span><span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">-webkit-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">0deg</span>)</span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line">            <span class="tag">to</span><span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">-webkit-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">360deg</span>)</span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="at_rule">@<span class="keyword">-moz-keyframes</span> rot </span>&#123;</span><br><span class="line">            <span class="tag">from</span><span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">-moz-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">0deg</span>)</span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line">            <span class="tag">to</span><span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">-moz-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">360deg</span>)</span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="at_rule">@<span class="keyword">-ms-keyframes</span> rot </span>&#123;</span><br><span class="line">            <span class="tag">from</span><span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">-ms-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">0deg</span>)</span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line">            <span class="tag">to</span><span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">-ms-transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">360deg</span>)</span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line">        &#125;</span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"center"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"dot"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="javascript"><a href="#javascript" class="headerlink" title="javascript"></a>javascript</h2><p><a href="https://zhongshan1993.github.io/myDemo/singlePage/rotateCircle1.html" target="_blank" rel="external">DEMO演示</a></p>
-<p><code>Math.cos()</code>, <code>Math.sin()</code>,这两个函数的参数都是弧度，所以可以用 <code>Math.PI * 2/360</code>将角度转化成弧度。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="doctype">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span><span class="css"></span><br><span class="line">        <span class="id">#center</span> <span class="rules">&#123;</span><br><span class="line">            <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">10px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">10px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">border-radius</span>:<span class="value"> <span class="number">5px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#000</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">200px</span> auto</span></span>;</span><br><span class="line">        &#125;</span></span><br><span class="line">        <span class="id">#dot</span> <span class="rules">&#123;</span><br><span class="line">            <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">10px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">10px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">background</span>:<span class="value"> red</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">border-radius</span>:<span class="value"> <span class="number">5px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">left</span>:<span class="value"> <span class="number">200px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">        &#125;</span></span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"center"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"dot"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">        <span class="keyword">var</span> oDot = <span class="built_in">document</span>.getElementById(<span class="string">'dot'</span>);</span><br><span class="line">        <span class="keyword">var</span> deg = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">var</span> timer = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">var</span> radius = oDot.offsetLeft; <span class="comment">// 旋转半径</span></span><br><span class="line"></span><br><span class="line">        timer = setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> radian = (<span class="number">2</span>*<span class="built_in">Math</span>.PI/<span class="number">360</span>)*deg;</span><br><span class="line">            <span class="keyword">var</span> theTop = <span class="built_in">Math</span>.ceil(<span class="built_in">Math</span>.sin(radian)*radius);</span><br><span class="line">            <span class="keyword">var</span> theLeft = <span class="built_in">Math</span>.ceil(<span class="built_in">Math</span>.cos(radian)*radius);</span><br><span class="line">            oDot.style.top = theTop + <span class="string">'px'</span>;</span><br><span class="line">            oDot.style.left = theLeft + <span class="string">'px'</span>;</span><br><span class="line">            deg += <span class="number">0.5</span>;</span><br><span class="line">            <span class="keyword">if</span> (deg === <span class="number">361</span>) &#123;</span><br><span class="line">                deg = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,<span class="number">1</span>);</span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure></span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1197,7 +1244,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-count">45</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1264,7 +1311,7 @@
             <div class="copyright" >
   
   &copy; &nbsp; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-heart"></i>
   </span>
