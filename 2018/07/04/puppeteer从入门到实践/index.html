@@ -1,0 +1,712 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+    <meta name="description" content="Zhongshan's Blog" />
+
+
+
+  <meta name="keywords" content="JS," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="关于puppeteer123puppeteer是一个node库，他提供了一组用来操纵Chrome的API（默认headless也就是无UI的chrome，也可以配置为有UI）有点类似于PhantomJS，但Puppeteer是Chrome官方团队进行维护的，前景更好。
+puppeteer可以做什么
+利用网页生成PDF、图片
+爬取SPA应用，并生成预渲染内容（即“SSR” 服务端渲染）
+可以从网站抓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="puppeteer从入门到实践">
+<meta property="og:url" content="http://yoursite.com/2018/07/04/puppeteer从入门到实践/index.html">
+<meta property="og:site_name" content="钟山">
+<meta property="og:description" content="关于puppeteer123puppeteer是一个node库，他提供了一组用来操纵Chrome的API（默认headless也就是无UI的chrome，也可以配置为有UI）有点类似于PhantomJS，但Puppeteer是Chrome官方团队进行维护的，前景更好。
+puppeteer可以做什么
+利用网页生成PDF、图片
+爬取SPA应用，并生成预渲染内容（即“SSR” 服务端渲染）
+可以从网站抓">
+<meta property="og:image" content="http://7xksst.com1.z0.glb.clouddn.com/nd.png">
+<meta property="og:image" content="http://7xksst.com1.z0.glb.clouddn.com/dom-1.png">
+<meta property="og:image" content="http://7xksst.com1.z0.glb.clouddn.com/song-list.png">
+<meta property="og:updated_time" content="2018-07-04T12:02:20.823Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="puppeteer从入门到实践">
+<meta name="twitter:description" content="关于puppeteer123puppeteer是一个node库，他提供了一组用来操纵Chrome的API（默认headless也就是无UI的chrome，也可以配置为有UI）有点类似于PhantomJS，但Puppeteer是Chrome官方团队进行维护的，前景更好。
+puppeteer可以做什么
+利用网页生成PDF、图片
+爬取SPA应用，并生成预渲染内容（即“SSR” 服务端渲染）
+可以从网站抓">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> puppeteer从入门到实践 // 钟山 </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5a2d0a4cdbf5a39b405be1bde03decdb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">钟山</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+<form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ziircGxZ7ZMf75HN6yzE','2.0.0');
+</script>
+
+<div class="site-search-toggle"></div>
+    </div>
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              puppeteer从入门到实践
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2018-07-04T19:53:02+08:00" content="2018-07-04">
+            2018-07-04
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2018/07/04/puppeteer从入门到实践/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/04/puppeteer从入门到实践/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="关于puppeteer"><a href="#关于puppeteer" class="headerlink" title="关于puppeteer"></a>关于puppeteer</h2><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">puppeteer是一个<span class="keyword">node</span>库，他提供了一组用来操纵<span class="constant">Chrome</span>的<span class="constant">A</span>PI（默认headless也就是无<span class="constant">U</span>I的chrome，也可以配置为有<span class="constant">U</span>I）</span><br><span class="line"></span><br><span class="line">有点类似于<span class="constant">Phantom</span>JS，但<span class="constant">Puppeteer</span>是<span class="constant">Chrome</span>官方团队进行维护的，前景更好。</span><br></pre></td></tr></table></figure>
+<h2 id="puppeteer可以做什么"><a href="#puppeteer可以做什么" class="headerlink" title="puppeteer可以做什么"></a>puppeteer可以做什么</h2><ol>
+<li>利用网页生成PDF、图片</li>
+<li>爬取SPA应用，并生成预渲染内容（即“SSR” 服务端渲染）</li>
+<li>可以从网站抓取内容</li>
+<li>自动化表单提交、UI测试、键盘输入等</li>
+<li>帮你创建一个最新的自动化测试环境（chrome），可以直接在此运行测试用例</li>
+<li>捕获站点的时间线，以便追踪你的网站，帮助分析网站性能问题</li>
+</ol>
+<a id="more"></a>
+<p>基本了解之后，我们今天打算来用puppeteer做一个小爬虫试试。</p>
+<h2 id="环境和安装"><a href="#环境和安装" class="headerlink" title="环境和安装"></a>环境和安装</h2><p>puppeteer依赖v6.4以上的Node，在这里我推荐安装v7.6以上版本的node，便于我们更好地使用<a href="http://es6.ruanyifeng.com/#docs/async" target="_blank" rel="external">async/wait</a>，如果你的机器上已经安装了node，同时对版本又有特定的需求，我建议你了解一下<a href="https://github.com/creationix/nvm" target="_blank" rel="external">nvm</a>，node版本管理神器，实现多个node版本自由切换。另外，我这里采用v9.4.0版本的node。</p>
+<p>puppeteer也是一个npm包，所以安装还是老套路。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="tag">i</span> puppeteer --save</span><br></pre></td></tr></table></figure>
+<p>puppeteer安装时自带一个最新版本的Chromium，如果你没有梯子的话，建议使用淘宝的<a href="https://npm.taobao.org/" target="_blank" rel="external">cnpm</a>安装，这样会自动地从淘宝的源下载Chromium。如果你本地已经安装Chromium，可以通过设置环境变量或者npm config中的<code>PUPPETEER_SKIP_CHROMIUM_DOWNLOAD</code>跳过下载，我这里使用npm官方源安装。</p>
+<h2 id="小试牛刀-生成网页截图"><a href="#小试牛刀-生成网页截图" class="headerlink" title="小试牛刀-生成网页截图"></a>小试牛刀-生成网页截图</h2><p>puppeteer安装完成之后，我们先来个小demo练练手，对指定网站进行截图，我们就拿公司内网试试吧。创建screenshot.js文件，贴入以下代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 加载先前安装的 puppeteer</span></span><br><span class="line"><span class="keyword">const</span> puppeteer = <span class="built_in">require</span>(<span class="string">'puppeteer'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">getPic</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 创建chrome实例</span></span><br><span class="line">  <span class="keyword">const</span> browser = <span class="keyword">await</span> puppeteer.launch()</span><br><span class="line">  <span class="comment">// 打开一个新的选项卡</span></span><br><span class="line">  <span class="keyword">const</span> page = <span class="keyword">await</span> browser.newPage()</span><br><span class="line">  <span class="comment">// 设置页面宽高</span></span><br><span class="line">  page.setViewport(&#123;</span><br><span class="line">    width: <span class="number">1920</span>,</span><br><span class="line">    height: <span class="number">2000</span></span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// 在我们创建的这个选项卡下，转到公司内网首页</span></span><br><span class="line">  <span class="keyword">await</span> page.goto(<span class="string">'http://777.nd.com.cn/html/index.html'</span>)</span><br><span class="line">  <span class="comment">// 在当前目录下生成nd.png截图</span></span><br><span class="line">  <span class="keyword">await</span> page.screenshot(&#123;path: <span class="string">'nd.png'</span>&#125;)</span><br><span class="line">  <span class="comment">// 最后，关闭浏览器</span></span><br><span class="line">  <span class="keyword">await</span> browser.close()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">getPic()</span><br></pre></td></tr></table></figure>
+<p>在当前目录执行<code>node screenshot.js</code>命令，不出意外的话我们将会得到如下截图。</p>
+<p><img src="http://7xksst.com1.z0.glb.clouddn.com/nd.png" alt=""></p>
+<h2 id="爬虫实践"><a href="#爬虫实践" class="headerlink" title="爬虫实践"></a>爬虫实践</h2><p>我们可以轻易地想到，puppeteer功能如此强大，用来做爬虫是再好不过了。接下来的内容也是我自己的实践:网易云音乐的歌曲下面总是有各种各样的神评论，所以我打算用puppeteer来收集一下云音乐的评论。</p>
+<h3 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h3><p>我们的需求是输入一个音乐人的主页链接，收集这个音乐人下的所有热门单曲的所有评论。例如音乐人赵雷的主页下有47首热门单曲，他的主页是<a href="http://music.163.com/#/artist?id=6731" target="_blank" rel="external">http://music.163.com/#/artist?id=6731</a>，接下来我们一步一步实现。</p>
+<h3 id="分析音乐人主页的DOM结构"><a href="#分析音乐人主页的DOM结构" class="headerlink" title="分析音乐人主页的DOM结构"></a>分析音乐人主页的DOM结构</h3><p>我们发现主页的整个页面是由一个iframe包裹的，iframe中有一个id是<code>song-list-pre-cache</code>的div，该div下有一个table，table下的每一个a标签，就是每一首歌的url以及歌名了。</p>
+<p><img src="http://7xksst.com1.z0.glb.clouddn.com/dom-1.png" alt=""></p>
+<p>接下来我们进行第一步。</p>
+<h3 id="获取主页歌曲列表"><a href="#获取主页歌曲列表" class="headerlink" title="获取主页歌曲列表"></a>获取主页歌曲列表</h3><p>这一步开始前，我们先分析一下具体操作步骤：打开音乐人主页-&gt;取到对应iframe-&gt;取到id为<code>song-list-pre-cache</code>的节点-&gt;遍历所有的a标签节点-&gt;取到歌曲的url和名称。</p>
+<p>关于分析DOM结构，我这里使用<a href="https://www.npmjs.com/package/cheerio" target="_blank" rel="external">cheerio</a>，其简介为“为服务器特别定制的，快速、灵活的jQuery核心实现”。</p>
+<p>我们新建<code>song-list.js</code>文件，执行以下代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> puppeteer = <span class="built_in">require</span>(<span class="string">'puppeteer'</span>)</span><br><span class="line"><span class="keyword">const</span> cheerio = <span class="built_in">require</span>(<span class="string">'cheerio'</span>)</span><br><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> host = <span class="string">'http://music.163.com/#'</span></span><br><span class="line"></span><br><span class="line">puppeteer</span><br><span class="line">    .launch(&#123;headless: <span class="literal">true</span>&#125;)</span><br><span class="line">    .then(<span class="keyword">async</span> browser =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> page = <span class="keyword">await</span> browser.newPage()</span><br><span class="line">        page.setViewport(&#123;width: <span class="number">1367</span>, height: <span class="number">768</span>&#125;)</span><br><span class="line">        <span class="comment">// 在网络连接数为0时，再进行下一步操作，确保页面加载完成</span></span><br><span class="line">        <span class="keyword">await</span> page.goto(<span class="string">`<span class="subst">$&#123;host&#125;</span>/artist?id=6731`</span>, &#123;waitUntil: <span class="string">'networkidle0'</span>&#125;)</span><br><span class="line">        <span class="keyword">const</span> frames = <span class="keyword">await</span> page.frames()</span><br><span class="line">        <span class="comment">// 取到目标iframe</span></span><br><span class="line">        <span class="keyword">const</span> targetFrame = frames.find(frame =&gt; &#123;</span><br><span class="line">            <span class="keyword">return</span> frame.name() === <span class="string">'contentFrame'</span></span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">const</span> content = <span class="keyword">await</span> targetFrame.content()</span><br><span class="line">        <span class="keyword">let</span> $ = cheerio.load(content)</span><br><span class="line">        <span class="keyword">const</span> $list = $(<span class="string">'#song-list-pre-cache'</span>)</span><br><span class="line">        <span class="comment">// 遍历a标签，并取到其中的对应属性，作为歌曲的链接和名称</span></span><br><span class="line">        <span class="keyword">const</span> songList = $list</span><br><span class="line">            .find(<span class="string">'a'</span>)</span><br><span class="line">            .map((i, elem) =&gt; &#123;</span><br><span class="line">                <span class="keyword">const</span> href = $(elem).attr(<span class="string">'href'</span>)</span><br><span class="line">                <span class="keyword">if</span> (_.startsWith(href, <span class="string">'/song?id='</span>)) &#123;</span><br><span class="line">                    <span class="keyword">const</span> title = $(elem).find(<span class="string">'b'</span>).attr(<span class="string">'title'</span>)</span><br><span class="line">                    <span class="keyword">return</span> &#123;href, title&#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">            .get()</span><br><span class="line">        <span class="comment">// 打印歌曲列表</span></span><br><span class="line">        <span class="built_in">console</span>.log(songList)</span><br><span class="line">        <span class="keyword">await</span> browser.close()</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+<p>不出意外的话，控制台将会打印出音乐人的歌曲列表，列表的每一项包含歌曲的url和title，如下图。</p>
+<p><img src="http://7xksst.com1.z0.glb.clouddn.com/song-list.png" alt=""></p>
+<h3 id="跳转到歌曲页面"><a href="#跳转到歌曲页面" class="headerlink" title="跳转到歌曲页面"></a>跳转到歌曲页面</h3><p>在上一步，我们拿到了歌曲的url，那么接下来自然就是跳转到每首歌的页面，进行评论抓取了。</p>
+<p>歌曲页面的DOM结构和音乐人页面很类似，也有一个iframe，iframe中有一个id为<code>comment-box</code>的div节点，在这个节点在遍历class为<code>itm</code>的div节点，在<code>itm</code>下，通过具体分析，我们就能取到用户名和评论内容了。关于热评和最新评论，我们先简单处理，不区分。</p>
+<p>我们将每首歌第一页的评论都写在<code>content.html</code>文件中。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> puppeteer = <span class="built_in">require</span>(<span class="string">'puppeteer'</span>)</span><br><span class="line"><span class="keyword">const</span> cheerio = <span class="built_in">require</span>(<span class="string">'cheerio'</span>)</span><br><span class="line"><span class="keyword">const</span> he = <span class="built_in">require</span>(<span class="string">'he'</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> host = <span class="string">'http://music.163.com/#'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 抽象出抓取评论的函数，便于进一步开发</span><br><span class="line"> * @param &#123;*&#125; sTargetFrame </span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">const</span> collectCommentList = <span class="keyword">async</span>(sTargetFrame) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> sContent = <span class="keyword">await</span> sTargetFrame.content()</span><br><span class="line">    <span class="keyword">const</span> $ = cheerio.load(sContent)</span><br><span class="line">    <span class="keyword">const</span> res = $(<span class="string">'#comment-box'</span>)</span><br><span class="line">        .find(<span class="string">'.itm'</span>)</span><br><span class="line">        .map((i, elem) =&gt; &#123;</span><br><span class="line">            <span class="keyword">const</span> brk = $(elem).find(<span class="string">'.cntwrap .f-brk'</span>)</span><br><span class="line">            <span class="keyword">const</span> brkText = brk.text()</span><br><span class="line">            <span class="comment">// 用户名</span></span><br><span class="line">            <span class="keyword">const</span> username = $(brk)</span><br><span class="line">                .find(<span class="string">'a'</span>)</span><br><span class="line">                .text()</span><br><span class="line">            <span class="comment">// 评论字符串</span></span><br><span class="line">            <span class="keyword">const</span> commentStr = $(brk)</span><br><span class="line">                .text()</span><br><span class="line">                .replace(username, <span class="string">''</span>)</span><br><span class="line">            <span class="keyword">return</span> &#123;username, commentStr&#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        .get()</span><br><span class="line">    fs.appendFile(<span class="string">'./content.html'</span>, <span class="built_in">JSON</span>.stringify(res) + <span class="string">'\n'</span>)</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">puppeteer</span><br><span class="line">    .launch(&#123;headless: <span class="literal">true</span>&#125;)</span><br><span class="line">    .then(<span class="keyword">async</span> browser =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> page = <span class="keyword">await</span> browser.newPage()</span><br><span class="line">        page.setViewport(&#123;width: <span class="number">1367</span>, height: <span class="number">768</span>&#125;)</span><br><span class="line">        <span class="keyword">await</span> page.goto(<span class="string">`<span class="subst">$&#123;host&#125;</span>/artist?id=6731`</span>, &#123;waitUntil: <span class="string">'networkidle0'</span>&#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> frames = <span class="keyword">await</span> page.frames()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> targetFrame = frames.find(frame =&gt; &#123;</span><br><span class="line">            <span class="keyword">return</span> frame.name() === <span class="string">'contentFrame'</span></span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> content = <span class="keyword">await</span> targetFrame.content()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> $ = cheerio.load(content)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> $list = $(<span class="string">'#song-list-pre-cache'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> songList = $list</span><br><span class="line">            .find(<span class="string">'a'</span>)</span><br><span class="line">            .map((i, elem) =&gt; &#123;</span><br><span class="line">                <span class="keyword">const</span> href = $(elem).attr(<span class="string">'href'</span>)</span><br><span class="line">                <span class="keyword">if</span> (_.startsWith(href, <span class="string">'/song?id='</span>)) &#123;</span><br><span class="line">                    <span class="keyword">const</span> title = $(elem).find(<span class="string">'b'</span>).attr(<span class="string">'title'</span>)</span><br><span class="line">                    <span class="keyword">return</span> &#123;href, title&#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">            .get()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> index = <span class="number">0</span></span><br><span class="line">        <span class="keyword">let</span> songItem</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`一共<span class="subst">$&#123;songList.length&#125;</span>首歌`</span>)</span><br><span class="line">        <span class="keyword">while</span> (songItem = songList[index++]) &#123;</span><br><span class="line">            <span class="keyword">const</span> sPage = <span class="keyword">await</span> browser.newPage()</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`正在收集<span class="subst">$&#123;songItem.title&#125;</span>下的评论`</span>)</span><br><span class="line">            <span class="keyword">await</span> sPage.goto(<span class="string">`<span class="subst">$&#123;host&#125;</span><span class="subst">$&#123;songItem.href&#125;</span>`</span>, &#123;</span><br><span class="line">                waitUntil: <span class="string">'networkidle2'</span>,</span><br><span class="line">                timeout: <span class="number">0</span></span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="keyword">const</span> sFrames = <span class="keyword">await</span> sPage.frames()</span><br><span class="line">            <span class="keyword">const</span> sTargetFrame = sFrames.find(frame =&gt; &#123;</span><br><span class="line">                <span class="keyword">return</span> frame.name() === <span class="string">'contentFrame'</span></span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">let</span> commentList = <span class="keyword">await</span> collectCommentList(sTargetFrame)</span><br><span class="line"></span><br><span class="line">            sPage.close()</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> browser.close()</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+<p>到此为止，我们已经可以抓取每一首歌的第一页评论了，但是这远远不够，一首热门歌曲往往有上万条评论，这就需要翻页抓取了。</p>
+<h3 id="评论翻页"><a href="#评论翻页" class="headerlink" title="评论翻页"></a>评论翻页</h3><p>puppeteer功能强大，模拟<a href="https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#elementhandleclickoptions" target="_blank" rel="external">按钮点击功能</a>当然也不在话下。所以我们接下来要做的事情就是点击下一页按钮后，再重复一次抓取动作即可。</p>
+<p>避免篇幅过大，我这里贴出主要的翻页代码，完整代码会在文末给出。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> commentList = <span class="keyword">await</span> collectCommentList(sTargetFrame)</span><br><span class="line">  <span class="keyword">let</span> nextBtnHandler = <span class="keyword">await</span> sTargetFrame.$(<span class="string">'.znxt'</span>)</span><br><span class="line">  <span class="keyword">if</span> (!nextBtnHandler) &#123;</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">  &#125;</span><br><span class="line">  nextBtnHandler.click()</span><br><span class="line">  <span class="comment">// 关于如何判断评论加载完成，这里还没有找到更好的方案，所以暂时做一个 sleep 处理</span></span><br><span class="line">  <span class="keyword">await</span> timeout(<span class="number">1500</span>)</span><br><span class="line">&#125; <span class="keyword">while</span> (<span class="keyword">await</span> isBtnAbled(sTargetFrame))</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> commentList = <span class="keyword">await</span> collectCommentList(sTargetFrame)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isBtnAbled = <span class="keyword">async</span>(sTargetFrame, className) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> sContent = <span class="keyword">await</span> sTargetFrame.content()</span><br><span class="line">    <span class="keyword">const</span> $ = cheerio.load(sContent)</span><br><span class="line">    <span class="keyword">return</span> !$(<span class="string">'.znxt'</span>).hasClass(<span class="string">'js-disabled'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">timeout</span>(<span class="params">ms</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(resolve =&gt; setTimeout(resolve, ms))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>到现在，我们的爬虫功能就基本完成了，我这里暂时只把评论内容存入文本，还没有存放在数据库中。如果你感兴趣，可以把<a href="https://github.com/zhongshan1993/puppeteer-music" target="_blank" rel="external">源码</a>clone下来，拓展一下。</p>
+<p>关于puppeteer更多更好玩的API，可以自行查看<a href="https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md" target="_blank" rel="external">文档</a>，这是一个不断更新的库，所以隔一段时间相关API可能就会有更新，因此阅读文档可能是深入学习的最好方式。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><p><a href="http://www.infoq.com/cn/news/2017/09/how-belcome-Puppeteer-master" target="_blank" rel="external">如何成为Puppeteer大师</a></p>
+</li>
+<li><p><a href="https://medium.com/@e_mad_ehsan/getting-started-with-puppeteer-and-chrome-headless-for-web-scrapping-6bf5979dee3e" target="_blank" rel="external">Getting started with Puppeteer and Chrome Headless for Web Scraping</a></p>
+</li>
+<li><p><a href="https://segmentfault.com/a/1190000010736797" target="_blank" rel="external">Puppeteer初探–爬取并生成《ES6标准入门》PDF</a></p>
+</li>
+<li><p><a href="https://codeburst.io/a-guide-to-automating-scraping-the-web-with-javascript-chrome-puppeteer-node-js-b18efb9e9921" target="_blank" rel="external">A Guide to Automating &amp; Scraping the Web with JavaScript (Chrome + Puppeteer + Node JS)</a></p>
+</li>
+</ul>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag">#JS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/21/Redux中间件理解/" rel="next">Redux中间件理解</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+                  <div class="ds-thread" data-thread-key="2018/07/04/puppeteer从入门到实践/"
+                       data-title="puppeteer从入门到实践" data-url="http://yoursite.com/2018/07/04/puppeteer从入门到实践/">
+                  </div>
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Zhongshan" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Zhongshan</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">Zhongshan's Blog</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhongshan1993" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhongshan93" target="_blank">Weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.cnblogs.com/zhongshanblog/" target="_blank">Cnblogs</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://zhongshan1993.github.io/diary/" target="_blank">MyDiary</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于puppeteer"><span class="nav-number">1.</span> <span class="nav-text">关于puppeteer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#puppeteer可以做什么"><span class="nav-number">2.</span> <span class="nav-text">puppeteer可以做什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境和安装"><span class="nav-number">3.</span> <span class="nav-text">环境和安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小试牛刀-生成网页截图"><span class="nav-number">4.</span> <span class="nav-text">小试牛刀-生成网页截图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#爬虫实践"><span class="nav-number">5.</span> <span class="nav-text">爬虫实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#需求分析"><span class="nav-number">5.1.</span> <span class="nav-text">需求分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析音乐人主页的DOM结构"><span class="nav-number">5.2.</span> <span class="nav-text">分析音乐人主页的DOM结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取主页歌曲列表"><span class="nav-number">5.3.</span> <span class="nav-text">获取主页歌曲列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跳转到歌曲页面"><span class="nav-number">5.4.</span> <span class="nav-text">跳转到歌曲页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#评论翻页"><span class="nav-number">5.5.</span> <span class="nav-text">评论翻页</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章"><span class="nav-number">6.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhongshan</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhongshan1993"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	  <script type="text/javascript">
+  		var duoshuo_user_ID = 0
+  	  </script>
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>
