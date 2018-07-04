@@ -188,92 +188,6 @@
           
           
             
-              <a class="post-title-link" href="/2016/04/12/JS中引用的小问题/" itemprop="url">
-                JS中引用的小问题
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2016-04-12T23:11:13+08:00" content="2016-04-12">
-            2016-04-12
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front-end</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2016/04/12/JS中引用的小问题/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/12/JS中引用的小问题/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p>今天做简单的冒泡排序时，由于需要用图示法来展示冒泡排序的过程。于是便对每一次数组位置调换记录了快照，然后在渲染。开始的代码是这样的：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="dns"></span><br><span class="line">    var arr = [<span class="number">5,4,3,2</span>,1]<span class="comment">;</span></span><br><span class="line">    var i = 0,</span><br><span class="line">        j = 0,</span><br><span class="line">        temp = 0<span class="comment">;</span></span><br><span class="line">        len = arr.length<span class="comment">;</span></span><br><span class="line">        snapshoot = [],</span><br><span class="line">    for (i=0<span class="comment">; i &lt; len; i++) &#123;</span></span><br><span class="line">    for (j = len-1<span class="comment">; j &gt; i; j--) &#123;</span></span><br><span class="line">      if (arr[j-1] &gt; arr[j]) &#123;</span><br><span class="line">        temp = arr[j-1]<span class="comment">;</span></span><br><span class="line">        arr[j-1] = arr[j]<span class="comment">;</span></span><br><span class="line">        arr[j] = temp<span class="comment">;</span></span><br><span class="line">        // 记录快照</span><br><span class="line">        snapshoot.push(arr)<span class="comment">;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>这里最后<code>snapshoot</code>最后的元素都是一个相同的数组：<code>[1,2,3,4,5]</code>，即排序完成后的<code>arr</code>，是什么原因导致了这样的结果呢？因为<code>snapshoot</code>中的<code>arr</code>都指向同一个数组。</p>
-<p>这里的解决方法多种多样，只要解除<code>push</code>后<code>snapshoot</code>中元素的指向即可。<br>如： </p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">snapshoot</span><span class="class">.push</span>(<span class="tag">JSON</span><span class="class">.parse</span>(<span class="tag">JSON</span><span class="class">.stringify</span>(<span class="tag">arr</span>)));</span><br></pre></td></tr></table></figure>
-<p>抑或：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">snapshoot</span><span class="class">.push</span>(<span class="tag">arr</span><span class="class">.concat</span>());</span><br></pre></td></tr></table></figure>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
               <a class="post-title-link" href="/2016/03/20/CSS居中完全指南/" itemprop="url">
                 CSS居中完全指南
               </a>
@@ -1205,6 +1119,90 @@
 
 
     
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/09/05/日志文件名更新/" itemprop="url">
+                日志文件名更新
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-09-05T11:03:17+08:00" content="2015-09-05">
+            2015-09-05
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/back-end/" itemprop="url" rel="index"><span itemprop="name">back-end</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/09/05/日志文件名更新/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/05/日志文件名更新/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p><a href="https://github.com/zhongshan1993/diary" target="_blank" rel="external">日志地址</a></p>
+<p><strong>从七月初开始用md在github上写技术日志,每天一篇,提醒自己不能放松。</strong></p>
+<p><strong>后来逐渐发现如果文件名上只有日期的话,会很不方便查阅,于是便想着将每篇日志的标题放到文件名上来,这样在没有网络的时候，我也可以随时在本地找到。</strong></p>
+<p><strong>这样改的话工程量毕竟很大,于是今天试着用PHP对文件进行操作,统一更改文件名。</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="preprocessor">&lt;?php</span>  </span><br><span class="line">header(<span class="string">"Content-Type:text/html;charset=utf-8"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 日志所在文件夹</span></span><br><span class="line"><span class="variable">$diaryDir</span> = <span class="string">"./07/"</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tree</span><span class="params">(<span class="variable">$directory</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="variable">$mydir</span> = dir(<span class="variable">$directory</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;ul&gt;\n"</span>;</span><br><span class="line">    <span class="keyword">while</span>(<span class="variable">$file</span> = <span class="variable">$mydir</span>-&gt;read())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>((is_dir(<span class="string">"$directory/$file"</span>)) &amp;&amp; (<span class="variable">$file</span>!=<span class="string">"."</span>) &amp;&amp; (<span class="variable">$file</span>!=<span class="string">".."</span>))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"&lt;li&gt;&lt;font color=\"#ff00cc\"&gt;&lt;b&gt;$file&lt;/b&gt;&lt;/font&gt;&lt;/li&gt;\n"</span>;</span><br><span class="line">            tree(<span class="string">"$directory/$file"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="variable">$file</span> != <span class="string">"."</span> &amp;&amp; <span class="variable">$file</span> != <span class="string">".."</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 在这里进行文件处理</span></span><br><span class="line">            <span class="variable">$reg</span> = <span class="string">"/#&#123;1&#125;\s+(.*)\s+#&#123;1&#125;/"</span>;</span><br><span class="line">            <span class="variable">$arr</span> = <span class="keyword">array</span>();</span><br><span class="line">            <span class="variable">$str</span> = htmlspecialchars(file_get_contents(<span class="variable">$diaryDir</span>.<span class="variable">$file</span>));</span><br><span class="line">            <span class="comment">// echo $str;</span></span><br><span class="line">            preg_match(<span class="variable">$reg</span>, <span class="variable">$str</span>, <span class="variable">$arr</span>);</span><br><span class="line"></span><br><span class="line">            print_r(trim(<span class="variable">$arr</span>[<span class="number">1</span>]));</span><br><span class="line">            rename(<span class="variable">$diaryDir</span>.<span class="variable">$file</span>, <span class="variable">$diaryDir</span>.substr(<span class="variable">$file</span>, <span class="number">0</span>, <span class="number">10</span>).<span class="string">'('</span>.iconv(<span class="string">'UTF-8'</span>, <span class="string">'GB2312'</span>, <span class="variable">$arr</span>[<span class="number">1</span>]).<span class="string">')'</span>.<span class="string">'.md'</span>);</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;/ul&gt;\n"</span>;</span><br><span class="line">    <span class="variable">$mydir</span>-&gt;close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//开始运行</span></span><br><span class="line">tree(<span class="variable">$diaryDir</span>);</span></span><br></pre></td></tr></table></figure>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -1244,7 +1242,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
